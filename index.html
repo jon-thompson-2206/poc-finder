@@ -941,6 +941,150 @@
             margin-top: 12px;
         }
         
+        /* Floating POC Panel (bottom of screen, Figma-style, wide aspect ratio) */
+        .poc-float-panel {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(246, 246, 245, 0.92);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            padding: 12px 16px;
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(15, 17, 18, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--color-border);
+            font-family: 'IBM Plex Mono', monospace;
+            z-index: 1002;
+            display: none;
+        }
+        
+        .poc-float-panel.visible {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .poc-float-panel-coords {
+            font-size: 11px;
+            color: #6b7280;
+            min-width: 130px;
+            flex-shrink: 0;
+        }
+        
+        .poc-float-panel-results {
+            display: flex;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .poc-float-result {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 6px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .poc-float-result-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        
+        .poc-float-result-voltage {
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .poc-float-result-type {
+            font-size: 11px;
+            color: #6b7280;
+        }
+        
+        .poc-float-result-distance {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-left: 4px;
+        }
+        
+        .poc-float-result-shuffle {
+            padding: 3px 6px;
+            border-radius: 4px;
+            border: 1px solid #e5e7eb;
+            background: #f9fafb;
+            font-size: 10px;
+            cursor: pointer;
+            color: #6b7280;
+            transition: background 0.15s, color 0.15s;
+            margin-left: 4px;
+        }
+        
+        .poc-float-result-shuffle:hover {
+            background: #f3f4f6;
+            color: #374151;
+        }
+        
+        .poc-float-panel-actions {
+            display: flex;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+        
+        .poc-float-btn {
+            padding: 8px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.15s, transform 0.1s;
+            white-space: nowrap;
+        }
+        
+        .poc-float-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .poc-float-btn-primary {
+            background: var(--color-dark);
+            color: white;
+            border: none;
+        }
+        
+        .poc-float-btn-primary:hover {
+            background: #1f2937;
+        }
+        
+        .poc-float-btn-secondary {
+            background: #f9fafb;
+            color: #374151;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .poc-float-btn-secondary:hover {
+            background: #f3f4f6;
+        }
+        
+        .poc-float-btn-reset {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fcd34d;
+        }
+        
+        .poc-float-btn-reset:hover {
+            background: #fde68a;
+        }
+        
+        .poc-float-empty {
+            color: #6b7280;
+            font-size: 12px;
+            padding: 4px 0;
+        }
+        
         /* Side Panel */
         .side-panel {
             position: fixed;
@@ -1252,6 +1396,39 @@
             font-size: 10px;
             color: var(--color-muted);
             text-transform: uppercase;
+        }
+        
+        .add-custom-poc-btn {
+            padding: 5px 10px;
+            font-size: 11px;
+            background: var(--color-dark);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        
+        .add-custom-poc-btn:hover {
+            background: #374151;
+        }
+        
+        .add-custom-poc-btn.active {
+            background: #dc2626;
+        }
+        
+        .add-custom-poc-btn.active:hover {
+            background: #b91c1c;
+        }
+        
+        .add-custom-poc-instruction {
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            margin-bottom: 12px;
+            text-align: center;
             letter-spacing: 0.5px;
         }
         
@@ -1313,36 +1490,6 @@
             opacity: 0.6;
         }
         
-        .poc-card {
-            cursor: pointer;
-        }
-        
-        .poc-card.focused {
-            border-color: var(--color-dark);
-            box-shadow: 0 0 0 2px var(--color-dark), 0 4px 12px rgba(0, 0, 0, 0.15);
-            background: rgba(255, 255, 255, 0.9);
-        }
-        
-        .show-all-btn {
-            width: 100%;
-            padding: 10px 12px;
-            margin-bottom: 12px;
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--color-dark);
-            background: rgba(255, 255, 255, 0.6);
-            border: 1px solid var(--color-border);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .show-all-btn:hover {
-            background: rgba(255, 255, 255, 0.9);
-            border-color: var(--color-dark);
-        }
-        
         .poc-card-header {
             display: flex;
             align-items: center;
@@ -1390,99 +1537,28 @@
             margin-left: 4px;
         }
         
-        /* Obstacle indicators */
-        .poc-obstacles {
-            padding: 10px 12px;
-            margin: 8px 0;
-            border-radius: 6px;
+        /* Obstacle indicators - simplified */
+        .poc-obstacles-loading {
             font-size: 11px;
-        }
-        
-        .poc-obstacles.loading {
-            background: rgba(107, 114, 128, 0.1);
             color: var(--color-muted);
-            font-style: italic;
+            padding: 4px 0;
         }
         
-        .poc-obstacles.warning {
-            background: rgba(168, 85, 247, 0.08);
-            border: 1px solid rgba(168, 85, 247, 0.25);
-            color: var(--color-dark);
-        }
-        
-        .poc-obstacles.clear {
-            background: rgba(34, 197, 94, 0.08);
-            color: #15803d;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .obstacle-clear-icon {
-            color: #22c55e;
-            font-weight: bold;
-        }
-        
-        .obstacle-header {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-bottom: 8px;
-            padding-bottom: 6px;
-            border-bottom: 1px solid rgba(168, 85, 247, 0.15);
-        }
-        
-        .obstacle-warning-icon {
-            color: #a855f7;
-        }
-        
-        .obstacle-summary {
-            font-weight: 600;
-            color: #7c3aed;
-            font-size: 12px;
-        }
-        
-        .obstacle-detail-list {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-        
-        .obstacle-detail-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 4px 8px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 4px;
+        .poc-obstacles-summary {
             font-size: 11px;
-        }
-        
-        .obstacle-type-icon {
-            width: 18px;
-            height: 18px;
+            padding: 6px 10px;
+            margin: 6px 0;
             border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            flex-shrink: 0;
         }
         
-        .obstacle-detail-name {
-            flex: 1;
-            color: #374151;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+        .poc-obstacles-summary.warning {
+            background: rgba(168, 85, 247, 0.1);
+            color: #7c3aed;
         }
         
-        .obstacle-detail-count {
-            font-size: 10px;
-            color: #6b7280;
-            background: rgba(0, 0, 0, 0.06);
-            padding: 1px 5px;
-            border-radius: 3px;
+        .poc-obstacles-summary.clear {
+            background: rgba(34, 197, 94, 0.1);
+            color: #15803d;
         }
         
         .poc-card.has-crossings {
@@ -1620,6 +1696,13 @@
     <!-- POC Mode distance tooltip -->
     <div class="poc-tooltip" id="poc-tooltip">
         <div id="poc-tooltip-content"></div>
+    </div>
+    
+    <!-- Floating POC Panel (Figma-style bottom panel, wide layout) -->
+    <div class="poc-float-panel" id="poc-float-panel">
+        <div class="poc-float-panel-coords" id="poc-float-coords"></div>
+        <div class="poc-float-panel-results" id="poc-float-results"></div>
+        <div class="poc-float-panel-actions" id="poc-float-actions"></div>
     </div>
     
     <div class="loading-overlay" id="loading">
@@ -1768,7 +1851,7 @@
         // One-off POC click visuals (default mode)
         let singlePocLines = {};
         let singlePocMarkers = {};
-        let singlePocPopup = null;
+        let singlePocClickPin = null;       // Pin marker at click location
         let singlePocClickLocation = null;  // Store last click location for "Add Site" button
         let singlePocResults = [];          // Current displayed results
         let singlePocOriginalResults = [];  // Original results for reset
@@ -1787,15 +1870,14 @@
         let obstaclesCache = {};  // Cache: pocId -> { crossings: [], fetched: boolean }
         let obstacleOverlays = {};  // Map of POC ID to array of obstacle overlay polygons
         
-        // Focus mode state
-        let focusedPocId = null;  // Currently focused POC ID
-        let focusHighlightLayer = null;  // Temporary layer showing focused cable/substation
+        // Custom POC mode state
+        let addCustomPOCMode = false;  // Whether user is in "add custom POC" mode
         
         // Voltage levels and their power capacities (MVA)
+        // Note: 33kV and 66kV are treated as the same voltage class "33/66kV"
         const VOLTAGE_POWER_RANGES = {
             '11kV': { min: 0.3, max: 5, color: '#ef4444' },
-            '33kV': { min: 3, max: 30, color: '#22c55e' },
-            '66kV': { min: 20, max: 60, color: '#22c55e' },
+            '33/66kV': { min: 3, max: 60, color: '#22c55e' },
             '132kV': { min: 20, max: 100, color: '#f97316' }
         };
         
@@ -2465,15 +2547,21 @@
             }
         }
         
-        // Handle default map click: one-time POC calculation
+        // Handle default map click: one-time POC calculation or custom POC addition
         function handleSinglePOCClick(e) {
             
-            // Also ignore clicks inside controls
+            // Ignore clicks inside controls
             if (e.originalEvent && e.originalEvent.target.closest && e.originalEvent.target.closest('.leaflet-control')) {
                 return;
             }
             
-            // Run one-off POC calculation at click location
+            // If in custom POC mode, add a custom POC
+            if (addCustomPOCMode && currentSiteId) {
+                addCustomPOC(e.latlng);
+                return;
+            }
+            
+            // Otherwise, run one-off POC calculation at click location
             runSinglePOCAt(e.latlng);
         }
         
@@ -2500,11 +2588,34 @@
             }
             
             if (results.length === 0) {
-                // No connections found within range - show simple popup
-                singlePocPopup = L.popup()
-                    .setLatLng(latlng)
-                    .setContent(`<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">No connections found within 30km.</div>`)
-                    .openOn(map);
+                // No connections found within range - show floating panel with message
+                // Add pin at click location
+                const pinIcon = L.divIcon({
+                    className: '',
+                    html: `<div style="
+                        width: 24px;
+                        height: 24px;
+                        position: relative;
+                    ">
+                        <div style="
+                            width: 16px;
+                            height: 16px;
+                            background: #6b7280;
+                            border: 3px solid white;
+                            border-radius: 50% 50% 50% 0;
+                            transform: rotate(-45deg);
+                            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                            position: absolute;
+                            top: 0;
+                            left: 4px;
+                        "></div>
+                    </div>`,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 24]
+                });
+                singlePocClickPin = L.marker([latlng.lat, latlng.lng], { icon: pinIcon }).addTo(map);
+                
+                updateFloatingPOCPanel([], latlng);
                 return;
             }
             
@@ -2618,22 +2729,59 @@
                 });
             });
             
-            // Convert map to results array in voltage order
-            const voltageOrder = ['11kV', '33kV', '66kV', '132kV'];
+            // Convert map to results array, sorted by distance
+            // Then pick the 2 nearest with DIFFERENT voltages
+            const allResults = Object.values(nearestMap).sort((a, b) => a.distance - b.distance);
             
-            voltageOrder.forEach(voltage => {
-                if (nearestMap[voltage]) {
-                    results.push(nearestMap[voltage]);
+            // Pick up to 2 results with different voltages
+            const selectedResults = [];
+            for (const result of allResults) {
+                // Check if we already have this voltage
+                const alreadyHasVoltage = selectedResults.some(r => r.voltage === result.voltage);
+                if (!alreadyHasVoltage) {
+                    selectedResults.push(result);
+                    if (selectedResults.length >= 2) break;
                 }
-            });
+            }
             
-            return results;
+            return selectedResults;
         }
         
-        // Render single POC visuals (lines, markers, popup)
+        // Render single POC visuals (lines, markers, floating panel)
         function renderSinglePOCVisuals(results, latlng) {
             const clickLatLng = [latlng.lat, latlng.lng];
             
+            // Add pin marker at click location
+            if (!singlePocClickPin) {
+                const pinIcon = L.divIcon({
+                    className: '',
+                    html: `<div style="
+                        width: 24px;
+                        height: 24px;
+                        position: relative;
+                    ">
+                        <div style="
+                            width: 16px;
+                            height: 16px;
+                            background: #0f1112;
+                            border: 3px solid white;
+                            border-radius: 50% 50% 50% 0;
+                            transform: rotate(-45deg);
+                            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                            position: absolute;
+                            top: 0;
+                            left: 4px;
+                        "></div>
+                    </div>`,
+                    iconSize: [24, 24],
+                    iconAnchor: [12, 24]
+                });
+                singlePocClickPin = L.marker(clickLatLng, { icon: pinIcon }).addTo(map);
+            } else {
+                singlePocClickPin.setLatLng(clickLatLng);
+            }
+            
+            // Draw lines and endpoint markers for each voltage
             results.forEach(r => {
                 const color = VOLTAGE_POWER_RANGES[r.voltage]?.color || '#6b7280';
                 const key = r.voltage;
@@ -2661,47 +2809,54 @@
                 singlePocMarkers[key] = marker;
             });
             
+            // Update floating panel
+            updateFloatingPOCPanel(results, latlng);
+        }
+        
+        // Update the floating POC panel content
+        function updateFloatingPOCPanel(results, latlng) {
+            const panel = document.getElementById('poc-float-panel');
+            const coordsEl = document.getElementById('poc-float-coords');
+            const resultsEl = document.getElementById('poc-float-results');
+            const actionsEl = document.getElementById('poc-float-actions');
+            
+            // Update coordinates display
+            coordsEl.textContent = `${latlng.lat.toFixed(5)}, ${latlng.lng.toFixed(5)}`;
+            
             // Check if any shuffling has occurred
             const hasShuffled = Object.keys(singlePocSkipped).length > 0;
             
-            // Build popup content
-            let html = `<div style="font-family: 'IBM Plex Mono', monospace; font-size: 12px;">`;
-            html += '<strong>Nearest connections</strong><br>';
-            html += '<div style="margin-top: 4px;">';
-            
-            results.forEach(r => {
-                const color = VOLTAGE_POWER_RANGES[r.voltage]?.color || '#6b7280';
-                html += `
-                    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
-                        <span style="width:10px;height:10px;border-radius:50%;background:${color};flex-shrink:0;"></span>
-                        <span style="min-width:40px;">${r.voltage}</span>
-                        <span style="font-size:11px;color:#6b7280;min-width:60px;">${r.type || ''}</span>
-                        <span style="font-weight:600;">${formatDistance(r.distance)}</span>
-                        <button onclick="shuffleSinglePOC('${r.voltage}')" 
-                                title="Find next nearest"
-                                style="margin-left:auto;padding:2px 6px;border-radius:3px;border:1px solid #e5e7eb;background:#f9fafb;font-size:10px;cursor:pointer;">
-                            ↻
-                        </button>
-                    </div>
-                `;
-            });
-            
-            html += '</div>';
-            html += '<div style="display:flex;gap:6px;margin-top:8px;">';
-            html += '<button onclick="addSiteFromSinglePOC()" style="flex:1;padding:4px 8px;border-radius:4px;border:none;background:#0f1112;color:white;font-size:11px;cursor:pointer;">Add Site</button>';
-            
-            if (hasShuffled) {
-                html += '<button onclick="resetSinglePOC()" style="padding:4px 8px;border-radius:4px;border:1px solid #e5e7eb;background:#fff3cd;font-size:11px;cursor:pointer;">Reset</button>';
+            // Build results HTML (horizontal layout, max 2 results)
+            if (results.length === 0) {
+                resultsEl.innerHTML = '<div class="poc-float-empty">No connections found within 30km</div>';
+            } else {
+                resultsEl.innerHTML = results.map(r => {
+                    const color = VOLTAGE_POWER_RANGES[r.voltage]?.color || '#6b7280';
+                    return `
+                        <div class="poc-float-result">
+                            <span class="poc-float-result-dot" style="background:${color}"></span>
+                            <span class="poc-float-result-voltage">${r.voltage}</span>
+                            <span class="poc-float-result-type">${r.type || ''}</span>
+                            <span class="poc-float-result-distance">${formatDistance(r.distance)}</span>
+                            <button class="poc-float-result-shuffle" onclick="shuffleSinglePOC('${r.voltage}')" title="Find next nearest in different direction">↻</button>
+                        </div>
+                    `;
+                }).join('');
             }
             
-            html += '<button onclick="clearSinglePOC()" style="padding:4px 8px;border-radius:4px;border:1px solid #e5e7eb;background:#f9fafb;font-size:11px;cursor:pointer;">Clear</button>';
-            html += '</div>';
-            html += '</div>';
+            // Build actions HTML (side by side on the right)
+            let actionsHTML = '<button class="poc-float-btn poc-float-btn-primary" onclick="addSiteFromSinglePOC()">Add Site</button>';
             
-            singlePocPopup = L.popup()
-                .setLatLng(latlng)
-                .setContent(html)
-                .openOn(map);
+            if (hasShuffled) {
+                actionsHTML += '<button class="poc-float-btn poc-float-btn-reset" onclick="resetSinglePOC()">Reset</button>';
+            }
+            
+            actionsHTML += '<button class="poc-float-btn poc-float-btn-secondary" onclick="clearSinglePOC()">Clear</button>';
+            
+            actionsEl.innerHTML = actionsHTML;
+            
+            // Show panel
+            panel.classList.add('visible');
         }
         
         // Shuffle to next nearest for a specific voltage-type
@@ -2740,9 +2895,16 @@
             singlePocLines = {};
             singlePocMarkers = {};
             
-            if (singlePocPopup) {
-                map.closePopup(singlePocPopup);
-                singlePocPopup = null;
+            // Remove pin marker
+            if (singlePocClickPin) {
+                map.removeLayer(singlePocClickPin);
+                singlePocClickPin = null;
+            }
+            
+            // Hide floating panel
+            const panel = document.getElementById('poc-float-panel');
+            if (panel) {
+                panel.classList.remove('visible');
             }
         }
         
@@ -3307,12 +3469,46 @@
             });
         }
         
-        // Recalculate obstacles after path change
+        // Check obstacles for a POC on demand (triggered by button click)
+        function checkPOCObstacles(pocId) {
+            const site = sites.find(s => s.id === currentSiteId);
+            if (!site) return;
+            
+            const poc = site.pocs.find(p => p.id === pocId);
+            if (!poc) return;
+            
+            // Set loading state
+            obstaclesCache[pocId] = { loading: true, fetched: false, crossings: [], builtupAreas: [] };
+            renderSidePanel();
+            
+            detectObstacles(site, poc).then(crossings => {
+                const cacheData = obstaclesCache[pocId];
+                cacheData.loading = false;
+                
+                saveSitesToStorage();
+                
+                // Draw obstacles on map
+                drawObstacleVisualsForPOC(poc, cacheData, crossings);
+                
+                // Update side panel
+                renderSidePanel();
+            });
+        }
+        
+        // Recalculate obstacles after path change (only if already checked)
         function recalculatePOCObstacles(site, poc) {
+            // Only recalculate if obstacles were already checked
+            if (!obstaclesCache[poc.id]?.fetched) return;
+            
             clearPOCObstacles(poc.id);
+            
+            // Set loading state
+            obstaclesCache[poc.id] = { loading: true, fetched: false, crossings: [], builtupAreas: [] };
+            renderSidePanel();
             
             detectObstacles(site, poc).then(crossings => {
                 const cacheData = obstaclesCache[poc.id];
+                cacheData.loading = false;
                 
                 saveSitesToStorage();
                 
@@ -3491,34 +3687,21 @@
                     }
                     
                     poc.distance = calculatePathDistance(site, poc);
-                    clearPOCObstacles(poc.id);
+                    saveSitesToStorage();
+                    updatePopup();
                     
-                    detectObstacles(site, poc).then(crossings => {
-                        const cacheData = obstaclesCache[poc.id];
-                        
-                        saveSitesToStorage();
-                        
-                        drawObstacleVisualsForPOC(poc, cacheData, crossings);
-                        updatePopup();
-                        renderSidePanel();
-                    });
+                    // Only recalculate obstacles if they were already checked
+                    recalculatePOCObstacles(site, poc);
                 });
                 
                 // Create waypoint markers
                 rebuildPOCLine(site, poc);
                 
-                // Detect and draw obstacles
-                detectObstacles(site, poc).then(crossings => {
+                // Draw any cached obstacle visuals (but don't auto-detect)
+                if (obstaclesCache[poc.id]?.fetched) {
                     const cacheData = obstaclesCache[poc.id];
-                    
-                    saveSitesToStorage();
-                    
-                    // Draw obstacles using helper function
-                    drawObstacleVisualsForPOC(poc, cacheData, crossings);
-                    
-                    // Update side panel to show crossing info
-                    renderSidePanel();
-                });
+                    drawObstacleVisualsForPOC(poc, cacheData, cacheData.crossings || []);
+                }
             });
         }
         
@@ -3535,6 +3718,8 @@
         // Deselect current site and show site list
         function deselectSite() {
             currentSiteId = null;
+            addCustomPOCMode = false;
+            document.getElementById('map').classList.remove('add-poc-mode-active');
             clearPOCVisuals();
             renderSidePanel();
         }
@@ -3654,109 +3839,40 @@
                 const crossingData = obstaclesCache[poc.id];
                 const crossings = crossingData?.crossings || [];
                 const builtupAreas = crossingData?.builtupAreas || [];
-                const isLoading = !crossingData?.fetched;
+                const isLoading = crossingData?.loading;
+                const hasFetched = crossingData?.fetched;
                 
                 // Group crossings by type
                 const roadCrossings = crossings.filter(c => c.obstacleType === 'road');
                 const railwayCrossings = crossings.filter(c => c.obstacleType === 'railway');
                 const waterwayCrossings = crossings.filter(c => c.obstacleType === 'waterway');
-                const builtupCrossings = crossings.filter(c => c.obstacleType === 'builtup');
                 
                 const hasObstacles = crossings.length > 0 || builtupAreas.length > 0;
                 
-                // Build detailed obstacle breakdown HTML
+                // Build obstacle HTML - simplified to just counts
                 let obstacleHTML = '';
                 if (isLoading) {
-                    obstacleHTML = '<div class="poc-crossings loading">Checking for obstacles...</div>';
-                } else if (hasObstacles) {
-                    // Build detailed list of individual obstacles
-                    let obstacleDetailItems = [];
+                    obstacleHTML = '<div class="poc-obstacles-loading">Checking...</div>';
+                } else if (hasFetched && hasObstacles) {
+                    // Simple count summary
+                    const counts = [];
+                    if (roadCrossings.length > 0) counts.push(`${roadCrossings.length} road${roadCrossings.length > 1 ? 's' : ''}`);
+                    if (railwayCrossings.length > 0) counts.push(`${railwayCrossings.length} railway${railwayCrossings.length > 1 ? 's' : ''}`);
+                    if (waterwayCrossings.length > 0) counts.push(`${waterwayCrossings.length} waterway${waterwayCrossings.length > 1 ? 's' : ''}`);
+                    if (builtupAreas.length > 0) counts.push(`${builtupAreas.length} building${builtupAreas.length > 1 ? 's' : ''}`);
                     
-                    // Group obstacles by type and show names
-                    if (roadCrossings.length > 0) {
-                        const roadNames = [...new Set(roadCrossings.map(c => c.obstacleName || 'Unnamed road'))];
-                        roadNames.forEach(name => {
-                            const count = roadCrossings.filter(c => (c.obstacleName || 'Unnamed road') === name).length;
-                            const displayName = name.length > 30 ? name.substring(0, 30) + '...' : name;
-                            obstacleDetailItems.push(`
-                                <div class="obstacle-detail-item road">
-                                    <span class="obstacle-type-icon" style="background:#f59e0b">🛣️</span>
-                                    <span class="obstacle-detail-name">${displayName}</span>
-                                    ${count > 1 ? `<span class="obstacle-detail-count">×${count}</span>` : ''}
-                                </div>
-                            `);
-                        });
-                    }
-                    
-                    if (railwayCrossings.length > 0) {
-                        const railNames = [...new Set(railwayCrossings.map(c => c.obstacleName || 'Railway'))];
-                        railNames.forEach(name => {
-                            const count = railwayCrossings.filter(c => (c.obstacleName || 'Railway') === name).length;
-                            const displayName = name.length > 30 ? name.substring(0, 30) + '...' : name;
-                            obstacleDetailItems.push(`
-                                <div class="obstacle-detail-item railway">
-                                    <span class="obstacle-type-icon" style="background:#8b5cf6">🚂</span>
-                                    <span class="obstacle-detail-name">${displayName}</span>
-                                    ${count > 1 ? `<span class="obstacle-detail-count">×${count}</span>` : ''}
-                                </div>
-                            `);
-                        });
-                    }
-                    
-                    if (waterwayCrossings.length > 0) {
-                        const waterNames = [...new Set(waterwayCrossings.map(c => c.obstacleName || 'Waterway'))];
-                        waterNames.forEach(name => {
-                            const count = waterwayCrossings.filter(c => (c.obstacleName || 'Waterway') === name).length;
-                            const displayName = name.length > 30 ? name.substring(0, 30) + '...' : name;
-                            obstacleDetailItems.push(`
-                                <div class="obstacle-detail-item waterway">
-                                    <span class="obstacle-type-icon" style="background:#3b82f6">💧</span>
-                                    <span class="obstacle-detail-name">${displayName}</span>
-                                    ${count > 1 ? `<span class="obstacle-detail-count">×${count}</span>` : ''}
-                                </div>
-                            `);
-                        });
-                    }
-                    
-                    if (builtupAreas.length > 0) {
-                        const buildingNames = [...new Set(builtupAreas.map(b => b.name || 'Building'))];
-                        buildingNames.forEach(name => {
-                            const count = builtupAreas.filter(b => (b.name || 'Building') === name).length;
-                            const displayName = name.length > 30 ? name.substring(0, 30) + '...' : name;
-                            obstacleDetailItems.push(`
-                                <div class="obstacle-detail-item building">
-                                    <span class="obstacle-type-icon" style="background:#a855f7">🏢</span>
-                                    <span class="obstacle-detail-name">${displayName}</span>
-                                    ${count > 1 ? `<span class="obstacle-detail-count">×${count}</span>` : ''}
-                                </div>
-                            `);
-                        });
-                    }
-                    
-                    // Summary counts
-                    const summaryItems = [];
-                    if (roadCrossings.length > 0) summaryItems.push(`${roadCrossings.length} road${roadCrossings.length > 1 ? 's' : ''}`);
-                    if (railwayCrossings.length > 0) summaryItems.push(`${railwayCrossings.length} railway${railwayCrossings.length > 1 ? 's' : ''}`);
-                    if (waterwayCrossings.length > 0) summaryItems.push(`${waterwayCrossings.length} waterway${waterwayCrossings.length > 1 ? 's' : ''}`);
-                    if (builtupAreas.length > 0) summaryItems.push(`${builtupAreas.length} building${builtupAreas.length > 1 ? 's' : ''}`);
-                    
-                    obstacleHTML = `
-                        <div class="poc-obstacles warning">
-                            <div class="obstacle-header">
-                                <span class="obstacle-warning-icon">⚠</span>
-                                <span class="obstacle-summary">${summaryItems.join(', ')}</span>
-                            </div>
-                            <div class="obstacle-detail-list">${obstacleDetailItems.join('')}</div>
-                        </div>
-                    `;
-                } else if (crossingData?.fetched) {
-                    obstacleHTML = '<div class="poc-obstacles clear"><span class="obstacle-clear-icon">✓</span> Route clear – no obstacles detected</div>';
+                    obstacleHTML = `<div class="poc-obstacles-summary warning">⚠ ${counts.join(', ')}</div>`;
+                } else if (hasFetched) {
+                    obstacleHTML = '<div class="poc-obstacles-summary clear">✓ Route clear</div>';
                 }
                 
-                const isFocused = focusedPocId === poc.id;
+                // Show check obstacles button if not yet checked
+                const checkObstaclesBtn = !hasFetched && !isLoading
+                    ? `<button class="poc-action-btn" onclick="checkPOCObstacles('${poc.id}')">Check Obstacles</button>`
+                    : '';
                 
                 return `
-                    <div class="poc-card${hasObstacles ? ' has-crossings' : ''}${isFocused ? ' focused' : ''}" onclick="focusPOC('${poc.id}')">
+                    <div class="poc-card${hasObstacles ? ' has-crossings' : ''}">
                         <div class="poc-card-header">
                             <div class="poc-voltage-badge" style="background: ${color}">${poc.voltage}</div>
                             <div class="poc-card-info">
@@ -3767,7 +3883,8 @@
                         </div>
                         ${obstacleHTML}
                         <div class="poc-card-actions">
-                            <button class="poc-action-btn reject" onclick="event.stopPropagation(); removePOC('${poc.id}')">Remove</button>
+                            ${checkObstaclesBtn}
+                            <button class="poc-action-btn reject" onclick="removePOC('${poc.id}')">Remove</button>
                         </div>
                     </div>
                 `;
@@ -3807,12 +3924,15 @@
                 
                 <div class="poc-section-header">
                     <div class="poc-section-title">Connection Options</div>
+                    <button class="add-custom-poc-btn${addCustomPOCMode ? ' active' : ''}" onclick="toggleAddCustomPOCMode()">
+                        ${addCustomPOCMode ? 'Cancel' : '+ Add Custom'}
+                    </button>
                 </div>
                 
-                ${focusedPocId ? `
-                    <button class="show-all-btn" onclick="exitFocusMode()">
-                        ← Show All Layers
-                    </button>
+                ${addCustomPOCMode ? `
+                    <div class="add-custom-poc-instruction">
+                        Click on any cable on the map to add a custom connection point
+                    </div>
                 ` : ''}
                 
                 ${site.pocs.length > 0 ? pocCardsHTML : '<div class="poc-empty">No connections found within 30km.</div>'}
@@ -3824,13 +3944,11 @@
             const site = sites.find(s => s.id === currentSiteId);
             if (!site) return;
             
-            // Exit focus mode if removing the focused POC
-            if (focusedPocId === pocId) {
-                exitFocusMode();
-            }
-            
             site.pocs = site.pocs.filter(p => p.id !== pocId);
             saveSitesToStorage();
+            
+            // Clear obstacle cache for this POC
+            delete obstaclesCache[pocId];
             
             // Redraw visuals and panel
             clearPOCVisuals();
@@ -3838,127 +3956,124 @@
             renderSidePanel();
         }
         
-        // Focus on a specific POC - hide all other layers and show only the connected feature
-        function focusPOC(pocId) {
+        // Toggle custom POC mode
+        function toggleAddCustomPOCMode() {
+            addCustomPOCMode = !addCustomPOCMode;
+            
+            // Update map cursor
+            const mapContainer = document.getElementById('map');
+            if (addCustomPOCMode) {
+                mapContainer.classList.add('add-poc-mode-active');
+            } else {
+                mapContainer.classList.remove('add-poc-mode-active');
+            }
+            
+            renderSidePanel();
+        }
+        
+        // Add a custom POC at a clicked location
+        function addCustomPOC(latlng) {
             const site = sites.find(s => s.id === currentSiteId);
             if (!site) return;
             
-            const poc = site.pocs.find(p => p.id === pocId);
-            if (!poc) return;
+            // Find the nearest cable point to where the user clicked
+            const clickPoint = turf.point([latlng.lng, latlng.lat]);
+            let nearestResult = null;
+            let nearestDistance = Infinity;
+            let nearestLayerConfig = null;
+            let nearestLayerName = null;
             
-            // Exit any existing focus mode first
-            if (focusedPocId) {
-                exitFocusMode();
-            }
+            // Search all visible cable layers
+            const visibleLayerNames = getVisibleLayerNames();
             
-            focusedPocId = pocId;
-            
-            // Hide all cable and substation layers
-            LAYERS.forEach(layerConfig => {
-                const layer = layerGroups[layerConfig.name];
-                if (layer && map.hasLayer(layer)) {
-                    map.removeLayer(layer);
-                }
-            });
-            
-            Object.entries(substationLayerGroups).forEach(([name, layerGroup]) => {
-                if (layerGroup && map.hasLayer(layerGroup)) {
-                    map.removeLayer(layerGroup);
-                }
-            });
-            
-            // Find and highlight the specific feature this POC connects to
-            const geoJSON = rawGeoJSONData[poc.layerName];
-            if (geoJSON && geoJSON.features) {
-                // Find the nearest feature to the POC point
-                const pocPoint = turf.point([poc.lng, poc.lat]);
-                let nearestFeature = null;
-                let nearestDist = Infinity;
+            visibleLayerNames.forEach(layerName => {
+                const geoJSON = rawGeoJSONData[layerName];
+                if (!geoJSON || !geoJSON.features) return;
+                
+                const layerConfig = getLayerConfig(layerName);
+                if (!layerConfig || layerConfig.isSubstation || layerConfig.isGSP) return; // Skip substations
                 
                 geoJSON.features.forEach(feature => {
                     if (!feature.geometry) return;
                     
                     try {
-                        let dist;
-                        if (feature.geometry.type === 'Point') {
-                            dist = turf.distance(pocPoint, feature, { units: 'meters' });
-                        } else if (feature.geometry.type === 'LineString') {
-                            const nearest = turf.nearestPointOnLine(feature, pocPoint, { units: 'meters' });
-                            dist = nearest.properties.dist;
+                        let candidatePoint = null;
+                        let candidateDistance = Infinity;
+                        
+                        if (feature.geometry.type === 'LineString') {
+                            const nearestOnLine = turf.nearestPointOnLine(feature, clickPoint, { units: 'meters' });
+                            candidateDistance = nearestOnLine.properties.dist;
+                            candidatePoint = {
+                                lat: nearestOnLine.geometry.coordinates[1],
+                                lng: nearestOnLine.geometry.coordinates[0]
+                            };
                         } else if (feature.geometry.type === 'MultiLineString') {
-                            feature.geometry.coordinates.forEach(coords => {
-                                const line = turf.lineString(coords);
-                                const nearest = turf.nearestPointOnLine(line, pocPoint, { units: 'meters' });
-                                if (nearest.properties.dist < dist || dist === undefined) {
-                                    dist = nearest.properties.dist;
-                                }
+                            feature.geometry.coordinates.forEach(lineCoords => {
+                                try {
+                                    const line = turf.lineString(lineCoords);
+                                    const nearestOnLine = turf.nearestPointOnLine(line, clickPoint, { units: 'meters' });
+                                    if (nearestOnLine.properties.dist < candidateDistance) {
+                                        candidateDistance = nearestOnLine.properties.dist;
+                                        candidatePoint = {
+                                            lat: nearestOnLine.geometry.coordinates[1],
+                                            lng: nearestOnLine.geometry.coordinates[0]
+                                        };
+                                    }
+                                } catch (e) {}
                             });
                         }
                         
-                        if (dist < nearestDist) {
-                            nearestDist = dist;
-                            nearestFeature = feature;
+                        if (candidatePoint && candidateDistance < nearestDistance) {
+                            nearestDistance = candidateDistance;
+                            nearestResult = candidatePoint;
+                            nearestLayerConfig = layerConfig;
+                            nearestLayerName = layerName;
                         }
-                    } catch (e) {
-                        // Skip invalid features
-                    }
+                    } catch (e) {}
                 });
-                
-                // Create highlight layer for the nearest feature
-                if (nearestFeature) {
-                    const layerConfig = getLayerConfig(poc.layerName);
-                    const color = layerConfig?.color || poc.color || '#3b82f6';
-                    
-                    if (nearestFeature.geometry.type === 'Point') {
-                        // Substation - create a highlighted marker
-                        const coords = nearestFeature.geometry.coordinates;
-                        focusHighlightLayer = L.circleMarker([coords[1], coords[0]], {
-                            radius: 12,
-                            fillColor: color,
-                            color: 'white',
-                            weight: 3,
-                            fillOpacity: 0.9
-                        }).addTo(map);
-                    } else {
-                        // Cable - create a highlighted line
-                        focusHighlightLayer = L.geoJSON(nearestFeature, {
-                            style: {
-                                color: color,
-                                weight: 5,
-                                opacity: 1
-                            }
-                        }).addTo(map);
-                    }
-                }
+            });
+            
+            if (!nearestResult) {
+                alert('No cables found nearby. Please try clicking closer to a cable.');
+                return;
             }
             
-            // Zoom to fit site and POC
-            const bounds = L.latLngBounds([
-                [site.lat, site.lng],
-                [poc.lat, poc.lng]
-            ]);
-            map.fitBounds(bounds, { padding: [80, 80], maxZoom: 16 });
+            // Get voltage from layer name
+            const voltage = extractVoltage(nearestLayerName);
+            const powerRange = VOLTAGE_POWER_RANGES[voltage] || { min: 0, max: 0 };
             
-            // Re-render panel to show focused state
-            renderSidePanel();
-        }
-        
-        // Exit focus mode and restore all layers
-        function exitFocusMode() {
-            if (!focusedPocId) return;
+            // Calculate distance from site to POC point
+            const sitePoint = turf.point([site.lng, site.lat]);
+            const pocPoint = turf.point([nearestResult.lng, nearestResult.lat]);
+            const distance = turf.distance(sitePoint, pocPoint, { units: 'meters' });
             
-            focusedPocId = null;
+            // Create the custom POC
+            const customPOC = {
+                id: generateId(),
+                voltage: voltage,
+                type: 'Cable',
+                lat: nearestResult.lat,
+                lng: nearestResult.lng,
+                distance: distance,
+                powerMin: powerRange.min,
+                powerMax: powerRange.max,
+                color: nearestLayerConfig?.color || '#6b7280',
+                layerName: nearestLayerName,
+                isCustom: true,
+                waypoints: []
+            };
             
-            // Remove highlight layer
-            if (focusHighlightLayer) {
-                map.removeLayer(focusHighlightLayer);
-                focusHighlightLayer = null;
-            }
+            // Add to site
+            site.pocs.push(customPOC);
+            saveSitesToStorage();
             
-            // Restore all layers based on current filter
-            updateLayerVisibility();
+            // Exit custom POC mode
+            addCustomPOCMode = false;
+            document.getElementById('map').classList.remove('add-poc-mode-active');
             
-            // Re-render panel
+            // Redraw
+            clearPOCVisuals();
+            drawPOCVisuals(site);
             renderSidePanel();
         }
         
@@ -4130,9 +4245,9 @@
                 const recommendations = [];
                 
                 // Check for high voltage options
-                const highVoltage = site.pocs.filter(p => p.voltage === '132kV' || p.voltage === '66kV');
+                const highVoltage = site.pocs.filter(p => p.voltage === '132kV');
                 if (highVoltage.length > 0) {
-                    recommendations.push('High voltage connections (66kV/132kV) available - suitable for large projects.');
+                    recommendations.push('High voltage 132kV connection available - suitable for large projects.');
                 }
                 
                 // Check for obstacle-free options
@@ -4179,10 +4294,10 @@
         // ============== POC DISCOVERY ALGORITHM ==============
         
         // Extract voltage from layer name
+        // Note: 33kV and 66kV are treated as the same voltage class
         function extractVoltage(layerName) {
             if (layerName.includes('11kV')) return '11kV';
-            if (layerName.includes('33kV')) return '33kV';
-            if (layerName.includes('66kV')) return '66kV';
+            if (layerName.includes('33kV') || layerName.includes('66kV')) return '33/66kV';
             if (layerName.includes('132kV')) return '132kV';
             return null;
         }
@@ -4330,8 +4445,8 @@
                     });
                 }
                 
-                // Add other voltages (33kV, 66kV, 132kV)
-                const otherVoltages = ['33kV', '66kV', '132kV'];
+                // Add other voltages (33/66kV combined, 132kV)
+                const otherVoltages = ['33/66kV', '132kV'];
                 
                 otherVoltages.forEach(voltage => {
                     const nearest = nearestPerVoltage[voltage];
