@@ -1474,11 +1474,6 @@
             transition: all 0.2s;
         }
         
-        .poc-card:hover {
-            border-color: var(--color-muted);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
         .poc-card.accepted {
             border-color: #86efac;
             background: #f0fdf4;
@@ -3484,6 +3479,7 @@
             detectObstacles(site, poc).then(crossings => {
                 const cacheData = obstaclesCache[pocId];
                 cacheData.loading = false;
+                cacheData.fetched = true;
                 
                 saveSitesToStorage();
                 
@@ -3491,6 +3487,12 @@
                 drawObstacleVisualsForPOC(poc, cacheData, crossings);
                 
                 // Update side panel
+                renderSidePanel();
+            }).catch(err => {
+                console.error('Error checking obstacles:', err);
+                const cacheData = obstaclesCache[pocId];
+                cacheData.loading = false;
+                cacheData.fetched = true;
                 renderSidePanel();
             });
         }
@@ -3509,6 +3511,7 @@
             detectObstacles(site, poc).then(crossings => {
                 const cacheData = obstaclesCache[poc.id];
                 cacheData.loading = false;
+                cacheData.fetched = true;
                 
                 saveSitesToStorage();
                 
@@ -3516,6 +3519,12 @@
                 drawObstacleVisualsForPOC(poc, cacheData, crossings);
                 
                 // Update side panel
+                renderSidePanel();
+            }).catch(err => {
+                console.error('Error recalculating obstacles:', err);
+                const cacheData = obstaclesCache[poc.id];
+                cacheData.loading = false;
+                cacheData.fetched = true;
                 renderSidePanel();
             });
         }
