@@ -55,7 +55,7 @@
             cursor: grabbing;
         }
         
-        /* Interactive elements (cables, substations, parcels) show pointer on hover */
+        /* Interactive elements (cables, parcels) show pointer on hover */
         #map .leaflet-interactive {
             cursor: pointer !important;
         }
@@ -170,35 +170,37 @@
             background: rgba(246, 246, 245, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding: 16px 20px;
+            padding: 12px 14px;
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(15, 17, 18, 0.12);
             border: 1px solid var(--color-border);
-            width: 280px;
+            width: 260px;
             font-family: 'IBM Plex Mono', monospace;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
         }
         
         .filter-panel h4 {
-            margin: 0 0 6px 0;
-            font-size: 14px;
+            margin: 0 0 4px 0;
+            font-size: 13px;
             font-weight: 600;
             color: var(--color-dark);
         }
         
         .filter-panel .subtitle {
-            font-size: 12px;
+            font-size: 11px;
             color: #6b7280;
-            margin-bottom: 16px;
+            margin-bottom: 10px;
         }
         
         .mva-display {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            padding: 10px 14px;
+            margin-bottom: 8px;
+            padding: 6px 10px;
             background: #f3f4f6;
-            border-radius: 8px;
+            border-radius: 6px;
         }
         
         .mva-value {
@@ -206,26 +208,26 @@
         }
         
         .mva-value .label {
-            font-size: 10px;
+            font-size: 9px;
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
         
         .mva-value .number {
-            font-size: 18px;
+            font-size: 15px;
             font-weight: 700;
             color: #1f2937;
         }
         
         .mva-separator {
-            font-size: 14px;
+            font-size: 12px;
             color: #9ca3af;
             font-weight: 500;
         }
         
         .slider-container {
-            padding: 10px 8px 20px 8px;
+            padding: 6px 6px 14px 6px;
         }
         
         /* noUiSlider custom styling */
@@ -270,25 +272,25 @@
         
         /* Active layers list */
         .active-layers {
-            margin-top: 16px;
-            padding-top: 12px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1px solid #e5e7eb;
         }
         
         .active-layers-title {
-            font-size: 11px;
+            font-size: 10px;
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
         
         .layer-indicator {
             display: flex;
             align-items: center;
-            gap: 8px;
-            padding: 4px 0;
-            font-size: 13px;
+            gap: 6px;
+            padding: 2px 0;
+            font-size: 11px;
             color: #374151;
             transition: opacity 0.2s ease;
         }
@@ -299,33 +301,33 @@
         }
         
         .layer-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             flex-shrink: 0;
         }
         
         /* Map layer options */
         .map-layers {
-            margin-top: 16px;
-            padding-top: 12px;
+            margin-top: 10px;
+            padding-top: 8px;
             border-top: 1px solid #e5e7eb;
         }
         
         .map-layers-title {
-            font-size: 11px;
+            font-size: 10px;
             color: #6b7280;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 4px;
         }
         
         .map-layer-option {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 8px 12px;
-            margin-bottom: 4px;
+            padding: 5px 10px;
+            margin-bottom: 2px;
             border-radius: 6px;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -362,6 +364,24 @@
             color: #9ca3af;
         }
         
+        .layer-toggle {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .layer-toggle:hover {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 4px;
+            margin: 0 -4px;
+            padding: 4px 4px;
+        }
+        
+        .layer-toggle-check {
+            font-size: 12px;
+            color: #22c55e;
+            transition: opacity 0.2s ease;
+        }
+        
         /* Slider pips */
         .noUi-pips {
             color: #9ca3af;
@@ -379,6 +399,167 @@
         
         .noUi-value {
             padding-top: 2px;
+        }
+        
+        /* Location Search */
+        .location-search {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+        }
+        
+        .location-search-title {
+            font-size: 10px;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+        
+        .location-search-input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .location-search-icon {
+            position: absolute;
+            left: 8px;
+            width: 14px;
+            height: 14px;
+            color: #9ca3af;
+            pointer-events: none;
+        }
+        
+        .location-search-input {
+            width: 100%;
+            padding: 7px 30px 7px 28px;
+            border: 1px solid var(--color-border);
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.7);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: var(--color-dark);
+            transition: all 0.2s ease;
+        }
+        
+        .location-search-input:focus {
+            outline: none;
+            border-color: var(--color-muted);
+            box-shadow: 0 0 0 2px rgba(102, 109, 112, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .location-search-input::placeholder {
+            color: #9ca3af;
+        }
+        
+        .location-search-clear {
+            position: absolute;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            border: none;
+            background: #e5e7eb;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 12px;
+            line-height: 1;
+            padding: 0;
+            transition: all 0.2s ease;
+        }
+        
+        .location-search-clear:hover {
+            background: #d1d5db;
+            color: #374151;
+        }
+        
+        .location-search-clear.visible {
+            display: flex;
+        }
+        
+        .location-search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            margin-top: 4px;
+            max-height: 240px;
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(15, 17, 18, 0.15);
+            z-index: 1000;
+            display: none;
+        }
+        
+        .location-search-results.visible {
+            display: block;
+        }
+        
+        .location-search-result {
+            padding: 10px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #f3f4f6;
+            transition: background 0.15s ease;
+        }
+        
+        .location-search-result:last-child {
+            border-bottom: none;
+        }
+        
+        .location-search-result:hover {
+            background: #f3f4f6;
+        }
+        
+        .location-search-result-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--color-dark);
+            margin-bottom: 2px;
+        }
+        
+        .location-search-result-address {
+            font-size: 10px;
+            color: #6b7280;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .location-search-loading {
+            padding: 16px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 11px;
+        }
+        
+        .location-search-loading::after {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #6b7280;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        
+        .location-search-no-results {
+            padding: 16px;
+            text-align: center;
+            color: #6b7280;
+            font-size: 11px;
         }
         
         /* POC Mode Styles */
@@ -1660,7 +1841,7 @@
             width: 20px;
             height: 20px;
             background: #1f2937;
-            border: 2px solid white;
+            border: 1px solid white;
             border-radius: 50% 50% 50% 0;
             transform: translateX(-50%) rotate(-45deg);
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
@@ -1677,11 +1858,152 @@
             border-radius: 50%;
         }
         
-        /* Substation marker - square with rounded edges */
-        .substation-marker {
-            border: 2px solid white;
+        
+        /* Embedded capacity marker - diamond shape */
+        .embedded-capacity-marker {
+            border-radius: 2px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+
+            border: solid #ffffff;  /* Width set inline based on zoom */
+        }
+        
+        /* Connected: purple diamond */
+        .embedded-capacity-marker.connected {
+            background: #8b5cf6;
+        }
+        
+        /* Accepted: lighter purple diamond */
+        .embedded-capacity-marker.accepted {
+            background: #c1a9fa;
+        }
+        
+        /* Infrastructure projects marker - hexagon shape */
+        .infrastructure-project-marker {
             border-radius: 3px;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+            border: solid #ffffff;
+            background: #f59e0b;  /* Amber/orange color */
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        /* Embedded capacity filter section */
+        .embedded-filter-section {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid var(--color-border);
+        }
+        
+        .embedded-filter-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 6px;
+        }
+        
+        /* Date slider section */
+        .date-slider-container {
+            margin: 6px 0 0 0;
+        }
+        
+        .date-display {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 8px;
+            background: #f3f4f6;
+            border-radius: 4px;
+        }
+        
+        .date-display .current-date {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-dark);
+        }
+        
+        .date-display .date-range {
+            font-size: 9px;
+            color: var(--color-muted);
+        }
+        
+        #embedded-date-slider {
+            margin-top: 6px;
+        }
+        
+        #embedded-date-slider .noUi-connect {
+            background: #656565;
+        }
+        
+        #embedded-date-slider .noUi-handle {
+            width: 14px;
+            height: 14px;
+            right: -7px;
+            top: -5px;
+            border-radius: 50%;
+            background: #898989;
+            border: 2px solid white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        
+        #embedded-date-slider .noUi-handle:before,
+        #embedded-date-slider .noUi-handle:after {
+            display: none;
+        }
+        
+        /* Resource type filter - compact 2-column grid */
+        .resource-type-filters {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 4px;
+        }
+        
+        .resource-type-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 10px;
+            color: var(--color-dark);
+            transition: background-color 0.15s ease;
+        }
+        
+        .resource-type-toggle:hover {
+            background: #f3f4f6;
+        }
+        
+        .resource-type-toggle .resource-icon {
+            width: 14px;
+            height: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+        }
+        
+        .resource-type-toggle .resource-name {
+            flex: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .resource-type-toggle .resource-check {
+            opacity: 1;
+            color: #8b5cf6;
+            font-weight: bold;
+            font-size: 10px;
+            transition: opacity 0.15s ease;
+        }
+        
+        .resource-type-toggle.hidden .resource-check {
+            opacity: 0.3;
+        }
+        
+        .resource-type-toggle.hidden .resource-name,
+        .resource-type-toggle.hidden .resource-icon {
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -1754,11 +2076,12 @@
         };
 
         // Layer definitions with colors, file paths, and MVA ranges
+        // UKPN Cable Layers
         const LAYERS = [
             {
                 name: '33kV',
                 file: 'ukpn-33kv-overhead-lines.geojson',
-                color: '#22c55e',  // Green
+                color: '#4ade80',  // Light green
                 weight: 2,
                 mvaMin: 3,
                 mvaMax: 30
@@ -1766,7 +2089,7 @@
             {
                 name: '66kV',
                 file: 'ukpn-66kv-overhead-lines.geojson',
-                color: '#22c55e',  // Green
+                color: '#16a34a',  // Dark green
                 weight: 2,
                 mvaMin: 20,
                 mvaMax: 60
@@ -1781,60 +2104,34 @@
             }
         ];
         
-        // Substation layer definitions (from grid-and-primary-sites only)
-        // Note: sitevoltage is the PRIMARY (input) voltage, we label by SECONDARY (output) voltage
-        const SUBSTATION_LAYERS = [
-            {
-                name: '11kV Substations',
-                file: 'grid-and-primary-sites.geojson',
-                // sitevoltage 6, 11, 20, 22, 33 all output 11kV
-                voltageFilter: (v) => {
-                    const num = parseFloat(v);
-                    return num === 6 || num === 11 || num === 20 || num === 22 || num === 33;
-                },
-                color: '#ef4444',  // Red
-                mvaMin: 0.3,
-                mvaMax: 5,
-                isSubstation: true
-            },
-            {
-                name: '33kV Substations',
-                file: 'grid-and-primary-sites.geojson',
-                // sitevoltage 132 outputs 33kV
-                voltageFilter: (v) => parseFloat(v) === 132 || v === 132,
-                color: '#22c55e',  // Green
-                mvaMin: 3,
-                mvaMax: 30,
-                isSubstation: true
-            },
-            {
-                name: '66kV Substations',
-                file: 'grid-and-primary-sites.geojson',
-                voltageFilter: (v) => parseFloat(v) === 66 || v === 66,
-                color: '#22c55e',  // Green
-                mvaMin: 20,
-                mvaMax: 60,
-                isSubstation: true
-            },
-            {
-                name: '132kV GSPs',
-                file: 'ukpn-grid-supply-points-overview.geojson',
-                voltageFilter: () => true,  // All GSPs are 132kV
-                color: '#f97316',  // Orange
-                mvaMin: 20,
-                mvaMax: 100,
-                isSubstation: true,
-                isGSP: true
-            }
-        ];
         
-        // Base radius for substations at zoom level 12 (will scale with zoom)
-        const SUBSTATION_BASE_RADIUS = 8;
-        const SUBSTATION_MIN_RADIUS = 2;
-        const SUBSTATION_MAX_RADIUS = 12;
+        // Embedded Capacity Register layer configuration
+        const EMBEDDED_CAPACITY_LAYER = {
+            name: 'Embedded Capacity',
+            file: 'ukpn-embedded-capacity-register.geojson',
+            color: '#8b5cf6',  // Purple
+            mvaMin: 0,
+            mvaMax: 100,
+            isEmbeddedCapacity: true
+        };
+        
+        // Infrastructure Projects (LTDS) layer configuration
+        const INFRASTRUCTURE_PROJECTS_LAYER = {
+            name: 'Infrastructure Projects',
+            file: 'ukpn-ltds-infrastructure-projects.geojson',
+            color: '#f59e0b',  // Amber/orange
+            mvaMin: 0,
+            mvaMax: 100,
+            isInfrastructureProjects: true
+        };
+        
+        // Base radius for markers at zoom level 12 (will scale with zoom)
+        const MARKER_BASE_RADIUS = 8;
+        const MARKER_MIN_RADIUS = 2;
+        const MARKER_MAX_RADIUS = 12;
         
         // Combined layers for display purposes
-        const ALL_LAYERS = [...LAYERS, ...SUBSTATION_LAYERS];
+        const ALL_LAYERS = [...LAYERS, EMBEDDED_CAPACITY_LAYER];
         
         // Current filter range (default: 10-20 MVA)
         let filterMin = 10;
@@ -1869,10 +2166,10 @@
         let addCustomPOCMode = false;  // Whether user is in "add custom POC" mode
         
         // Voltage levels and their power capacities (MVA)
-        // Note: 33kV and 66kV are treated as the same voltage class "33/66kV"
         const VOLTAGE_POWER_RANGES = {
             '11kV': { min: 0.3, max: 5, color: '#ef4444' },
-            '33/66kV': { min: 3, max: 60, color: '#22c55e' },
+            '33kV': { min: 3, max: 30, color: '#4ade80' },
+            '66kV': { min: 20, max: 60, color: '#16a34a' },
             '132kV': { min: 20, max: 100, color: '#f97316' }
         };
         
@@ -1909,71 +2206,497 @@
 
         // Layer groups for control
         const layerGroups = {};
-        const substationLayerGroups = {};
+        // Embedded capacity layer groups by voltage (for MVA filtering)
+        let embeddedCapacityLayerGroups = {};  // { '11kV': L.layerGroup, '33kV': L.layerGroup, ... }
+        // Separate toggle states for connected vs accepted projects
+        let embeddedConnectedVisible = false;
+        let embeddedAcceptedVisible = false;
+        
+        // Infrastructure projects layer groups by voltage
+        let infrastructureProjectsLayerGroups = {};  // { '11kV': L.layerGroup, '33kV': L.layerGroup, ... }
+        let infrastructureProjectsVisible = false;  // Default OFF
+        let infrastructureProjectsFeatures = [];    // Store all features with their data
+        
+        // Embedded capacity filter state
+        let embeddedCapacityFeatures = [];  // Store all features with their data
+        let embeddedDateMin = null;         // Earliest date (timestamp)
+        let embeddedDateMax = null;         // Latest date (timestamp)
+        let embeddedDateFilter = null;      // Current date filter (timestamp), defaults to max
+        let embeddedCapacityMin = 0;        // Min capacity (MW)
+        let embeddedCapacityMax = 500;      // Max capacity (MW)
+        
+        // Resource type filter - all visible by default
+        const RESOURCE_TYPES = ['Solar PV', 'Storage', 'Wind', 'Fossil fuel', 'Biogas', 'Unknown'];
+        let visibleResourceTypes = new Set(RESOURCE_TYPES);
+        
+        // MVA ranges for embedded capacity by voltage (matches cable ranges)
+        const EMBEDDED_CAPACITY_MVA_RANGES = {
+            11: { mvaMin: 0.3, mvaMax: 5 },
+            33: { mvaMin: 3, mvaMax: 30 },
+            66: { mvaMin: 20, mvaMax: 60 },
+            132: { mvaMin: 20, mvaMax: 100 }
+        };
         let loadedCount = 0;
         let allBounds = null;
         
         // Cache for loaded GeoJSON files (to avoid reloading same file)
         const geoJSONCache = {};
         
-        // Total layers to load (cables + unique substation files)
-        const TOTAL_LAYERS = LAYERS.length + 2; // 3 cable layers + 2 substation files (grid-and-primary + GSPs)
+        // Total layers to load (cables + embedded capacity + infrastructure projects)
+        const TOTAL_LAYERS = LAYERS.length + 2; // Cable layers + 1 embedded capacity + 1 infrastructure projects
 
         // Create popup content for cables
         function createPopupContent(properties, layerConfig) {
-            const voltage = properties.voltage || layerConfig.name;
-            const dno = properties.dno || 'Unknown';
+            let voltage = properties.voltage || layerConfig.name;
             const localAuth = properties.local_authority || 'Unknown';
-            const obClass = properties.ob_class || '';
+            let cableType = properties.ob_class || '';
             
             return `
                 <div class="popup-content">
                     <span class="voltage-badge" style="background-color: ${layerConfig.color}">${voltage}</span>
-                    <div><strong>Type:</strong> ${obClass}</div>
-                    <div><strong>DNO:</strong> ${dno}</div>
-                    <div><strong>Area:</strong> ${localAuth}</div>
+                    <div><strong>Type:</strong> ${cableType}</div>
+                    <div><strong>DNO:</strong> UKPN</div>
+                    ${localAuth !== 'Unknown' ? `<div><strong>Area:</strong> ${localAuth}</div>` : ''}
                 </div>
             `;
         }
         
-        // Create popup content for substations
-        function createSubstationPopupContent(properties, layerConfig) {
-            // Handle GSPs
-            if (layerConfig.isGSP) {
-                const name = properties.gsp || 'GSP';
-                const dno = properties.dno || 'Unknown';
-                const importLimit = properties.asset_import_limit || 'N/A';
-                const exportLimit = properties.asset_export_limit || 'N/A';
-                
-                return `
-                    <div class="popup-content">
-                        <span class="voltage-badge" style="background-color: ${layerConfig.color}">132kV</span>
-                        <div><strong>Name:</strong> ${name}</div>
-                        <div><strong>Type:</strong> Grid Supply Point</div>
-                        <div><strong>DNO:</strong> ${dno}</div>
-                        <div><strong>Import Limit:</strong> ${importLimit} MVA</div>
-                        <div><strong>Export Limit:</strong> ${exportLimit} MVA</div>
-                    </div>
-                `;
-            }
+        
+        // Create popup content for embedded capacity features
+        function createEmbeddedCapacityPopupContent(properties) {
+            const customerName = properties.customer_name || 'Unknown';
+            const gsp = properties.grid_supply_point || 'Unknown';
+            const bsp = properties.bulk_supply_point || 'Unknown';
+            const primary = properties.primary || 'Unknown';
+            const voltage = properties.point_of_connection_poc_voltage_kv || 'N/A';
+            const status = properties.connection_status || 'Unknown';
+            const dateConnected = properties.date_connected || 'N/A';
+            const dateAccepted = properties.date_accepted || 'N/A';
+            const targetEnergisation = properties.target_energisation_date || 'N/A';
+            const resourceType = properties.primary_resource_type_group || 'Unknown';
             
-            // Handle grid/primary substations
-            const name = properties.sitename || properties.substationalias || 'Substation';
-            // Use the layer config name for voltage label (this is the OUTPUT voltage, not the raw data)
-            const voltage = layerConfig.name.replace(' Substations', '').replace(' GSPs', '');
-            const siteType = properties.sitetype || properties.substationdesign || 'Substation';
-            const dno = properties.licencearea || properties.dno || 'Unknown';
-            const localAuth = properties.local_authority || properties.localauthority || 'Unknown';
+            // Get registered capacity based on connection status
+            let registeredCapacity;
+            if (status === 'Connected') {
+                registeredCapacity = properties.already_connected_registered_capacity_mw;
+            } else {
+                registeredCapacity = properties.accepted_to_connect_registered_capacity_mw;
+            }
+            const capacityDisplay = registeredCapacity ? `${registeredCapacity} MW` : 'N/A';
+            
+            // Voltage badge color - match cable colors
+            let voltageColor = '#6b7280'; // Gray default
+            const voltageNum = parseFloat(voltage);
+            if (voltageNum === 11) voltageColor = '#ef4444'; // Red (11kV)
+            else if (voltageNum === 33) voltageColor = '#4ade80'; // Light green (33kV)
+            else if (voltageNum === 66) voltageColor = '#16a34a'; // Dark green (66kV)
+            else if (voltageNum === 132) voltageColor = '#f97316'; // Orange (132kV)
+            
+            // Status color
+            let statusColor = '#6b7280'; // Gray default
+            if (status === 'Connected') statusColor = '#22c55e'; // Green
+            else if (status === 'Accepted') statusColor = '#3b82f6'; // Blue
+            else if (status === 'In Queue' || status === 'Pending') statusColor = '#f59e0b'; // Amber
+            
+            return `
+                <div class="popup-content" style="max-width: 320px;">
+                    <span class="voltage-badge" style="background-color: ${voltageColor}">${voltage}kV POC</span>
+                    <div style="margin-bottom: 8px;"><strong style="font-size: 14px;">${customerName}</strong></div>
+                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
+                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${statusColor};"></span>
+                        <span>${status}</span>
+                    </div>
+                    <div><strong>Resource Type:</strong> ${resourceType}</div>
+                    <div><strong>Registered Capacity:</strong> ${capacityDisplay}</div>
+                    <hr style="margin: 8px 0; border: none; border-top: 1px solid #e5e7eb;">
+                    <div><strong>GSP:</strong> ${gsp}</div>
+                    <div><strong>BSP:</strong> ${bsp}</div>
+                    <div><strong>Primary:</strong> ${primary}</div>
+                    <hr style="margin: 8px 0; border: none; border-top: 1px solid #e5e7eb;">
+                    ${dateConnected !== 'N/A' ? `<div><strong>Connected:</strong> ${dateConnected}</div>` : ''}
+                    ${dateAccepted !== 'N/A' ? `<div><strong>Accepted:</strong> ${dateAccepted}</div>` : ''}
+                    ${status !== 'Connected' && targetEnergisation !== 'N/A' ? `<div><strong>Planned energisation:</strong> ${targetEnergisation}</div>` : ''}
+                </div>
+            `;
+        }
+        
+        // Create embedded capacity marker icon
+        // status: 'Connected' for purple, 'Accepted' for lighter purple
+        // sizeMultiplier: 0.5 to 2.0 based on capacity
+        function createEmbeddedCapacityIcon(baseSize, status, borderWidth, sizeMultiplier) {
+            const statusClass = status === 'Connected' ? 'connected' : 'accepted';
+            borderWidth = borderWidth || 1.5;
+            sizeMultiplier = sizeMultiplier || 1;
+            const size = baseSize * sizeMultiplier;
+            return L.divIcon({
+                className: '',
+                html: `<div class="embedded-capacity-marker ${statusClass}" style="width:${size}px;height:${size}px;border-width:${borderWidth}px;"></div>`,
+                iconSize: [size, size],
+                iconAnchor: [size/2, size/2]
+            });
+        }
+        
+        // Get size multiplier based on capacity (0.5x to 2x)
+        function getCapacitySizeMultiplier(capacity) {
+            if (embeddedCapacityMax === embeddedCapacityMin) return 1;
+            // Use log scale for better distribution since capacity range is huge (1-456 MW)
+            const logMin = Math.log(embeddedCapacityMin + 1);
+            const logMax = Math.log(embeddedCapacityMax + 1);
+            const logCap = Math.log(capacity + 1);
+            const normalized = (logCap - logMin) / (logMax - logMin);
+            // Map to 0.5 - 2.0 range
+            return 0.5 + (normalized * 1.5);
+        }
+        
+        // Get the relevant date for a feature (date_connected for connected, target_energisation_date for accepted)
+        function getFeatureDate(properties) {
+            const status = properties.connection_status || 'Connected';
+            if (status === 'Connected') {
+                return properties.date_connected;
+            } else {
+                // For Accepted to Connect projects, use planned connected date (target_energisation_date)
+                return properties.target_energisation_date || properties.date_accepted;
+            }
+        }
+        
+        // Parse date string (YYYY-MM-DD) to timestamp
+        function parseDate(dateStr) {
+            if (!dateStr) return null;
+            const d = new Date(dateStr);
+            return isNaN(d.getTime()) ? null : d.getTime();
+        }
+        
+        // Format timestamp to display date
+        function formatDateDisplay(timestamp) {
+            if (!timestamp) return 'N/A';
+            const d = new Date(timestamp);
+            return d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
+        }
+        
+        // Load embedded capacity register layer
+        async function loadEmbeddedCapacityLayer() {
+            try {
+                const response = await fetch(EMBEDDED_CAPACITY_LAYER.file);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // Store raw GeoJSON for POC mode calculations
+                rawGeoJSONData[EMBEDDED_CAPACITY_LAYER.name] = data;
+                
+                // Process features and compute ranges
+                let minDate = Infinity;
+                let maxDate = -Infinity;
+                let minCap = Infinity;
+                let maxCap = -Infinity;
+                
+                embeddedCapacityFeatures = [];
+                
+                data.features.forEach(feature => {
+                    if (!feature.geometry || feature.geometry.type !== 'Point') return;
+                    
+                    const props = feature.properties;
+                    const coords = feature.geometry.coordinates;
+                    const status = props.connection_status || 'Connected';
+                    const voltage = props.point_of_connection_poc_voltage_kv || 11;
+                    
+                    // Get capacity
+                    const capacity = props.already_connected_registered_capacity_mw || 
+                                     props.accepted_to_connect_registered_capacity_mw || 0;
+                    
+                    // Get date
+                    const dateStr = getFeatureDate(props);
+                    const dateTs = parseDate(dateStr);
+                    
+                    // Get resource type
+                    const resourceType = props.primary_resource_type_group || 'Unknown';
+                    
+                    // Update ranges
+                    if (dateTs) {
+                        minDate = Math.min(minDate, dateTs);
+                        maxDate = Math.max(maxDate, dateTs);
+                    }
+                    if (capacity > 0) {
+                        minCap = Math.min(minCap, capacity);
+                        maxCap = Math.max(maxCap, capacity);
+                    }
+                    
+                    // Store processed feature data
+                    embeddedCapacityFeatures.push({
+                        coords: coords,
+                        status: status,
+                        voltage: voltage,
+                        capacity: capacity,
+                        dateTs: dateTs,
+                        resourceType: resourceType,
+                        properties: props
+                    });
+                });
+                
+                // Set global ranges
+                embeddedDateMin = minDate === Infinity ? Date.now() : minDate;
+                embeddedDateMax = maxDate === -Infinity ? Date.now() : maxDate;
+                embeddedDateFilter = embeddedDateMax;  // Default to latest date
+                embeddedCapacityMin = minCap === Infinity ? 1 : minCap;
+                embeddedCapacityMax = maxCap === -Infinity ? 100 : maxCap;
+                
+                // Create layer groups for each voltage level
+                const voltages = [11, 33, 66, 132];
+                voltages.forEach(v => {
+                    embeddedCapacityLayerGroups[v] = L.layerGroup();
+                    embeddedCapacityLayerGroups[v].addTo(map);
+                });
+                
+                // Build initial markers
+                rebuildEmbeddedCapacityMarkers();
+                
+                loadedCount++;
+                updateProgress();
+                
+                return true;
+            } catch (error) {
+                console.error(`Failed to load ${EMBEDDED_CAPACITY_LAYER.name}:`, error);
+                loadedCount++;
+                updateProgress();
+                return false;
+            }
+        }
+        
+        // Rebuild embedded capacity markers based on current filters
+        function rebuildEmbeddedCapacityMarkers() {
+            // Clear existing markers
+            Object.values(embeddedCapacityLayerGroups).forEach(layerGroup => {
+                layerGroup.clearLayers();
+            });
+            
+            const zoom = map.getZoom();
+            const baseSize = getMarkerRadius(zoom) * 1.5;
+            const borderWidth = getMarkerBorderWidth(zoom);
+            
+            embeddedCapacityFeatures.forEach(feature => {
+                // Filter by date - show projects that existed by the selected date
+                if (feature.dateTs && feature.dateTs > embeddedDateFilter) {
+                    return;  // Skip projects that don't exist yet at the filtered date
+                }
+                
+                // Filter by resource type
+                if (!visibleResourceTypes.has(feature.resourceType)) {
+                    return;
+                }
+                
+                // Calculate size multiplier based on capacity
+                const sizeMultiplier = getCapacitySizeMultiplier(feature.capacity);
+                
+                const marker = L.marker([feature.coords[1], feature.coords[0]], {
+                    icon: createEmbeddedCapacityIcon(baseSize, feature.status, borderWidth, sizeMultiplier)
+                });
+                
+                // Store data on marker for later use
+                marker._embeddedStatus = feature.status;
+                marker._embeddedVoltage = feature.voltage;
+                marker._embeddedCapacity = feature.capacity;
+                
+                marker.bindPopup(createEmbeddedCapacityPopupContent(feature.properties));
+                
+                // Add to appropriate voltage layer group
+                const voltage = feature.voltage;
+                if (embeddedCapacityLayerGroups[voltage]) {
+                    embeddedCapacityLayerGroups[voltage].addLayer(marker);
+                } else {
+                    embeddedCapacityLayerGroups[11].addLayer(marker);
+                }
+            });
+            
+            // Apply visibility rules
+            updateLayerVisibility();
+        }
+        
+        // Update embedded capacity marker sizes based on zoom
+        function updateEmbeddedCapacitySizes() {
+            const zoom = map.getZoom();
+            const baseSize = getMarkerRadius(zoom) * 1.5;
+            const borderWidth = getMarkerBorderWidth(zoom);
+            Object.values(embeddedCapacityLayerGroups).forEach(layerGroup => {
+                layerGroup.eachLayer(marker => {
+                    if (marker.setIcon) {
+                        const status = marker._embeddedStatus || 'Connected';
+                        const capacity = marker._embeddedCapacity || 1;
+                        const sizeMultiplier = getCapacitySizeMultiplier(capacity);
+                        marker.setIcon(createEmbeddedCapacityIcon(baseSize, status, borderWidth, sizeMultiplier));
+                    }
+                });
+            });
+        }
+        
+        // Create popup content for infrastructure projects
+        function createInfrastructureProjectPopupContent(properties) {
+            const name = properties.ltds_name || properties.substation_or_circuit_ple_name || 'Unknown';
+            const assetType = properties.asset_type_or_quantity || 'Unknown';
+            const justification = properties.justification_for_the_need || 'Unknown';
+            const voltage = properties.connectivity_voltage || 'Unknown';
+            const startYear = properties.expected_start_year || 'Unknown';
+            const completionYear = properties.expected_completion_year || 'Unknown';
+            const gsp = properties.associated_gsp || 'Unknown';
+            const localAuthority = properties.local_authority || 'Unknown';
+            const dno = properties.dno || 'Unknown';
             
             return `
                 <div class="popup-content">
-                    <span class="voltage-badge" style="background-color: ${layerConfig.color}">${voltage}</span>
-                    <div><strong>Name:</strong> ${name}</div>
-                    <div><strong>Type:</strong> ${siteType}</div>
-                    <div><strong>DNO:</strong> ${dno}</div>
-                    <div><strong>Area:</strong> ${localAuth}</div>
+                    <div class="voltage-badge" style="background: #f59e0b;">Infrastructure Project</div>
+                    <strong style="font-size: 14px; display: block; margin-bottom: 8px;">${name}</strong>
+                    <div style="font-size: 12px; line-height: 1.6;">
+                        <div><strong>Asset/Work:</strong> ${assetType}</div>
+                        <div><strong>Justification:</strong> ${justification}</div>
+                        <div><strong>Voltage:</strong> ${voltage}</div>
+                        <div><strong>Timeline:</strong> ${startYear} - ${completionYear}</div>
+                        <div><strong>Grid Supply Point:</strong> ${gsp}</div>
+                        <div><strong>Local Authority:</strong> ${localAuthority}</div>
+                        <div><strong>DNO:</strong> ${dno}</div>
+                    </div>
                 </div>
             `;
+        }
+        
+        // Create infrastructure project marker icon
+        function createInfrastructureProjectIcon(baseSize, borderWidth) {
+            borderWidth = borderWidth || 1.5;
+            const size = baseSize * 1.2;
+            return L.divIcon({
+                className: '',
+                html: `<div class="infrastructure-project-marker" style="width:${size}px;height:${size}px;border-width:${borderWidth}px;"></div>`,
+                iconSize: [size, size],
+                iconAnchor: [size/2, size/2]
+            });
+        }
+        
+        // Parse voltage string to numeric value (for filtering)
+        function parseVoltageFromString(voltageStr) {
+            if (!voltageStr) return 11;  // Default
+            voltageStr = voltageStr.toLowerCase();
+            
+            if (voltageStr.includes('132')) return 132;
+            if (voltageStr.includes('66')) return 66;
+            if (voltageStr.includes('33')) return 33;
+            if (voltageStr.includes('20')) return 20;
+            if (voltageStr.includes('11')) return 11;
+            if (voltageStr.includes('6.6')) return 11;  // Map 6.6kV to 11kV bucket
+            
+            return 11;  // Default to 11kV
+        }
+        
+        // Load infrastructure projects layer
+        async function loadInfrastructureProjectsLayer() {
+            try {
+                const response = await fetch(INFRASTRUCTURE_PROJECTS_LAYER.file);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // Store raw GeoJSON for POC mode calculations
+                rawGeoJSONData[INFRASTRUCTURE_PROJECTS_LAYER.name] = data;
+                
+                infrastructureProjectsFeatures = [];
+                
+                data.features.forEach(feature => {
+                    if (!feature.geometry || feature.geometry.type !== 'Point') return;
+                    
+                    const props = feature.properties;
+                    const coords = feature.geometry.coordinates;
+                    
+                    // Parse voltage
+                    const voltage = parseVoltageFromString(props.connectivity_voltage);
+                    
+                    // Parse completion year to timestamp (for date filtering)
+                    const completionYear = parseInt(props.expected_completion_year) || 2026;
+                    const completionDate = new Date(completionYear, 11, 31);  // End of year
+                    const completionTs = completionDate.getTime();
+                    
+                    // Store processed feature data
+                    infrastructureProjectsFeatures.push({
+                        coords: coords,
+                        voltage: voltage,
+                        completionYear: completionYear,
+                        completionTs: completionTs,
+                        properties: props
+                    });
+                });
+                
+                // Create layer groups for each voltage level
+                const voltages = [11, 33, 66, 132];
+                voltages.forEach(v => {
+                    infrastructureProjectsLayerGroups[v] = L.layerGroup();
+                    // Don't add to map yet - default is OFF
+                });
+                
+                // Build initial markers
+                rebuildInfrastructureProjectMarkers();
+                
+                loadedCount++;
+                updateProgress();
+                
+                return true;
+            } catch (error) {
+                console.error(`Failed to load ${INFRASTRUCTURE_PROJECTS_LAYER.name}:`, error);
+                loadedCount++;
+                updateProgress();
+                return false;
+            }
+        }
+        
+        // Rebuild infrastructure project markers based on current filters
+        function rebuildInfrastructureProjectMarkers() {
+            // Clear existing markers
+            Object.values(infrastructureProjectsLayerGroups).forEach(layerGroup => {
+                layerGroup.clearLayers();
+            });
+            
+            const zoom = map.getZoom();
+            const baseSize = getMarkerRadius(zoom) * 1.5;
+            const borderWidth = getMarkerBorderWidth(zoom);
+            
+            infrastructureProjectsFeatures.forEach(feature => {
+                // Filter by date - show projects completing by the selected date
+                if (feature.completionTs && feature.completionTs > embeddedDateFilter) {
+                    return;  // Skip projects completing after the filtered date
+                }
+                
+                const marker = L.marker([feature.coords[1], feature.coords[0]], {
+                    icon: createInfrastructureProjectIcon(baseSize, borderWidth)
+                });
+                
+                // Store data on marker for later use
+                marker._infraVoltage = feature.voltage;
+                marker._infraCompletionYear = feature.completionYear;
+                
+                marker.bindPopup(createInfrastructureProjectPopupContent(feature.properties));
+                
+                // Add to appropriate voltage layer group
+                const voltage = feature.voltage;
+                if (infrastructureProjectsLayerGroups[voltage]) {
+                    infrastructureProjectsLayerGroups[voltage].addLayer(marker);
+                } else {
+                    infrastructureProjectsLayerGroups[11].addLayer(marker);
+                }
+            });
+            
+            // Apply visibility rules
+            updateLayerVisibility();
+        }
+        
+        // Update infrastructure project marker sizes based on zoom
+        function updateInfrastructureProjectSizes() {
+            const zoom = map.getZoom();
+            const baseSize = getMarkerRadius(zoom) * 1.5;
+            const borderWidth = getMarkerBorderWidth(zoom);
+            Object.values(infrastructureProjectsLayerGroups).forEach(layerGroup => {
+                layerGroup.eachLayer(marker => {
+                    if (marker.setIcon) {
+                        marker.setIcon(createInfrastructureProjectIcon(baseSize, borderWidth));
+                    }
+                });
+            });
         }
 
         // Load a GeoJSON layer
@@ -2023,7 +2746,7 @@
                 return false;
             }
         }
-
+        
         // Update loading progress
         function updateProgress() {
             const progressEl = document.getElementById('loading-progress');
@@ -2034,141 +2757,27 @@
             }
         }
         
-        // Load substation GeoJSON and create filtered layers
-        async function loadSubstationFile(file) {
-            // Return cached data if already loaded
-            if (geoJSONCache[file]) {
-                return geoJSONCache[file];
-            }
-            
-            try {
-                const response = await fetch(file);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                const data = await response.json();
-                geoJSONCache[file] = data;
-                return data;
-            } catch (error) {
-                console.error(`Failed to load ${file}:`, error);
-                return null;
-            }
-        }
-        
-        // Get voltage value from substation properties
-        function getSubstationVoltage(properties) {
-            // Grid/Primary sites use sitevoltage (number)
-            if (properties.sitevoltage !== undefined) {
-                return properties.sitevoltage;
-            }
-            // Secondary sites use substationvoltage (string like "11kV")
-            if (properties.substationvoltage) {
-                return properties.substationvoltage;
-            }
-            return null;
-        }
-        
-        // Calculate substation marker radius based on zoom level
-        function getSubstationRadius(zoom) {
+        // Calculate marker radius based on zoom level
+        function getMarkerRadius(zoom) {
             // At zoom 6 (min): 2px, at zoom 12+: 8px, interpolate between
             const minZoom = 6;
             const maxZoom = 12;
             
-            if (zoom <= minZoom) return SUBSTATION_MIN_RADIUS;
-            if (zoom >= maxZoom) return SUBSTATION_BASE_RADIUS;
+            if (zoom <= minZoom) return MARKER_MIN_RADIUS;
+            if (zoom >= maxZoom) return MARKER_BASE_RADIUS;
             
             // Linear interpolation
             const t = (zoom - minZoom) / (maxZoom - minZoom);
-            return SUBSTATION_MIN_RADIUS + t * (SUBSTATION_BASE_RADIUS - SUBSTATION_MIN_RADIUS);
+            return MARKER_MIN_RADIUS + t * (MARKER_BASE_RADIUS - MARKER_MIN_RADIUS);
         }
         
-        // Create a substation divIcon with given size and color
-        function createSubstationIcon(size, color) {
-            return L.divIcon({
-                className: '',
-                html: `<div class="substation-marker" style="width:${size}px;height:${size}px;background:${color};"></div>`,
-                iconSize: [size, size],
-                iconAnchor: [size/2, size/2]
-            });
+        // Calculate border width based on zoom level (thinner at higher zoom)
+        function getMarkerBorderWidth(zoom) {
+            // At zoom 6: 2px, at zoom 14+: 1px
+            if (zoom <= 8) return 2;
+            if (zoom >= 14) return 1;
+            return 1.5;
         }
-        
-        // Update all substation marker sizes based on current zoom
-        function updateSubstationSizes() {
-            const size = getSubstationRadius(map.getZoom()) * 2;  // Convert radius to size
-            
-            Object.entries(substationLayerGroups).forEach(([name, layerGroup]) => {
-                const layerConfig = getLayerConfig(name);
-                if (!layerConfig) return;
-                
-                if (layerGroup && layerGroup.eachLayer) {
-                    layerGroup.eachLayer(marker => {
-                        if (marker.setIcon) {
-                            marker.setIcon(createSubstationIcon(size, layerConfig.color));
-                        }
-                    });
-                }
-            });
-        }
-        
-        // Load and filter substations for a specific layer config
-        async function loadSubstationLayer(layerConfig) {
-            const data = await loadSubstationFile(layerConfig.file);
-            if (!data || !data.features) return;
-            
-            // Filter features matching this voltage level (GSPs use all features)
-            const filteredFeatures = layerConfig.isGSP 
-                ? data.features 
-                : data.features.filter(feature => {
-                    const voltage = getSubstationVoltage(feature.properties);
-                    if (voltage === null) return false;
-                    return layerConfig.voltageFilter(voltage);
-                });
-            
-            if (filteredFeatures.length === 0) return;
-            
-            // Store filtered GeoJSON for POC mode
-            rawGeoJSONData[layerConfig.name] = {
-                type: 'FeatureCollection',
-                features: filteredFeatures
-            };
-            
-            // Create layer group for these substations
-            const layerGroup = L.layerGroup();
-            const currentSize = getSubstationRadius(map.getZoom()) * 2;  // Convert radius to size
-            
-            filteredFeatures.forEach(feature => {
-                if (!feature.geometry || feature.geometry.type !== 'Point') return;
-                
-                const coords = feature.geometry.coordinates;
-                const marker = L.marker([coords[1], coords[0]], {
-                    icon: createSubstationIcon(currentSize, layerConfig.color)
-                });
-                
-                marker.bindPopup(createSubstationPopupContent(feature.properties, layerConfig));
-                layerGroup.addLayer(marker);
-            });
-            
-            substationLayerGroups[layerConfig.name] = layerGroup;
-            layerGroup.addTo(map);
-        }
-        
-        // Load all substations
-        async function loadAllSubstations() {
-            // Load both substation files
-            await Promise.all([
-                loadSubstationFile('grid-and-primary-sites.geojson'),
-                loadSubstationFile('ukpn-grid-supply-points-overview.geojson')
-            ]);
-            
-            loadedCount += 2;
-            updateProgress();
-            
-            // Now create filtered layers for each substation type
-            for (const layerConfig of SUBSTATION_LAYERS) {
-                await loadSubstationLayer(layerConfig);
-            }
-        }
-
         // Check if ranges overlap
         function rangesOverlap(userMin, userMax, layerMin, layerMax) {
             return userMin <= layerMax && userMax >= layerMin;
@@ -2182,49 +2791,132 @@
             return value.toFixed(1);
         }
         
-        // Update layer visibility based on current filter
+        // Update layer visibility based on current MVA filter
         function updateLayerVisibility() {
+            // Voltage indicator visibility tracking
+            const voltageVisible = { '33kV': false, '66kV': false, '132kV': false };
+            
             // Update cable layers
             LAYERS.forEach(layerConfig => {
                 const layer = layerGroups[layerConfig.name];
                 if (!layer) return;
                 
                 const shouldShow = rangesOverlap(filterMin, filterMax, layerConfig.mvaMin, layerConfig.mvaMax);
-                const indicator = document.getElementById(`indicator-${layerConfig.name.replace(/[^a-zA-Z0-9]/g, '')}`);
                 
                 if (shouldShow) {
                     if (!map.hasLayer(layer)) {
                         map.addLayer(layer);
                     }
-                    if (indicator) indicator.classList.remove('hidden');
+                    // Track which voltage levels are visible
+                    if (layerConfig.name.includes('33kV')) voltageVisible['33kV'] = true;
+                    if (layerConfig.name.includes('66kV')) voltageVisible['66kV'] = true;
+                    if (layerConfig.name.includes('132kV')) voltageVisible['132kV'] = true;
                 } else {
                     if (map.hasLayer(layer)) {
                         map.removeLayer(layer);
                     }
-                    if (indicator) indicator.classList.add('hidden');
                 }
             });
             
-            // Update substation layers
-            SUBSTATION_LAYERS.forEach(layerConfig => {
-                const layer = substationLayerGroups[layerConfig.name];
-                if (!layer) return;
-                
-                const shouldShow = rangesOverlap(filterMin, filterMax, layerConfig.mvaMin, layerConfig.mvaMax);
-                const indicator = document.getElementById(`indicator-${layerConfig.name.replace(/[^a-zA-Z0-9]/g, '')}`);
-                
-                if (shouldShow) {
-                    if (!map.hasLayer(layer)) {
-                        map.addLayer(layer);
+            // Update voltage indicators in UI
+            Object.entries(voltageVisible).forEach(([voltage, visible]) => {
+                const indicator = document.getElementById(`indicator-${voltage.replace(/[^a-zA-Z0-9]/g, '')}`);
+                if (indicator) {
+                    if (visible) {
+                        indicator.classList.remove('hidden');
+                    } else {
+                        indicator.classList.add('hidden');
                     }
-                    if (indicator) indicator.classList.remove('hidden');
-                } else {
-                    if (map.hasLayer(layer)) {
-                        map.removeLayer(layer);
-                    }
-                    if (indicator) indicator.classList.add('hidden');
                 }
             });
+            
+            
+            // Update embedded capacity layers by voltage and status
+            let anyConnectedVisible = false;
+            let anyAcceptedVisible = false;
+            
+            Object.entries(embeddedCapacityLayerGroups).forEach(([voltage, layerGroup]) => {
+                const voltageNum = parseInt(voltage, 10);
+                const mvaRange = EMBEDDED_CAPACITY_MVA_RANGES[voltageNum];
+                if (!mvaRange) return;
+                
+                const voltageInRange = rangesOverlap(filterMin, filterMax, mvaRange.mvaMin, mvaRange.mvaMax);
+                
+                // Always keep layer group on map, but control individual marker visibility
+                if (!map.hasLayer(layerGroup)) {
+                    map.addLayer(layerGroup);
+                }
+                
+                // Update each marker's visibility based on status toggles
+                layerGroup.eachLayer(marker => {
+                    const status = marker._embeddedStatus || 'Connected';
+                    const isConnected = status === 'Connected';
+                    const statusVisible = isConnected ? embeddedConnectedVisible : embeddedAcceptedVisible;
+                    const shouldShow = voltageInRange && statusVisible;
+                    
+                    // Use opacity to show/hide markers
+                    if (shouldShow) {
+                        marker.setOpacity(1);
+                        if (isConnected) anyConnectedVisible = true;
+                        else anyAcceptedVisible = true;
+                    } else {
+                        marker.setOpacity(0);
+                    }
+                });
+            });
+            
+            // Update embedded capacity indicators
+            const connectedIndicator = document.getElementById('toggle-embedded-connected');
+            const acceptedIndicator = document.getElementById('toggle-embedded-accepted');
+            
+            if (connectedIndicator) {
+                if (!embeddedConnectedVisible) {
+                    connectedIndicator.classList.add('hidden');
+                } else {
+                    connectedIndicator.classList.remove('hidden');
+                }
+            }
+            if (acceptedIndicator) {
+                if (!embeddedAcceptedVisible) {
+                    acceptedIndicator.classList.add('hidden');
+                } else {
+                    acceptedIndicator.classList.remove('hidden');
+                }
+            }
+            
+            // Update infrastructure projects layers by voltage
+            Object.entries(infrastructureProjectsLayerGroups).forEach(([voltage, layerGroup]) => {
+                const voltageNum = parseInt(voltage, 10);
+                const mvaRange = EMBEDDED_CAPACITY_MVA_RANGES[voltageNum];  // Reuse same MVA ranges
+                if (!mvaRange) return;
+                
+                const voltageInRange = rangesOverlap(filterMin, filterMax, mvaRange.mvaMin, mvaRange.mvaMax);
+                const shouldShow = infrastructureProjectsVisible && voltageInRange;
+                
+                if (shouldShow) {
+                    if (!map.hasLayer(layerGroup)) {
+                        map.addLayer(layerGroup);
+                    }
+                    // Update each marker's visibility
+                    layerGroup.eachLayer(marker => {
+                        marker.setOpacity(1);
+                    });
+                } else {
+                    if (map.hasLayer(layerGroup)) {
+                        map.removeLayer(layerGroup);
+                    }
+                }
+            });
+            
+            // Update infrastructure projects indicator
+            const infraIndicator = document.getElementById('toggle-infrastructure-projects');
+            if (infraIndicator) {
+                if (!infrastructureProjectsVisible) {
+                    infraIndicator.classList.add('hidden');
+                } else {
+                    infraIndicator.classList.remove('hidden');
+                }
+            }
         }
         
         // Update the MVA display values
@@ -2255,23 +2947,23 @@
             };
         }
         
-        // Get visible layer names (filtered by MVA) - includes both cables and substations
+        // Get visible layer names (filtered by MVA) - includes cables and embedded capacity
         function getVisibleLayerNames() {
             const cableNames = LAYERS
                 .filter(l => rangesOverlap(filterMin, filterMax, l.mvaMin, l.mvaMax))
                 .map(l => l.name);
-            const substationNames = SUBSTATION_LAYERS
-                .filter(l => rangesOverlap(filterMin, filterMax, l.mvaMin, l.mvaMax))
-                .map(l => l.name);
-            return [...cableNames, ...substationNames];
+            // Include embedded capacity if either connected or accepted is visible
+            const embeddedNames = (embeddedConnectedVisible || embeddedAcceptedVisible) ? [EMBEDDED_CAPACITY_LAYER.name] : [];
+            return [...cableNames, ...embeddedNames];
         }
         
-        // Get layer config by name (from either cables or substations)
+        // Get layer config by name (from cables or embedded capacity)
         function getLayerConfig(name) {
-            return LAYERS.find(l => l.name === name) || SUBSTATION_LAYERS.find(l => l.name === name);
+            if (name === EMBEDDED_CAPACITY_LAYER.name) return EMBEDDED_CAPACITY_LAYER;
+            return LAYERS.find(l => l.name === name);
         }
         
-        // Find nearest point on all visible cables and substations within 30km
+        // Find nearest point on all visible cables within 30km
         function findNearestConnection(cursorLat, cursorLng) {
             const cursorPoint = turf.point([cursorLng, cursorLat]);
             const visibleLayerNames = getVisibleLayerNames();
@@ -2302,18 +2994,6 @@
                     }
                     
                     try {
-                        // Handle Point geometries (substations)
-                        if (feature.geometry.type === 'Point') {
-                            const distance = turf.distance(cursorPoint, feature, { units: 'meters' });
-                            
-                            if (distance < nearestDistance && distance <= POC_MAX_DISTANCE_KM * 1000) {
-                                nearestDistance = distance;
-                                nearestResult = turf.point(feature.geometry.coordinates);
-                                nearestLayerConfig = layerConfig;
-                            }
-                            return;
-                        }
-                        
                         // Handle LineString and MultiLineString (cables)
                         let lines = [];
                         if (feature.geometry.type === 'LineString') {
@@ -2402,11 +3082,6 @@
                                     }
                                 } catch (e) {}
                             });
-                        } else if (feature.geometry.type === 'Point') {
-                            // For substations, snap to the point
-                            const coords = feature.geometry.coordinates;
-                            candidateDistance = turf.distance(cursorPoint, feature, { units: 'meters' });
-                            candidatePoint = { lat: coords[1], lng: coords[0] };
                         }
                         
                         if (candidatePoint && candidateDistance < nearestDistance) {
@@ -2639,9 +3314,8 @@
                 const voltage = extractVoltage(layerName);
                 if (!voltage) return;
                 
-                const isSubstation = layerConfig.isSubstation || layerConfig.isGSP;
-                const type = isSubstation ? 'Substation' : 'Cable';
-                // Use just voltage as key - find nearest cable OR substation per voltage
+                const type = 'Cable';
+                // Use just voltage as key - find nearest cable per voltage
                 const key = voltage;
                 const skippedPoints = singlePocSkipped[key] || [];
                 
@@ -2659,11 +3333,7 @@
                         let candidatePoint = null;
                         let candidateDistance = Infinity;
                         
-                        if (feature.geometry.type === 'Point') {
-                            const coords = feature.geometry.coordinates;
-                            candidateDistance = turf.distance(sitePoint, feature, { units: 'meters' });
-                            candidatePoint = { lat: coords[1], lng: coords[0] };
-                        } else if (feature.geometry.type === 'LineString') {
+                        if (feature.geometry.type === 'LineString') {
                             const nearestOnLine = turf.nearestPointOnLine(feature, sitePoint, { units: 'meters' });
                             candidateDistance = nearestOnLine.properties.dist;
                             candidatePoint = {
@@ -3117,8 +3787,8 @@
         
         // Detect all obstacles for a POC connection line
         async function detectObstacles(site, poc) {
-            // Check cache first
-            if (obstaclesCache[poc.id]) {
+            // Check cache first - only return if fully fetched (not just loading)
+            if (obstaclesCache[poc.id]?.fetched) {
                 return obstaclesCache[poc.id].crossings;
             }
             
@@ -4000,7 +4670,7 @@
                 if (!geoJSON || !geoJSON.features) return;
                 
                 const layerConfig = getLayerConfig(layerName);
-                if (!layerConfig || layerConfig.isSubstation || layerConfig.isGSP) return; // Skip substations
+                if (!layerConfig) return;
                 
                 geoJSON.features.forEach(feature => {
                     if (!feature.geometry) return;
@@ -4303,10 +4973,10 @@
         // ============== POC DISCOVERY ALGORITHM ==============
         
         // Extract voltage from layer name
-        // Note: 33kV and 66kV are treated as the same voltage class
         function extractVoltage(layerName) {
             if (layerName.includes('11kV')) return '11kV';
-            if (layerName.includes('33kV') || layerName.includes('66kV')) return '33/66kV';
+            if (layerName.includes('66kV')) return '66kV';  // Check 66kV before 33kV to avoid false match
+            if (layerName.includes('33kV')) return '33kV';
             if (layerName.includes('132kV')) return '132kV';
             return null;
         }
@@ -4319,7 +4989,6 @@
             
             // Track nearest per voltage
             const nearestPerVoltage = {};
-            const nearest11kVSubstation = { result: null };
             
             const searchBuffer = turf.buffer(sitePoint, maxDistanceKm, { units: 'kilometers' });
             const searchBbox = turf.bbox(searchBuffer);
@@ -4333,8 +5002,6 @@
                 
                 const voltage = extractVoltage(layerName);
                 if (!voltage) return;
-                
-                const isSubstation = layerConfig.isSubstation || layerConfig.isGSP;
                 
                 geoJSON.features.forEach((feature) => {
                     if (!feature.geometry) return;
@@ -4350,16 +5017,8 @@
                         let candidatePoint = null;
                         let candidateDistance = Infinity;
                         
-                        // Handle Point geometries (substations)
-                        if (feature.geometry.type === 'Point') {
-                            const coords = feature.geometry.coordinates;
-                            candidateDistance = turf.distance(sitePoint, feature, { units: 'meters' });
-                            if (candidateDistance <= maxDistanceKm * 1000) {
-                                candidatePoint = { lat: coords[1], lng: coords[0] };
-                            }
-                        }
                         // Handle LineString
-                        else if (feature.geometry.type === 'LineString') {
+                        if (feature.geometry.type === 'LineString') {
                             const nearest = turf.nearestPointOnLine(feature, sitePoint, { units: 'meters' });
                             candidateDistance = nearest.properties.dist;
                             if (candidateDistance <= maxDistanceKm * 1000) {
@@ -4387,21 +5046,12 @@
                                 lng: candidatePoint.lng,
                                 distance: candidateDistance,
                                 layerConfig: layerConfig,
-                                type: isSubstation ? 'Substation' : 'Cable'
+                                type: 'Cable'
                             };
                             
-                            // For 11kV, track substation separately (no 11kV cables)
-                            if (voltage === '11kV') {
-                                if (isSubstation) {
-                                    if (!nearest11kVSubstation.result || candidateDistance < nearest11kVSubstation.result.distance) {
-                                        nearest11kVSubstation.result = result;
-                                    }
-                                }
-                            } else {
-                                // For other voltages, just track nearest regardless of type
-                                if (!nearestPerVoltage[voltage] || candidateDistance < nearestPerVoltage[voltage].distance) {
-                                    nearestPerVoltage[voltage] = result;
-                                }
+                            // Track nearest cable per voltage
+                            if (!nearestPerVoltage[voltage] || candidateDistance < nearestPerVoltage[voltage].distance) {
+                                nearestPerVoltage[voltage] = result;
                             }
                         }
                     } catch (e) {
@@ -4410,10 +5060,8 @@
                 });
             });
             
-            // Return results including 11kV substation
             return {
-                nearestPerVoltage,
-                nearest11kVSubstation: nearest11kVSubstation.result
+                nearestPerVoltage
             };
         }
         
@@ -4433,31 +5081,13 @@
             
             // Use setTimeout to allow UI to update
             setTimeout(() => {
-                const { nearestPerVoltage, nearest11kVSubstation } = findNearestPerVoltage(site.lat, site.lng);
+                const { nearestPerVoltage } = findNearestPerVoltage(site.lat, site.lng);
                 const discoveredPOCs = [];
-                const powerRange11kV = VOLTAGE_POWER_RANGES['11kV'];
                 
-                // Add 11kV Substation if found
-                if (nearest11kVSubstation) {
-                    discoveredPOCs.push({
-                        id: generateId(),
-                        voltage: '11kV',
-                        lat: nearest11kVSubstation.lat,
-                        lng: nearest11kVSubstation.lng,
-                        distance: nearest11kVSubstation.distance,
-                        type: 'Substation',
-                        layerName: nearest11kVSubstation.layerConfig.name,
-                        powerMin: powerRange11kV.min,
-                        powerMax: powerRange11kV.max,
-                        color: powerRange11kV.color,
-                        status: 'pending'
-                    });
-                }
+                // Add all voltages (33kV, 66kV, 132kV)
+                const voltages = ['33kV', '66kV', '132kV'];
                 
-                // Add other voltages (33/66kV combined, 132kV)
-                const otherVoltages = ['33/66kV', '132kV'];
-                
-                otherVoltages.forEach(voltage => {
+                voltages.forEach(voltage => {
                     const nearest = nearestPerVoltage[voltage];
                     if (nearest) {
                         const powerRange = VOLTAGE_POWER_RANGES[voltage];
@@ -4607,31 +5237,42 @@
             filterPanel.onAdd = function() {
                 const div = L.DomUtil.create('div', 'filter-panel');
                 
-                // Build cable layer indicators HTML
-                let cableIndicatorsHTML = LAYERS.map(l => {
-                    const id = l.name.replace(/[^a-zA-Z0-9]/g, '');
+                // Build cable layer indicators HTML by voltage level
+                const voltageGroups = {
+                    '33kV': { color: '#4ade80', mvaMin: 3, mvaMax: 30 },
+                    '66kV': { color: '#16a34a', mvaMin: 20, mvaMax: 60 },
+                    '132kV': { color: '#f97316', mvaMin: 20, mvaMax: 100 }
+                };
+                let cableIndicatorsHTML = Object.entries(voltageGroups).map(([voltage, config]) => {
+                    const id = voltage.replace(/[^a-zA-Z0-9]/g, '');
                     return `
                         <div class="layer-indicator" id="indicator-${id}">
-                            <span class="layer-dot" style="background: ${l.color}"></span>
-                            <span>${l.name}</span>
-                            <span class="layer-mva">${l.mvaMin}-${l.mvaMax}</span>
+                            <span class="layer-dot" style="background: ${config.color}"></span>
+                            <span>${voltage}</span>
+                            <span class="layer-mva">${config.mvaMin}-${config.mvaMax}</span>
                         </div>
                     `;
                 }).join('');
                 
-                // Build substation layer indicators HTML
-                let substationIndicatorsHTML = SUBSTATION_LAYERS.map(l => {
-                    const id = l.name.replace(/[^a-zA-Z0-9]/g, '');
-                    return `
-                        <div class="layer-indicator" id="indicator-${id}">
-                            <span class="layer-dot" style="background: ${l.color}; width: ${Math.min(l.radius, 10)}px; height: ${Math.min(l.radius, 10)}px;"></span>
-                            <span>${l.name}</span>
-                            <span class="layer-mva">${l.mvaMin}-${l.mvaMax}</span>
-                        </div>
-                    `;
-                }).join('');
                 
                 div.innerHTML = `
+                    <div class="location-search">
+                        <div class="location-search-title">Search Location</div>
+                        <div class="location-search-input-wrapper">
+                            <svg class="location-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                            <input type="text" 
+                                   class="location-search-input" 
+                                   id="location-search-input"
+                                   placeholder="Enter address or postcode..."
+                                   autocomplete="off">
+                            <button class="location-search-clear" id="location-search-clear" title="Clear search">×</button>
+                        </div>
+                        <div class="location-search-results" id="location-search-results"></div>
+                    </div>
+                    
                     <h4>Project Size</h4>
                     <p class="subtitle">Filter networks by connection capacity (MVA)</p>
                     
@@ -4672,9 +5313,76 @@
                         ${cableIndicatorsHTML}
                     </div>
                     
-                    <div class="active-layers" style="margin-top: 12px;">
-                        <div class="active-layers-title">Substations</div>
-                        ${substationIndicatorsHTML}
+                    <div class="active-layers" style="margin-top: 8px;">
+                        <div class="active-layers-title">Embedded Capacity</div>
+                        <div class="layer-indicator layer-toggle hidden" id="toggle-embedded-connected" style="cursor: pointer;">
+                            <span class="layer-dot" style="background: #8b5cf6; transform: rotate(45deg);"></span>
+                            <span>Connected</span>
+                            <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
+                        </div>
+                        <div class="layer-indicator layer-toggle hidden" id="toggle-embedded-accepted" style="cursor: pointer;">
+                            <span class="layer-dot" style="background: #c4b5fd; transform: rotate(45deg);"></span>
+                            <span>Accepted</span>
+                            <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
+                        </div>
+                    </div>
+                    
+                    <div class="active-layers" style="margin-top: 8px;">
+                        <div class="active-layers-title">Infrastructure Projects</div>
+                        <div class="layer-indicator layer-toggle hidden" id="toggle-infrastructure-projects" style="cursor: pointer;">
+                            <span class="layer-dot" style="background: #f59e0b; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></span>
+                            <span>Planned Upgrades</span>
+                            <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
+                        </div>
+                        
+                        <!-- Date filter slider -->
+                        <div class="embedded-filter-section">
+                            <div class="embedded-filter-title">Project Date Filter</div>
+                            <div class="date-display">
+                                <span class="current-date" id="embedded-date-display">Loading...</span>
+                                <span class="date-range" id="embedded-date-range"></span>
+                            </div>
+                            <div class="date-slider-container">
+                                <div id="embedded-date-slider"></div>
+                            </div>
+                        </div>
+                        
+                        <!-- Resource type filter -->
+                        <div class="embedded-filter-section">
+                            <div class="embedded-filter-title">Project Type</div>
+                            <div class="resource-type-filters" id="resource-type-filters">
+                                <div class="resource-type-toggle" data-type="Solar PV">
+                                    <span class="resource-icon">☀️</span>
+                                    <span class="resource-name">Solar</span>
+                                    <span class="resource-check">✓</span>
+                                </div>
+                                <div class="resource-type-toggle" data-type="Storage">
+                                    <span class="resource-icon">🔋</span>
+                                    <span class="resource-name">Storage</span>
+                                    <span class="resource-check">✓</span>
+                                </div>
+                                <div class="resource-type-toggle" data-type="Wind">
+                                    <span class="resource-icon">💨</span>
+                                    <span class="resource-name">Wind</span>
+                                    <span class="resource-check">✓</span>
+                                </div>
+                                <div class="resource-type-toggle" data-type="Fossil fuel">
+                                    <span class="resource-icon">🏭</span>
+                                    <span class="resource-name">Fossil</span>
+                                    <span class="resource-check">✓</span>
+                                </div>
+                                <div class="resource-type-toggle" data-type="Biogas">
+                                    <span class="resource-icon">🌿</span>
+                                    <span class="resource-name">Biogas</span>
+                                    <span class="resource-check">✓</span>
+                                </div>
+                                <div class="resource-type-toggle" data-type="Unknown">
+                                    <span class="resource-icon">❓</span>
+                                    <span class="resource-name">Other</span>
+                                    <span class="resource-check">✓</span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 `;
                 
@@ -4720,6 +5428,266 @@
                         }
                     });
                 });
+                
+                // Add click handler for embedded capacity Connected toggle
+                const connectedToggle = document.getElementById('toggle-embedded-connected');
+                if (connectedToggle) {
+                    connectedToggle.addEventListener('click', function() {
+                        embeddedConnectedVisible = !embeddedConnectedVisible;
+                        const checkmark = this.querySelector('.layer-toggle-check');
+                        checkmark.style.opacity = embeddedConnectedVisible ? '1' : '0.3';
+                        updateLayerVisibility();
+                    });
+                }
+                
+                // Add click handler for embedded capacity Accepted toggle
+                const acceptedToggle = document.getElementById('toggle-embedded-accepted');
+                if (acceptedToggle) {
+                    acceptedToggle.addEventListener('click', function() {
+                        embeddedAcceptedVisible = !embeddedAcceptedVisible;
+                        const checkmark = this.querySelector('.layer-toggle-check');
+                        checkmark.style.opacity = embeddedAcceptedVisible ? '1' : '0.3';
+                        updateLayerVisibility();
+                    });
+                }
+                
+                // Add click handler for infrastructure projects toggle
+                const infraToggle = document.getElementById('toggle-infrastructure-projects');
+                if (infraToggle) {
+                    infraToggle.addEventListener('click', function() {
+                        infrastructureProjectsVisible = !infrastructureProjectsVisible;
+                        const checkmark = this.querySelector('.layer-toggle-check');
+                        checkmark.style.opacity = infrastructureProjectsVisible ? '1' : '0.3';
+                        updateLayerVisibility();
+                    });
+                }
+                
+                // Initialize embedded capacity date slider
+                const embeddedDateSliderEl = document.getElementById('embedded-date-slider');
+                if (embeddedDateSliderEl && typeof noUiSlider !== 'undefined') {
+                    // Initialize with placeholder values (will be updated after data loads)
+                    noUiSlider.create(embeddedDateSliderEl, {
+                        start: [Date.now()],
+                        connect: [true, false],
+                        range: {
+                            'min': Date.now() - (365 * 24 * 60 * 60 * 1000 * 30), // 30 years ago
+                            'max': Date.now() + (365 * 24 * 60 * 60 * 1000 * 15)  // 15 years in future
+                        },
+                        step: 24 * 60 * 60 * 1000 * 30  // ~1 month steps
+                    });
+                    
+                    embeddedDateSliderEl.noUiSlider.on('update', function(values) {
+                        const timestamp = parseInt(values[0]);
+                        const displayEl = document.getElementById('embedded-date-display');
+                        if (displayEl) {
+                            displayEl.textContent = formatDateDisplay(timestamp);
+                        }
+                    });
+                    
+                    embeddedDateSliderEl.noUiSlider.on('change', function(values) {
+                        embeddedDateFilter = parseInt(values[0]);
+                        rebuildEmbeddedCapacityMarkers();
+                        rebuildInfrastructureProjectMarkers();  // Also rebuild infrastructure projects
+                    });
+                }
+                
+                // Add click handlers for resource type toggles
+                const resourceTypeToggles = document.querySelectorAll('.resource-type-toggle');
+                resourceTypeToggles.forEach(toggle => {
+                    toggle.addEventListener('click', function() {
+                        const resourceType = this.dataset.type;
+                        if (visibleResourceTypes.has(resourceType)) {
+                            visibleResourceTypes.delete(resourceType);
+                            this.classList.add('hidden');
+                        } else {
+                            visibleResourceTypes.add(resourceType);
+                            this.classList.remove('hidden');
+                        }
+                        rebuildEmbeddedCapacityMarkers();
+                    });
+                });
+                
+                // Location search functionality
+                const locationSearchInput = document.getElementById('location-search-input');
+                const locationSearchResults = document.getElementById('location-search-results');
+                const locationSearchClear = document.getElementById('location-search-clear');
+                let searchTimeout = null;
+                let searchMarker = null;
+                
+                if (locationSearchInput && locationSearchResults && locationSearchClear) {
+                    // Clear button functionality
+                    locationSearchClear.addEventListener('click', function() {
+                        locationSearchInput.value = '';
+                        locationSearchResults.classList.remove('visible');
+                        locationSearchClear.classList.remove('visible');
+                        if (searchMarker) {
+                            map.removeLayer(searchMarker);
+                            searchMarker = null;
+                        }
+                    });
+                    
+                    // Update clear button visibility based on input
+                    locationSearchInput.addEventListener('input', function() {
+                        const query = this.value.trim();
+                        
+                        // Show/hide clear button
+                        if (query.length > 0) {
+                            locationSearchClear.classList.add('visible');
+                        } else {
+                            locationSearchClear.classList.remove('visible');
+                            locationSearchResults.classList.remove('visible');
+                        }
+                        
+                        // Debounce search
+                        if (searchTimeout) {
+                            clearTimeout(searchTimeout);
+                        }
+                        
+                        if (query.length >= 3) {
+                            // Show loading state
+                            locationSearchResults.innerHTML = '<div class="location-search-loading">Searching</div>';
+                            locationSearchResults.classList.add('visible');
+                            
+                            searchTimeout = setTimeout(() => {
+                                performLocationSearch(query);
+                            }, 300);
+                        } else {
+                            locationSearchResults.classList.remove('visible');
+                        }
+                    });
+                    
+                    // Hide results when clicking outside
+                    document.addEventListener('click', function(e) {
+                        if (!e.target.closest('.location-search')) {
+                            locationSearchResults.classList.remove('visible');
+                        }
+                    });
+                    
+                    // Show results on focus if there's content
+                    locationSearchInput.addEventListener('focus', function() {
+                        if (this.value.trim().length >= 3 && locationSearchResults.innerHTML && !locationSearchResults.innerHTML.includes('location-search-loading')) {
+                            locationSearchResults.classList.add('visible');
+                        }
+                    });
+                    
+                    // Perform location search using Nominatim
+                    async function performLocationSearch(query) {
+                        try {
+                            // Bias search towards UK
+                            const params = new URLSearchParams({
+                                q: query,
+                                format: 'json',
+                                addressdetails: '1',
+                                limit: '6',
+                                countrycodes: 'gb',
+                                viewbox: '-8.0,49.5,2.0,59.0',
+                                bounded: '0'
+                            });
+                            
+                            const response = await fetch(`https://nominatim.openstreetmap.org/search?${params}`, {
+                                headers: {
+                                    'Accept': 'application/json'
+                                }
+                            });
+                            
+                            if (!response.ok) {
+                                throw new Error('Search failed');
+                            }
+                            
+                            const results = await response.json();
+                            displaySearchResults(results);
+                        } catch (error) {
+                            console.error('Location search error:', error);
+                            locationSearchResults.innerHTML = '<div class="location-search-no-results">Search failed. Please try again.</div>';
+                        }
+                    }
+                    
+                    // Display search results
+                    function displaySearchResults(results) {
+                        if (results.length === 0) {
+                            locationSearchResults.innerHTML = '<div class="location-search-no-results">No locations found</div>';
+                            return;
+                        }
+                        
+                        const html = results.map(result => {
+                            // Extract meaningful name and address
+                            const address = result.address || {};
+                            let name = result.name || address.road || address.village || address.town || address.city || 'Unknown';
+                            
+                            // Build display address
+                            const addressParts = [];
+                            if (address.road && address.road !== name) addressParts.push(address.road);
+                            if (address.village) addressParts.push(address.village);
+                            if (address.town && address.town !== address.village) addressParts.push(address.town);
+                            if (address.city && address.city !== address.town) addressParts.push(address.city);
+                            if (address.county) addressParts.push(address.county);
+                            if (address.postcode) addressParts.push(address.postcode);
+                            
+                            const displayAddress = addressParts.slice(0, 3).join(', ');
+                            
+                            return `
+                                <div class="location-search-result" 
+                                     data-lat="${result.lat}" 
+                                     data-lon="${result.lon}"
+                                     data-name="${name.replace(/"/g, '&quot;')}">
+                                    <div class="location-search-result-name">${name}</div>
+                                    <div class="location-search-result-address">${displayAddress}</div>
+                                </div>
+                            `;
+                        }).join('');
+                        
+                        locationSearchResults.innerHTML = html;
+                        
+                        // Add click handlers to results
+                        locationSearchResults.querySelectorAll('.location-search-result').forEach(resultEl => {
+                            resultEl.addEventListener('click', function() {
+                                const lat = parseFloat(this.dataset.lat);
+                                const lon = parseFloat(this.dataset.lon);
+                                const name = this.dataset.name;
+                                
+                                selectSearchResult(lat, lon, name);
+                            });
+                        });
+                    }
+                    
+                    // Handle selection of a search result
+                    function selectSearchResult(lat, lon, name) {
+                        // Remove existing search marker if any
+                        if (searchMarker) {
+                            map.removeLayer(searchMarker);
+                        }
+                        
+                        // Create a marker at the selected location
+                        searchMarker = L.marker([lat, lon], {
+                            icon: L.divIcon({
+                                className: 'search-location-marker',
+                                html: `<div style="
+                                    width: 8px;
+                                    height: 8px;
+                                    background: #0f1112;
+                                    transform: translate(-50%, -50%);
+                                "></div>`,
+                                iconSize: [8, 8],
+                                iconAnchor: [4, 4]
+                            })
+                        }).addTo(map);
+                        
+                        // Add popup to marker
+                        searchMarker.bindPopup(`
+                            <div class="popup-content">
+                                <strong>${name}</strong>
+                            </div>
+                        `).openPopup();
+                        
+                        // Pan and zoom to the location
+                        map.setView([lat, lon], 15);
+                        
+                        // Update input and hide results
+                        locationSearchInput.value = name;
+                        locationSearchResults.classList.remove('visible');
+                    }
+                }
+                
             }, 100);
             
             // Initialize the slider after the panel is added to DOM
@@ -4791,22 +5759,52 @@
             // Default one-off POC on map click (lightweight alternative to POC mode)
             map.on('click', handleSinglePOCClick);
             
-            // Add zoom handler to update substation marker sizes
-            map.on('zoomend', updateSubstationSizes);
+            // Add zoom handler to update embedded capacity and infrastructure marker sizes
+            map.on('zoomend', () => {
+                updateEmbeddedCapacitySizes();
+                updateInfrastructureProjectSizes();
+            });
             
             // Initial size update
-            updateSubstationSizes();
+            updateEmbeddedCapacitySizes();
+            updateInfrastructureProjectSizes();
+            
+            // Update embedded date slider with actual data range
+            updateEmbeddedDateSlider();
             
             // Hide loading overlay
             document.getElementById('loading').classList.add('hidden');
         }
+        
+        // Update the embedded date slider with actual data range
+        function updateEmbeddedDateSlider() {
+            const sliderEl = document.getElementById('embedded-date-slider');
+            const rangeEl = document.getElementById('embedded-date-range');
+            
+            if (sliderEl && sliderEl.noUiSlider && embeddedDateMin && embeddedDateMax) {
+                // Update slider range
+                sliderEl.noUiSlider.updateOptions({
+                    range: {
+                        'min': embeddedDateMin,
+                        'max': embeddedDateMax
+                    },
+                    start: [embeddedDateFilter || embeddedDateMax]
+                });
+                
+                // Update range display
+                if (rangeEl) {
+                    rangeEl.textContent = `${formatDateDisplay(embeddedDateMin)} - ${formatDateDisplay(embeddedDateMax)}`;
+                }
+            }
+        }
 
         // Load all layers
         async function init() {
-            // Load cable layers and substations in parallel
+            // Load cable layers, embedded capacity, and infrastructure projects in parallel
             await Promise.all([
                 ...LAYERS.map(loadLayer),
-                loadAllSubstations()
+                loadEmbeddedCapacityLayer(),
+                loadInfrastructureProjectsLayer()
             ]);
         }
 
