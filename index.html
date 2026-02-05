@@ -1795,6 +1795,36 @@
             background: #e5e7eb;
         }
         
+        .poc-action-btn.route {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+        
+        .poc-action-btn.route:hover {
+            background: #bfdbfe;
+        }
+        
+        .poc-action-btn.route.active {
+            background: #1d4ed8;
+            color: white;
+        }
+        
+        .poc-action-btn.route:disabled {
+            background: #e5e7eb;
+            color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        /* Waypoints info */
+        .poc-waypoints-info {
+            font-size: 10px;
+            color: #1d4ed8;
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
         /* Loading state */
         .poc-loading {
             text-align: center;
@@ -2125,6 +2155,24 @@
             isInfrastructureProjects: true
         };
         
+        // Pole/Tower layer configurations - point features that represent connection points
+        // Note: 33kV poles dataset is too large, so only 132kV poles are loaded
+        const POLE_TOWER_LAYERS = [
+            {
+                name: '132kV Poles',
+                file: 'ukpn-132kv-poles-towers.geojson',
+                voltage: '132kV',
+                color: '#f97316',  // Orange (matches 132kV cables)
+                mvaMin: 20,
+                mvaMax: 100
+            }
+        ];
+        
+        // Store pole/tower data for POC snapping
+        const poleTowerData = {};  // { '33kV': [features...], '132kV': [features...] }
+        let poleTowerLayerGroups = {};  // Leaflet layer groups by voltage
+        let polesTowersVisible = false;  // Toggle state for poles/towers layer (default OFF)
+        
         // Base radius for markers at zoom level 12 (will scale with zoom)
         const MARKER_BASE_RADIUS = 8;
         const MARKER_MIN_RADIUS = 2;
@@ -2242,8 +2290,8 @@
         // Cache for loaded GeoJSON files (to avoid reloading same file)
         const geoJSONCache = {};
         
-        // Total layers to load (cables + embedded capacity + infrastructure projects)
-        const TOTAL_LAYERS = LAYERS.length + 2; // Cable layers + 1 embedded capacity + 1 infrastructure projects
+        // Total layers to load (cables + embedded capacity + infrastructure projects + pole/tower layers)
+        const TOTAL_LAYERS = LAYERS.length + 2 + POLE_TOWER_LAYERS.length; // Cable layers + 1 embedded capacity + 1 infrastructure projects + pole/tower layers
 
         // Create popup content for cables
         function createPopupContent(properties, layerConfig) {
@@ -2524,6 +2572,36 @@
                         const capacity = marker._embeddedCapacity || 1;
                         const sizeMultiplier = getCapacitySizeMultiplier(capacity);
                         marker.setIcon(createEmbeddedCapacityIcon(baseSize, status, borderWidth, sizeMultiplier));
+                    }
+                });
+            });
+        }
+        
+        // Update pole/tower marker sizes based on zoom
+        function updatePoleTowerSizes() {
+            const zoom = map.getZoom();
+            // Scale size: 6px at zoom 6, 8px at zoom 12, 12px at zoom 16+
+            const baseSize = Math.min(12, Math.max(6, 6 + (zoom - 6) * 0.5));
+            const borderWidth = zoom >= 14 ? 2 : (zoom >= 10 ? 1.5 : 1);
+            
+            POLE_TOWER_LAYERS.forEach(layerConfig => {
+                const layerGroup = poleTowerLayerGroups[layerConfig.voltage];
+                if (!layerGroup) return;
+                
+                layerGroup.eachLayer(marker => {
+                    if (marker.setIcon) {
+                        marker.setIcon(L.divIcon({
+                            className: '',
+                            html: `<div style="
+                                width: ${baseSize}px;
+                                height: ${baseSize}px;
+                                background: transparent;
+                                border: ${borderWidth}px solid ${layerConfig.color};
+                                opacity: 0.8;
+                            "></div>`,
+                            iconSize: [baseSize, baseSize],
+                            iconAnchor: [baseSize/2, baseSize/2]
+                        }));
                     }
                 });
             });
@@ -2830,6 +2908,34 @@
                 }
             });
             
+            // Update pole/tower layers visibility based on toggle AND MVA filter
+            POLE_TOWER_LAYERS.forEach(layerConfig => {
+                const layerGroup = poleTowerLayerGroups[layerConfig.voltage];
+                if (!layerGroup) return;
+                
+                const voltageInRange = rangesOverlap(filterMin, filterMax, layerConfig.mvaMin, layerConfig.mvaMax);
+                const shouldShow = polesTowersVisible && voltageInRange;
+                
+                if (shouldShow) {
+                    if (!map.hasLayer(layerGroup)) {
+                        map.addLayer(layerGroup);
+                    }
+                } else {
+                    if (map.hasLayer(layerGroup)) {
+                        map.removeLayer(layerGroup);
+                    }
+                }
+            });
+            
+            // Update poles/towers toggle indicator
+            const polesTowersToggle = document.getElementById('toggle-poles-towers');
+            if (polesTowersToggle) {
+                if (polesTowersVisible) {
+                    polesTowersToggle.classList.remove('hidden');
+                } else {
+                    polesTowersToggle.classList.add('hidden');
+                }
+            }
             
             // Update embedded capacity layers by voltage and status
             let anyConnectedVisible = false;
@@ -3393,6 +3499,31 @@
                     } catch (e) {}
                 });
             });
+            
+            // For each voltage result, try to snap to a nearby pole/tower (only if poles layer is enabled)
+            if (polesTowersVisible) {
+                const sitePointForSnap = turf.point([lng, lat]);
+                Object.keys(nearestMap).forEach(voltage => {
+                    const cableResult = nearestMap[voltage];
+                    if (!cableResult) return;
+                    
+                    // Look for a pole/tower within 200m of the cable point
+                    const nearestPole = findNearestPoleTower(cableResult.lat, cableResult.lng, voltage, 200);
+                    
+                    if (nearestPole) {
+                        // Recalculate distance from site to pole
+                        const polePoint = turf.point([nearestPole.lng, nearestPole.lat]);
+                        const distanceFromSite = turf.distance(sitePointForSnap, polePoint, { units: 'meters' });
+                        
+                        // Update result to snap to pole/tower
+                        cableResult.lat = nearestPole.lat;
+                        cableResult.lng = nearestPole.lng;
+                        cableResult.distance = distanceFromSite;
+                        cableResult.type = 'Pole/Tower';
+                        cableResult.poleInfo = nearestPole.properties;
+                    }
+                });
+            }
             
             // Convert map to results array, sorted by distance
             // Then pick the 2 nearest with DIFFERENT voltages
@@ -4019,6 +4150,9 @@
             Object.values(obstacleOverlays).forEach(overlays => {
                 overlays.forEach(o => map.removeLayer(o));
             });
+            // Clear routed paths
+            clearAllRoutedPaths();
+            
             pocMarkers = {};
             pocLines = {};
             pocWaypointMarkers = {};
@@ -4132,6 +4266,210 @@
                 
                 pocWaypointMarkers[poc.id].push(wpMarker);
             });
+        }
+        
+        // Storage for routed paths (separate from manual waypoints)
+        let routedPaths = {};  // Map of POC ID to { coordinates: [[lat, lng], ...], distance: meters }
+        let routedPathLines = {};  // Map of POC ID to Leaflet polyline(s)
+        let routeWaypointMarkers = {};  // Map of POC ID to array of via waypoint markers
+        
+        // Calculate distance between two points using turf
+        function calculateStraightLineDistance(lat1, lng1, lat2, lng2) {
+            const from = turf.point([lng1, lat1]);
+            const to = turf.point([lng2, lat2]);
+            return turf.distance(from, to, { units: 'meters' });
+        }
+        
+        // Calculate route along public roads using OSRM
+        // The route is converted to waypoints for the regular POC line system
+        async function calculateRoadRoute(pocId) {
+            const site = sites.find(s => s.id === currentSiteId);
+            if (!site) return;
+            
+            const poc = site.pocs.find(p => p.id === pocId);
+            if (!poc) return;
+            
+            // Set loading state
+            poc.routeLoading = true;
+            renderSidePanel();
+            
+            try {
+                // Build waypoints string: start to end
+                const waypointsStr = `${site.lng},${site.lat};${poc.lng},${poc.lat}`;
+                
+                // Use OSRM public demo server for routing
+                const response = await fetch(
+                    `https://router.project-osrm.org/route/v1/driving/${waypointsStr}?overview=full&geometries=geojson`,
+                    { headers: { 'User-Agent': 'POC-Finder-App' } }
+                );
+                
+                if (!response.ok) {
+                    throw new Error('Routing service unavailable');
+                }
+                
+                const data = await response.json();
+                
+                if (data.code !== 'Ok' || !data.routes || data.routes.length === 0) {
+                    throw new Error('No route found');
+                }
+                
+                const route = data.routes[0];
+                const routeCoords = route.geometry.coordinates.map(coord => [coord[1], coord[0]]); // [lat, lng]
+                let roadDistance = route.distance; // in meters
+                
+                // Get the snapped waypoints from OSRM (where the route actually starts/ends on the road)
+                const waypoints = data.waypoints || [];
+                const routeStart = waypoints[0]?.location; // [lng, lat]
+                const routeEnd = waypoints[waypoints.length - 1]?.location; // [lng, lat]
+                
+                // Build complete path with off-road extensions if needed
+                let fullCoordinates = [];
+                let totalDistance = roadDistance;
+                let offRoadStartDist = 0;
+                let offRoadEndDist = 0;
+                
+                // Check if site is off-road (route doesn't start at site location)
+                if (routeStart) {
+                    const siteToRoadStart = calculateStraightLineDistance(
+                        site.lat, site.lng, 
+                        routeStart[1], routeStart[0]
+                    );
+                    // If site is more than 10m from road start, add straight line connector
+                    if (siteToRoadStart > 10) {
+                        fullCoordinates.push([site.lat, site.lng]);
+                        offRoadStartDist = siteToRoadStart;
+                        totalDistance += siteToRoadStart;
+                    }
+                }
+                
+                // Add the road route coordinates
+                fullCoordinates = fullCoordinates.concat(routeCoords);
+                
+                // Check if POC is off-road (route doesn't end at POC location)
+                if (routeEnd) {
+                    const roadEndToPOC = calculateStraightLineDistance(
+                        routeEnd[1], routeEnd[0],
+                        poc.lat, poc.lng
+                    );
+                    // If POC is more than 10m from road end, add straight line connector
+                    if (roadEndToPOC > 10) {
+                        fullCoordinates.push([poc.lat, poc.lng]);
+                        offRoadEndDist = roadEndToPOC;
+                        totalDistance += roadEndToPOC;
+                    }
+                }
+                
+                // Simplify the route to reduce waypoints while maintaining general shape
+                // Uses Ramer-Douglas-Peucker algorithm via Turf.js
+                // Tolerance of 0.00015 (~15m) provides good balance between accuracy and simplicity
+                const originalPointCount = fullCoordinates.length;
+                let simplifiedCoords = fullCoordinates;
+                
+                if (fullCoordinates.length > 3) {
+                    // Convert to GeoJSON format for Turf (lng, lat)
+                    const lineForSimplify = turf.lineString(
+                        fullCoordinates.map(c => [c[1], c[0]])
+                    );
+                    
+                    // Simplify with tolerance (in degrees, ~0.00015 = ~15 meters)
+                    const simplified = turf.simplify(lineForSimplify, {
+                        tolerance: 0.00015,
+                        highQuality: true
+                    });
+                    
+                    // Convert back to [lat, lng] format
+                    simplifiedCoords = simplified.geometry.coordinates.map(c => [c[1], c[0]]);
+                    
+                    // Ensure we still have the exact start and end points
+                    simplifiedCoords[0] = fullCoordinates[0];
+                    simplifiedCoords[simplifiedCoords.length - 1] = fullCoordinates[fullCoordinates.length - 1];
+                    
+                    console.log(`Route simplified: ${originalPointCount} points → ${simplifiedCoords.length} points`);
+                }
+                
+                // Convert simplified route coordinates to waypoints for the regular POC line system
+                // Skip the first point (site) and last point (POC) as those are the endpoints
+                // The simplifiedCoords are in [lat, lng] format
+                const newWaypoints = [];
+                for (let i = 1; i < simplifiedCoords.length - 1; i++) {
+                    newWaypoints.push({
+                        lat: simplifiedCoords[i][0],
+                        lng: simplifiedCoords[i][1]
+                    });
+                }
+                
+                // Replace the POC's waypoints with the route waypoints
+                poc.waypoints = newWaypoints;
+                
+                // Recalculate distance based on simplified path for accuracy
+                poc.distance = calculatePathDistance(site, poc);
+                
+                // Clear any existing route-specific data (we're converting to regular line)
+                delete poc.routedDistance;
+                delete poc.routedPath;
+                delete poc.roadDistance;
+                delete poc.offRoadStartDist;
+                delete poc.offRoadEndDist;
+                delete poc.routeViaPoints;
+                delete poc.routeAvoidMotorway;
+                delete poc.routeAvoidToll;
+                delete poc.routeAvoidFerry;
+                delete routedPaths[pocId];
+                
+                // Remove any existing routed path visuals
+                if (routedPathLines[pocId]) {
+                    if (Array.isArray(routedPathLines[pocId])) {
+                        routedPathLines[pocId].forEach(line => map.removeLayer(line));
+                    } else {
+                        map.removeLayer(routedPathLines[pocId]);
+                    }
+                    delete routedPathLines[pocId];
+                }
+                if (routeWaypointMarkers[pocId]) {
+                    routeWaypointMarkers[pocId].forEach(m => map.removeLayer(m));
+                    delete routeWaypointMarkers[pocId];
+                }
+                
+                poc.routeLoading = false;
+                
+                saveSitesToStorage();
+                
+                // Rebuild the regular POC line with the new waypoints
+                rebuildPOCLine(site, poc);
+                
+                // Recalculate obstacles for the new path
+                recalculatePOCObstacles(site, poc);
+                
+                // Update side panel
+                renderSidePanel();
+                
+            } catch (error) {
+                console.error('Error calculating route:', error);
+                poc.routeLoading = false;
+                poc.routeError = error.message;
+                renderSidePanel();
+                
+                // Show user-friendly error
+                alert(`Could not calculate route: ${error.message}. The routing service may be temporarily unavailable.`);
+            }
+        }
+        
+        // Clear all routed path visuals
+        function clearAllRoutedPaths() {
+            Object.values(routedPathLines).forEach(lineOrLines => {
+                if (Array.isArray(lineOrLines)) {
+                    lineOrLines.forEach(line => map.removeLayer(line));
+                } else {
+                    map.removeLayer(lineOrLines);
+                }
+            });
+            routedPathLines = {};
+            
+            // Clear all waypoint markers
+            Object.values(routeWaypointMarkers).forEach(markers => {
+                markers.forEach(m => map.removeLayer(m));
+            });
+            routeWaypointMarkers = {};
         }
         
         // Check obstacles for a POC on demand (triggered by button click)
@@ -4381,6 +4719,7 @@
                     const cacheData = obstaclesCache[poc.id];
                     drawObstacleVisualsForPOC(poc, cacheData, cacheData.crossings || []);
                 }
+                
             });
         }
         
@@ -4550,18 +4889,42 @@
                     ? `<button class="poc-action-btn" onclick="checkPOCObstacles('${poc.id}')">Check Obstacles</button>`
                     : '';
                 
+                // Route planning button - always available to (re)calculate road route
+                const isRouteLoading = poc.routeLoading;
+                const hasWaypoints = poc.waypoints && poc.waypoints.length > 0;
+                let routeBtn = '';
+                if (isRouteLoading) {
+                    routeBtn = `<button class="poc-action-btn route" disabled>Planning...</button>`;
+                } else {
+                    const btnText = hasWaypoints ? 'Replan Route' : 'Plan Route';
+                    routeBtn = `<button class="poc-action-btn route" onclick="calculateRoadRoute('${poc.id}')" title="Calculate cable route following public roads (replaces current waypoints)">${btnText}</button>`;
+                }
+                
+                // Waypoints info
+                let waypointsInfoHTML = '';
+                if (hasWaypoints) {
+                    waypointsInfoHTML = `<div class="poc-waypoints-info">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:14px;height:14px;flex-shrink:0;">
+                            <path d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l5.447 2.724A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/>
+                        </svg>
+                        <span>${poc.waypoints.length} waypoint${poc.waypoints.length > 1 ? 's' : ''}</span>
+                    </div>`;
+                }
+                
                 return `
                     <div class="poc-card${hasObstacles ? ' has-crossings' : ''}">
                         <div class="poc-card-header">
                             <div class="poc-voltage-badge" style="background: ${color}">${poc.voltage}</div>
                             <div class="poc-card-info">
                                 <div class="poc-power-range">${poc.powerMin} – ${poc.powerMax} MVA</div>
-                                <div class="poc-card-distance">${formatDistance(poc.distance)}${poc.routedDistance ? ` / ${formatDistance(poc.routedDistance)} routed` : ''}</div>
+                                <div class="poc-card-distance">${formatDistance(poc.distance)}${hasWaypoints ? ' (routed)' : ''}</div>
                                 <div class="poc-card-type">${poc.type}${poc.isCustom ? ' <span class="poc-custom-badge">Custom</span>' : ''}</div>
                             </div>
                         </div>
+                        ${waypointsInfoHTML}
                         ${obstacleHTML}
                         <div class="poc-card-actions">
+                            ${routeBtn}
                             ${checkObstaclesBtn}
                             <button class="poc-action-btn reject" onclick="removePOC('${poc.id}')">Remove</button>
                         </div>
@@ -4628,6 +4991,25 @@
             
             // Clear obstacle cache for this POC
             delete obstaclesCache[pocId];
+            
+            // Clear routed path for this POC
+            if (routedPathLines[pocId]) {
+                const lineOrLines = routedPathLines[pocId];
+                if (Array.isArray(lineOrLines)) {
+                    lineOrLines.forEach(line => map.removeLayer(line));
+                } else {
+                    map.removeLayer(lineOrLines);
+                }
+                delete routedPathLines[pocId];
+            }
+            
+            // Clear route waypoint markers for this POC
+            if (routeWaypointMarkers[pocId]) {
+                routeWaypointMarkers[pocId].forEach(m => map.removeLayer(m));
+                delete routeWaypointMarkers[pocId];
+            }
+            
+            delete routedPaths[pocId];
             
             // Redraw visuals and panel
             clearPOCVisuals();
@@ -4758,7 +5140,6 @@
         
         // Delete a site
         function deleteSite(siteId) {
-            if (!confirm('Delete this site and all its POCs?')) return;
             
             // Remove marker
             if (siteMarkers[siteId]) {
@@ -5059,6 +5440,30 @@
                     }
                 });
             });
+            
+            // For each voltage with a result, try to snap to a nearby pole/tower (only if poles layer is enabled)
+            if (polesTowersVisible) {
+                Object.keys(nearestPerVoltage).forEach(voltage => {
+                    const cableResult = nearestPerVoltage[voltage];
+                    if (!cableResult) return;
+                    
+                    // Look for a pole/tower within 200m of the cable point
+                    const nearestPole = findNearestPoleTower(cableResult.lat, cableResult.lng, voltage, 200);
+                    
+                    if (nearestPole) {
+                        // Recalculate distance from site to pole
+                        const polePoint = turf.point([nearestPole.lng, nearestPole.lat]);
+                        const distanceFromSite = turf.distance(sitePoint, polePoint, { units: 'meters' });
+                        
+                        // Update result to snap to pole/tower
+                        cableResult.lat = nearestPole.lat;
+                        cableResult.lng = nearestPole.lng;
+                        cableResult.distance = distanceFromSite;
+                        cableResult.type = 'Pole/Tower';
+                        cableResult.poleInfo = nearestPole.properties;
+                    }
+                });
+            }
             
             return {
                 nearestPerVoltage
@@ -5384,6 +5789,16 @@
                             </div>
                         </div>
                     </div>
+                    
+                    <div class="active-layers" style="margin-top: 8px;">
+                        <div class="active-layers-title">Connection Points</div>
+                        <div class="layer-indicator layer-toggle hidden" id="toggle-poles-towers" style="cursor: pointer;">
+                            <span class="layer-dot" style="background: transparent; border: 2px solid #f97316; width: 8px; height: 8px;"></span>
+                            <span>132kV Poles/Towers</span>
+                            <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
+                        </div>
+                        <div style="font-size: 10px; color: #9ca3af; padding: 4px 0 0 14px;">POC finder snaps to poles when enabled</div>
+                    </div>
                 `;
                 
                 // Prevent map interactions when using the slider
@@ -5458,6 +5873,17 @@
                         infrastructureProjectsVisible = !infrastructureProjectsVisible;
                         const checkmark = this.querySelector('.layer-toggle-check');
                         checkmark.style.opacity = infrastructureProjectsVisible ? '1' : '0.3';
+                        updateLayerVisibility();
+                    });
+                }
+                
+                // Add click handler for poles/towers toggle
+                const polesTowersToggle = document.getElementById('toggle-poles-towers');
+                if (polesTowersToggle) {
+                    polesTowersToggle.addEventListener('click', function() {
+                        polesTowersVisible = !polesTowersVisible;
+                        const checkmark = this.querySelector('.layer-toggle-check');
+                        checkmark.style.opacity = polesTowersVisible ? '1' : '0.3';
                         updateLayerVisibility();
                     });
                 }
@@ -5759,15 +6185,17 @@
             // Default one-off POC on map click (lightweight alternative to POC mode)
             map.on('click', handleSinglePOCClick);
             
-            // Add zoom handler to update embedded capacity and infrastructure marker sizes
+            // Add zoom handler to update embedded capacity, infrastructure, and pole/tower marker sizes
             map.on('zoomend', () => {
                 updateEmbeddedCapacitySizes();
                 updateInfrastructureProjectSizes();
+                updatePoleTowerSizes();
             });
             
             // Initial size update
             updateEmbeddedCapacitySizes();
             updateInfrastructureProjectSizes();
+            updatePoleTowerSizes();
             
             // Update embedded date slider with actual data range
             updateEmbeddedDateSlider();
@@ -5798,13 +6226,112 @@
             }
         }
 
+        // Load pole/tower layer
+        async function loadPoleTowerLayer(layerConfig) {
+            try {
+                const response = await fetch(layerConfig.file);
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                const data = await response.json();
+                
+                // Store data for POC snapping
+                poleTowerData[layerConfig.voltage] = data.features || [];
+                
+                // Create layer group for this voltage
+                const layerGroup = L.layerGroup();
+                poleTowerLayerGroups[layerConfig.voltage] = layerGroup;
+                
+                // Create markers for each pole/tower
+                data.features.forEach(feature => {
+                    if (!feature.geometry || feature.geometry.type !== 'Point') return;
+                    
+                    const coords = feature.geometry.coordinates;
+                    const props = feature.properties || {};
+                    
+                    // Create small transparent box marker with voltage-colored outline
+                    const marker = L.marker([coords[1], coords[0]], {
+                        icon: L.divIcon({
+                            className: '',
+                            html: `<div style="
+                                width: 8px;
+                                height: 8px;
+                                background: transparent;
+                                border: 2px solid ${layerConfig.color};
+                                opacity: 0.8;
+                            "></div>`,
+                            iconSize: [8, 8],
+                            iconAnchor: [4, 4]
+                        })
+                    });
+                    
+                    // Add popup with pole info
+                    const poleType = props.ob_class || 'Pole/Tower';
+                    const routeName = props.route_name || 'Unknown';
+                    const poleNum = props.pole_num || 'N/A';
+                    marker.bindPopup(`
+                        <div class="popup-content">
+                            <span class="voltage-badge" style="background-color: ${layerConfig.color}">${layerConfig.voltage}</span>
+                            <div><strong>Type:</strong> ${poleType}</div>
+                            <div><strong>Route:</strong> ${routeName}</div>
+                            <div><strong>Pole #:</strong> ${poleNum}</div>
+                        </div>
+                    `);
+                    
+                    layerGroup.addLayer(marker);
+                });
+                
+                // Don't add to map initially - layer starts hidden (polesTowersVisible = false)
+                // Layer will be added when user enables it via the toggle
+                
+                loadedCount++;
+                updateProgress();
+                return true;
+            } catch (error) {
+                console.error(`Failed to load ${layerConfig.name}:`, error);
+                loadedCount++;
+                updateProgress();
+                return false;
+            }
+        }
+        
+        // Find nearest pole/tower to a given point for a specific voltage
+        function findNearestPoleTower(lat, lng, voltage, maxDistanceMeters = 200) {
+            const features = poleTowerData[voltage];
+            if (!features || features.length === 0) return null;
+            
+            const targetPoint = turf.point([lng, lat]);
+            let nearestPole = null;
+            let nearestDistance = Infinity;
+            
+            features.forEach(feature => {
+                if (!feature.geometry || feature.geometry.type !== 'Point') return;
+                
+                const polePoint = turf.point(feature.geometry.coordinates);
+                const distance = turf.distance(targetPoint, polePoint, { units: 'meters' });
+                
+                if (distance < nearestDistance && distance <= maxDistanceMeters) {
+                    nearestDistance = distance;
+                    nearestPole = {
+                        lat: feature.geometry.coordinates[1],
+                        lng: feature.geometry.coordinates[0],
+                        distance: distance,
+                        properties: feature.properties
+                    };
+                }
+            });
+            
+            return nearestPole;
+        }
+
         // Load all layers
         async function init() {
-            // Load cable layers, embedded capacity, and infrastructure projects in parallel
+            // Load cable layers, embedded capacity, infrastructure projects, and pole/tower layers in parallel
             await Promise.all([
                 ...LAYERS.map(loadLayer),
                 loadEmbeddedCapacityLayer(),
-                loadInfrastructureProjectsLayer()
+                loadInfrastructureProjectsLayer(),
+                ...POLE_TOWER_LAYERS.map(loadPoleTowerLayer)
             ]);
         }
 
