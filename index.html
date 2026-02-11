@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UKPN Power Lines Map</title>
+    <title>NPG Power Lines Map</title>
     
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" 
@@ -93,6 +93,14 @@
             height: 4px;
             border-radius: 2px;
             flex-shrink: 0;
+        }
+        
+        /* Zoom controls - 25% smaller */
+        .leaflet-control-zoom a {
+            width: 23px !important;
+            height: 23px !important;
+            line-height: 23px !important;
+            font-size: 14px !important;
         }
         
         /* Loading overlay */
@@ -226,8 +234,15 @@
             font-weight: 500;
         }
         
+        .filter-section {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid #e5e7eb;
+        }
+        
         .slider-container {
-            padding: 6px 6px 14px 6px;
+            padding: 6px 6px 0 6px;
+            margin-bottom: 42px;
         }
         
         /* noUiSlider custom styling */
@@ -1122,7 +1137,7 @@
             margin-top: 12px;
         }
         
-        /* Floating POC Panel (bottom of screen, Figma-style, wide aspect ratio) */
+        /* Floating POC Panel (compact vertical card) */
         .poc-float-panel {
             position: fixed;
             bottom: 20px;
@@ -1131,78 +1146,88 @@
             background: rgba(246, 246, 245, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            padding: 12px 16px;
+            padding: 10px 12px;
             border-radius: 10px;
             box-shadow: 0 8px 32px rgba(15, 17, 18, 0.18), 0 2px 8px rgba(0, 0, 0, 0.08);
             border: 1px solid var(--color-border);
             font-family: 'IBM Plex Mono', monospace;
             z-index: 1002;
             display: none;
+            width: 360px;
         }
         
         .poc-float-panel.visible {
             display: flex;
-            align-items: center;
-            gap: 16px;
+            flex-direction: column;
+            gap: 0;
         }
         
         .poc-float-panel-coords {
-            font-size: 11px;
-            color: #6b7280;
-            min-width: 130px;
-            flex-shrink: 0;
+            font-size: 10px;
+            color: #9ca3af;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            margin-bottom: 4px;
         }
         
         .poc-float-panel-results {
             display: flex;
-            gap: 12px;
-            flex: 1;
+            flex-direction: column;
+            gap: 0;
         }
         
         .poc-float-result {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 8px 12px;
-            background: rgba(255, 255, 255, 0.6);
-            border-radius: 6px;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 5px 4px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+        }
+        
+        .poc-float-result:last-child {
+            border-bottom: none;
         }
         
         .poc-float-result-dot {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             flex-shrink: 0;
         }
         
         .poc-float-result-voltage {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
+            width: 100px;
+            flex-shrink: 0;
         }
         
         .poc-float-result-type {
-            font-size: 11px;
-            color: #6b7280;
+            font-size: 10px;
+            color: #9ca3af;
+            width: 38px;
+            flex-shrink: 0;
         }
         
         .poc-float-result-distance {
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--color-dark);
-            margin-left: 4px;
+            flex: 1;
+            text-align: right;
         }
         
         .poc-float-result-shuffle {
-            padding: 3px 6px;
-            border-radius: 4px;
+            padding: 2px 5px;
+            border-radius: 3px;
             border: 1px solid #e5e7eb;
-            background: #f9fafb;
+            background: transparent;
             font-size: 10px;
             cursor: pointer;
-            color: #6b7280;
+            color: #9ca3af;
             transition: background 0.15s, color 0.15s;
-            margin-left: 4px;
+            flex-shrink: 0;
+            line-height: 1;
         }
         
         .poc-float-result-shuffle:hover {
@@ -1212,18 +1237,22 @@
         
         .poc-float-panel-actions {
             display: flex;
-            gap: 8px;
-            flex-shrink: 0;
+            gap: 6px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(0, 0, 0, 0.06);
+            margin-top: 4px;
         }
         
         .poc-float-btn {
-            padding: 8px 14px;
+            padding: 6px 0;
             border-radius: 6px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             cursor: pointer;
             transition: background 0.15s, transform 0.1s;
             white-space: nowrap;
+            flex: 1;
+            text-align: center;
         }
         
         .poc-float-btn:active {
@@ -1261,9 +1290,10 @@
         }
         
         .poc-float-empty {
-            color: #6b7280;
-            font-size: 12px;
-            padding: 4px 0;
+            color: #9ca3af;
+            font-size: 11px;
+            padding: 8px 0;
+            text-align: center;
         }
         
         /* Side Panel */
@@ -1272,7 +1302,7 @@
             top: 10px;
             right: 10px;
             bottom: 10px;
-            width: 320px;
+            width: 360px;
             background: rgba(246, 246, 245, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
@@ -2054,8 +2084,8 @@
     
     <div class="loading-overlay" id="loading">
         <div class="loading-spinner"></div>
-        <div class="loading-text">Loading power line data...</div>
-        <div class="loading-progress" id="loading-progress">0 / 5 layers loaded</div>
+        <div class="loading-text">Loading NPG network data...</div>
+        <div class="loading-progress" id="loading-progress">0 / 3 data sources loaded</div>
     </div>
     
     <!-- Side Panel for POCs -->
@@ -2098,75 +2128,99 @@
     <script>
         // Configuration
         const CONFIG = {
-            // Map center (roughly center of UKPN coverage area)
-            center: [51.5, 0.1],
-            zoom: 9,
+            // Map center (roughly center of NPG coverage area - Northern England)
+            center: [54.0, -1.5],
+            zoom: 8,
             minZoom: 6,
             maxZoom: 18
         };
 
-        // Layer definitions with colors, file paths, and MVA ranges
-        // UKPN Cable Layers
+        // Layer definitions with colors and MVA ranges (voltage-based layers)
+        // NPG Cable Layers - features are loaded from multiple source files and sorted by voltage
         const LAYERS = [
             {
+                name: 'HV Network',
+                color: '#ef4444',  // Red
+                weight: 1.5,
+                mvaMin: 0.5,
+                mvaMax: 5,
+                voltageVolts: [6600, 11000, 20000]
+            },
+            {
                 name: '33kV',
-                file: 'ukpn-33kv-overhead-lines.geojson',
                 color: '#4ade80',  // Light green
                 weight: 2,
+                mvaMin: 3,
+                mvaMax: 30,
+                voltageVolts: 33000
+            },
+            {
+                name: '66kV',
+                color: '#16a34a',  // Dark green
+                weight: 2,
+                mvaMin: 20,
+                mvaMax: 60,
+                voltageVolts: 66000
+            },
+            {
+                name: '132kV',
+                color: '#f97316',  // Orange
+                weight: 2.5,
+                mvaMin: 20,
+                mvaMax: 100,
+                voltageVolts: 132000
+            }
+        ];
+        
+        // NPG GeoJSON data sources - each file contains features at multiple voltages
+        const DATA_SOURCES = [
+            {
+                file: 'npg-ehv-feeders.geojson',
+                voltageField: 'voltage',       // Field name containing voltage in volts
+                typeField: 'situation'          // OVERHEAD or UNDERGROUND
+            },
+            {
+                file: 'npg-hv-overhead-feeders.geojson',
+                voltageField: 'operating_voltage',
+                typeField: 'line_situation_actual'
+            },
+            {
+                file: 'npg-hv-underground-cables.geojson',
+                voltageField: 'voltage_v',
+                typeField: 'line_situation'
+            }
+        ];
+        
+        // Pole/Tower layer configurations - loaded from supports location file
+        // Supports are loaded lazily (only when toggled on) due to large file size
+        const POLE_TOWER_LAYERS = [
+            {
+                name: '33kV Supports',
+                voltage: '33kV',
+                voltageVolts: 33000,
+                color: '#4ade80',
                 mvaMin: 3,
                 mvaMax: 30
             },
             {
-                name: '66kV',
-                file: 'ukpn-66kv-overhead-lines.geojson',
-                color: '#16a34a',  // Dark green
-                weight: 2,
+                name: '66kV Supports',
+                voltage: '66kV',
+                voltageVolts: 66000,
+                color: '#16a34a',
                 mvaMin: 20,
                 mvaMax: 60
             },
             {
-                name: '132kV',
-                file: 'ukpn-132kv-overhead-lines.geojson',
-                color: '#f97316',  // Orange
-                weight: 2.5,
-                mvaMin: 20,
-                mvaMax: 100
-            }
-        ];
-        
-        
-        // Embedded Capacity Register layer configuration
-        const EMBEDDED_CAPACITY_LAYER = {
-            name: 'Embedded Capacity',
-            file: 'ukpn-embedded-capacity-register.geojson',
-            color: '#8b5cf6',  // Purple
-            mvaMin: 0,
-            mvaMax: 100,
-            isEmbeddedCapacity: true
-        };
-        
-        // Infrastructure Projects (LTDS) layer configuration
-        const INFRASTRUCTURE_PROJECTS_LAYER = {
-            name: 'Infrastructure Projects',
-            file: 'ukpn-ltds-infrastructure-projects.geojson',
-            color: '#f59e0b',  // Amber/orange
-            mvaMin: 0,
-            mvaMax: 100,
-            isInfrastructureProjects: true
-        };
-        
-        // Pole/Tower layer configurations - point features that represent connection points
-        // Note: 33kV poles dataset is too large, so only 132kV poles are loaded
-        const POLE_TOWER_LAYERS = [
-            {
-                name: '132kV Poles',
-                file: 'ukpn-132kv-poles-towers.geojson',
+                name: '132kV Supports',
                 voltage: '132kV',
-                color: '#f97316',  // Orange (matches 132kV cables)
+                voltageVolts: 132000,
+                color: '#f97316',
                 mvaMin: 20,
                 mvaMax: 100
             }
         ];
+        const SUPPORTS_FILE = 'ehv-and-hv-supports-location.geojson';
+        let supportsLoaded = false; // Track if supports data has been loaded
         
         // Store pole/tower data for POC snapping
         const poleTowerData = {};  // { '33kV': [features...], '132kV': [features...] }
@@ -2179,14 +2233,14 @@
         const MARKER_MAX_RADIUS = 12;
         
         // Combined layers for display purposes
-        const ALL_LAYERS = [...LAYERS, EMBEDDED_CAPACITY_LAYER];
+        const ALL_LAYERS = [...LAYERS];
         
-        // Current filter range (default: 10-20 MVA)
+        // Current filter range (default: show all voltage levels)
         let filterMin = 10;
         let filterMax = 20;
         
-        // POC search constants
-        const POC_MAX_DISTANCE_KM = 30;
+        // POC search distance (configurable via slider, default 10km)
+        let POC_MAX_DISTANCE_KM = 10;
         
         // One-off POC click visuals (default mode)
         let singlePocLines = {};
@@ -2215,33 +2269,53 @@
         
         // Voltage levels and their power capacities (MVA)
         const VOLTAGE_POWER_RANGES = {
-            '11kV': { min: 0.3, max: 5, color: '#ef4444' },
+            'HV Network': { min: 0.4, max: 5, color: '#ef4444' },
             '33kV': { min: 3, max: 30, color: '#4ade80' },
             '66kV': { min: 20, max: 60, color: '#16a34a' },
             '132kV': { min: 20, max: 100, color: '#f97316' }
         };
+        
+        // Helper: find voltage layer config by voltage in volts
+        function getVoltageLayerByVolts(volts) {
+            return LAYERS.find(l => 
+                Array.isArray(l.voltageVolts) 
+                    ? l.voltageVolts.includes(volts) 
+                    : l.voltageVolts === volts
+            );
+        }
+        
+        // Helper: convert voltage in volts to display name (e.g., 33000 → '33kV')
+        function voltsToName(volts) {
+            const layer = getVoltageLayerByVolts(volts);
+            return layer ? layer.name : `${volts/1000}kV`;
+        }
         
         // Initialize map
         const map = L.map('map', {
             center: CONFIG.center,
             zoom: CONFIG.zoom,
             minZoom: CONFIG.minZoom,
-            maxZoom: CONFIG.maxZoom
+            maxZoom: CONFIG.maxZoom,
+            preferCanvas: true,  // Use canvas renderer for much faster rendering of large datasets
+            zoomControl: false   // Disable default top-left zoom, we add our own below
         });
+        
+        // Add zoom control to bottom-left
+        L.control.zoom({ position: 'bottomleft' }).addTo(map);
 
         // Base map layers
         const baseMaps = {
             'Light': L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a> | UKPN Network Data',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a> | NPG Network Data',
                 subdomains: 'abcd',
                 maxZoom: 20
             }),
             'Colour': L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | UKPN Network Data',
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors | NPG Network Data',
                 maxZoom: 19
             }),
             'Satellite': L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-                attribution: '&copy; <a href="https://www.esri.com/">Esri</a> | UKPN Network Data',
+                attribution: '&copy; <a href="https://www.esri.com/">Esri</a> | NPG Network Data',
                 maxZoom: 19
             })
         };
@@ -2254,546 +2328,116 @@
 
         // Layer groups for control
         const layerGroups = {};
-        // Embedded capacity layer groups by voltage (for MVA filtering)
-        let embeddedCapacityLayerGroups = {};  // { '11kV': L.layerGroup, '33kV': L.layerGroup, ... }
-        // Separate toggle states for connected vs accepted projects
-        let embeddedConnectedVisible = false;
-        let embeddedAcceptedVisible = false;
         
-        // Infrastructure projects layer groups by voltage
-        let infrastructureProjectsLayerGroups = {};  // { '11kV': L.layerGroup, '33kV': L.layerGroup, ... }
-        let infrastructureProjectsVisible = false;  // Default OFF
-        let infrastructureProjectsFeatures = [];    // Store all features with their data
-        
-        // Embedded capacity filter state
-        let embeddedCapacityFeatures = [];  // Store all features with their data
-        let embeddedDateMin = null;         // Earliest date (timestamp)
-        let embeddedDateMax = null;         // Latest date (timestamp)
-        let embeddedDateFilter = null;      // Current date filter (timestamp), defaults to max
-        let embeddedCapacityMin = 0;        // Min capacity (MW)
-        let embeddedCapacityMax = 500;      // Max capacity (MW)
-        
-        // Resource type filter - all visible by default
-        const RESOURCE_TYPES = ['Solar PV', 'Storage', 'Wind', 'Fossil fuel', 'Biogas', 'Unknown'];
-        let visibleResourceTypes = new Set(RESOURCE_TYPES);
-        
-        // MVA ranges for embedded capacity by voltage (matches cable ranges)
-        const EMBEDDED_CAPACITY_MVA_RANGES = {
-            11: { mvaMin: 0.3, mvaMax: 5 },
-            33: { mvaMin: 3, mvaMax: 30 },
-            66: { mvaMin: 20, mvaMax: 60 },
-            132: { mvaMin: 20, mvaMax: 100 }
-        };
         let loadedCount = 0;
         let allBounds = null;
         
         // Cache for loaded GeoJSON files (to avoid reloading same file)
         const geoJSONCache = {};
         
-        // Total layers to load (cables + embedded capacity + infrastructure projects + pole/tower layers)
-        const TOTAL_LAYERS = LAYERS.length + 2 + POLE_TOWER_LAYERS.length; // Cable layers + 1 embedded capacity + 1 infrastructure projects + pole/tower layers
+        // Total data sources to load (cable data sources only - supports loaded lazily)
+        const TOTAL_LAYERS = DATA_SOURCES.length;
 
         // Create popup content for cables
-        function createPopupContent(properties, layerConfig) {
-            let voltage = properties.voltage || layerConfig.name;
-            const localAuth = properties.local_authority || 'Unknown';
-            let cableType = properties.ob_class || '';
+        function createPopupContent(properties, layerConfig, sourceConfig) {
+            const voltage = layerConfig.name;
+            const situation = properties.situation || properties.line_situation_actual || properties.line_situation || 'Unknown';
+            const circuitName = properties.circuit_name || properties.circuit_id || '';
+            const circuitSection = properties.circuit_section_name || properties.circuit_section_id || '';
             
             return `
                 <div class="popup-content">
                     <span class="voltage-badge" style="background-color: ${layerConfig.color}">${voltage}</span>
-                    <div><strong>Type:</strong> ${cableType}</div>
-                    <div><strong>DNO:</strong> UKPN</div>
-                    ${localAuth !== 'Unknown' ? `<div><strong>Area:</strong> ${localAuth}</div>` : ''}
+                    <div><strong>Type:</strong> ${situation}</div>
+                    <div><strong>DNO:</strong> Northern Powergrid</div>
+                    ${circuitName ? `<div><strong>Circuit:</strong> ${circuitName}</div>` : ''}
+                    ${circuitSection ? `<div><strong>Section:</strong> ${circuitSection}</div>` : ''}
                 </div>
             `;
         }
         
         
-        // Create popup content for embedded capacity features
-        function createEmbeddedCapacityPopupContent(properties) {
-            const customerName = properties.customer_name || 'Unknown';
-            const gsp = properties.grid_supply_point || 'Unknown';
-            const bsp = properties.bulk_supply_point || 'Unknown';
-            const primary = properties.primary || 'Unknown';
-            const voltage = properties.point_of_connection_poc_voltage_kv || 'N/A';
-            const status = properties.connection_status || 'Unknown';
-            const dateConnected = properties.date_connected || 'N/A';
-            const dateAccepted = properties.date_accepted || 'N/A';
-            const targetEnergisation = properties.target_energisation_date || 'N/A';
-            const resourceType = properties.primary_resource_type_group || 'Unknown';
-            
-            // Get registered capacity based on connection status
-            let registeredCapacity;
-            if (status === 'Connected') {
-                registeredCapacity = properties.already_connected_registered_capacity_mw;
-            } else {
-                registeredCapacity = properties.accepted_to_connect_registered_capacity_mw;
-            }
-            const capacityDisplay = registeredCapacity ? `${registeredCapacity} MW` : 'N/A';
-            
-            // Voltage badge color - match cable colors
-            let voltageColor = '#6b7280'; // Gray default
-            const voltageNum = parseFloat(voltage);
-            if (voltageNum === 11) voltageColor = '#ef4444'; // Red (11kV)
-            else if (voltageNum === 33) voltageColor = '#4ade80'; // Light green (33kV)
-            else if (voltageNum === 66) voltageColor = '#16a34a'; // Dark green (66kV)
-            else if (voltageNum === 132) voltageColor = '#f97316'; // Orange (132kV)
-            
-            // Status color
-            let statusColor = '#6b7280'; // Gray default
-            if (status === 'Connected') statusColor = '#22c55e'; // Green
-            else if (status === 'Accepted') statusColor = '#3b82f6'; // Blue
-            else if (status === 'In Queue' || status === 'Pending') statusColor = '#f59e0b'; // Amber
-            
-            return `
-                <div class="popup-content" style="max-width: 320px;">
-                    <span class="voltage-badge" style="background-color: ${voltageColor}">${voltage}kV POC</span>
-                    <div style="margin-bottom: 8px;"><strong style="font-size: 14px;">${customerName}</strong></div>
-                    <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 6px;">
-                        <span style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: ${statusColor};"></span>
-                        <span>${status}</span>
-                    </div>
-                    <div><strong>Resource Type:</strong> ${resourceType}</div>
-                    <div><strong>Registered Capacity:</strong> ${capacityDisplay}</div>
-                    <hr style="margin: 8px 0; border: none; border-top: 1px solid #e5e7eb;">
-                    <div><strong>GSP:</strong> ${gsp}</div>
-                    <div><strong>BSP:</strong> ${bsp}</div>
-                    <div><strong>Primary:</strong> ${primary}</div>
-                    <hr style="margin: 8px 0; border: none; border-top: 1px solid #e5e7eb;">
-                    ${dateConnected !== 'N/A' ? `<div><strong>Connected:</strong> ${dateConnected}</div>` : ''}
-                    ${dateAccepted !== 'N/A' ? `<div><strong>Accepted:</strong> ${dateAccepted}</div>` : ''}
-                    ${status !== 'Connected' && targetEnergisation !== 'N/A' ? `<div><strong>Planned energisation:</strong> ${targetEnergisation}</div>` : ''}
-                </div>
-            `;
-        }
-        
-        // Create embedded capacity marker icon
-        // status: 'Connected' for purple, 'Accepted' for lighter purple
-        // sizeMultiplier: 0.5 to 2.0 based on capacity
-        function createEmbeddedCapacityIcon(baseSize, status, borderWidth, sizeMultiplier) {
-            const statusClass = status === 'Connected' ? 'connected' : 'accepted';
-            borderWidth = borderWidth || 1.5;
-            sizeMultiplier = sizeMultiplier || 1;
-            const size = baseSize * sizeMultiplier;
-            return L.divIcon({
-                className: '',
-                html: `<div class="embedded-capacity-marker ${statusClass}" style="width:${size}px;height:${size}px;border-width:${borderWidth}px;"></div>`,
-                iconSize: [size, size],
-                iconAnchor: [size/2, size/2]
-            });
-        }
-        
-        // Get size multiplier based on capacity (0.5x to 2x)
-        function getCapacitySizeMultiplier(capacity) {
-            if (embeddedCapacityMax === embeddedCapacityMin) return 1;
-            // Use log scale for better distribution since capacity range is huge (1-456 MW)
-            const logMin = Math.log(embeddedCapacityMin + 1);
-            const logMax = Math.log(embeddedCapacityMax + 1);
-            const logCap = Math.log(capacity + 1);
-            const normalized = (logCap - logMin) / (logMax - logMin);
-            // Map to 0.5 - 2.0 range
-            return 0.5 + (normalized * 1.5);
-        }
-        
-        // Get the relevant date for a feature (date_connected for connected, target_energisation_date for accepted)
-        function getFeatureDate(properties) {
-            const status = properties.connection_status || 'Connected';
-            if (status === 'Connected') {
-                return properties.date_connected;
-            } else {
-                // For Accepted to Connect projects, use planned connected date (target_energisation_date)
-                return properties.target_energisation_date || properties.date_accepted;
-            }
-        }
-        
-        // Parse date string (YYYY-MM-DD) to timestamp
-        function parseDate(dateStr) {
-            if (!dateStr) return null;
-            const d = new Date(dateStr);
-            return isNaN(d.getTime()) ? null : d.getTime();
-        }
-        
-        // Format timestamp to display date
-        function formatDateDisplay(timestamp) {
-            if (!timestamp) return 'N/A';
-            const d = new Date(timestamp);
-            return d.toLocaleDateString('en-GB', { month: 'short', year: 'numeric' });
-        }
-        
-        // Load embedded capacity register layer
-        async function loadEmbeddedCapacityLayer() {
-            try {
-                const response = await fetch(EMBEDDED_CAPACITY_LAYER.file);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                const data = await response.json();
-                
-                // Store raw GeoJSON for POC mode calculations
-                rawGeoJSONData[EMBEDDED_CAPACITY_LAYER.name] = data;
-                
-                // Process features and compute ranges
-                let minDate = Infinity;
-                let maxDate = -Infinity;
-                let minCap = Infinity;
-                let maxCap = -Infinity;
-                
-                embeddedCapacityFeatures = [];
-                
-                data.features.forEach(feature => {
-                    if (!feature.geometry || feature.geometry.type !== 'Point') return;
-                    
-                    const props = feature.properties;
-                    const coords = feature.geometry.coordinates;
-                    const status = props.connection_status || 'Connected';
-                    const voltage = props.point_of_connection_poc_voltage_kv || 11;
-                    
-                    // Get capacity
-                    const capacity = props.already_connected_registered_capacity_mw || 
-                                     props.accepted_to_connect_registered_capacity_mw || 0;
-                    
-                    // Get date
-                    const dateStr = getFeatureDate(props);
-                    const dateTs = parseDate(dateStr);
-                    
-                    // Get resource type
-                    const resourceType = props.primary_resource_type_group || 'Unknown';
-                    
-                    // Update ranges
-                    if (dateTs) {
-                        minDate = Math.min(minDate, dateTs);
-                        maxDate = Math.max(maxDate, dateTs);
-                    }
-                    if (capacity > 0) {
-                        minCap = Math.min(minCap, capacity);
-                        maxCap = Math.max(maxCap, capacity);
-                    }
-                    
-                    // Store processed feature data
-                    embeddedCapacityFeatures.push({
-                        coords: coords,
-                        status: status,
-                        voltage: voltage,
-                        capacity: capacity,
-                        dateTs: dateTs,
-                        resourceType: resourceType,
-                        properties: props
-                    });
-                });
-                
-                // Set global ranges
-                embeddedDateMin = minDate === Infinity ? Date.now() : minDate;
-                embeddedDateMax = maxDate === -Infinity ? Date.now() : maxDate;
-                embeddedDateFilter = embeddedDateMax;  // Default to latest date
-                embeddedCapacityMin = minCap === Infinity ? 1 : minCap;
-                embeddedCapacityMax = maxCap === -Infinity ? 100 : maxCap;
-                
-                // Create layer groups for each voltage level
-                const voltages = [11, 33, 66, 132];
-                voltages.forEach(v => {
-                    embeddedCapacityLayerGroups[v] = L.layerGroup();
-                    embeddedCapacityLayerGroups[v].addTo(map);
-                });
-                
-                // Build initial markers
-                rebuildEmbeddedCapacityMarkers();
-                
-                loadedCount++;
-                updateProgress();
-                
-                return true;
-            } catch (error) {
-                console.error(`Failed to load ${EMBEDDED_CAPACITY_LAYER.name}:`, error);
-                loadedCount++;
-                updateProgress();
-                return false;
-            }
-        }
-        
-        // Rebuild embedded capacity markers based on current filters
-        function rebuildEmbeddedCapacityMarkers() {
-            // Clear existing markers
-            Object.values(embeddedCapacityLayerGroups).forEach(layerGroup => {
-                layerGroup.clearLayers();
-            });
-            
-            const zoom = map.getZoom();
-            const baseSize = getMarkerRadius(zoom) * 1.5;
-            const borderWidth = getMarkerBorderWidth(zoom);
-            
-            embeddedCapacityFeatures.forEach(feature => {
-                // Filter by date - show projects that existed by the selected date
-                if (feature.dateTs && feature.dateTs > embeddedDateFilter) {
-                    return;  // Skip projects that don't exist yet at the filtered date
-                }
-                
-                // Filter by resource type
-                if (!visibleResourceTypes.has(feature.resourceType)) {
-                    return;
-                }
-                
-                // Calculate size multiplier based on capacity
-                const sizeMultiplier = getCapacitySizeMultiplier(feature.capacity);
-                
-                const marker = L.marker([feature.coords[1], feature.coords[0]], {
-                    icon: createEmbeddedCapacityIcon(baseSize, feature.status, borderWidth, sizeMultiplier)
-                });
-                
-                // Store data on marker for later use
-                marker._embeddedStatus = feature.status;
-                marker._embeddedVoltage = feature.voltage;
-                marker._embeddedCapacity = feature.capacity;
-                
-                marker.bindPopup(createEmbeddedCapacityPopupContent(feature.properties));
-                
-                // Add to appropriate voltage layer group
-                const voltage = feature.voltage;
-                if (embeddedCapacityLayerGroups[voltage]) {
-                    embeddedCapacityLayerGroups[voltage].addLayer(marker);
-                } else {
-                    embeddedCapacityLayerGroups[11].addLayer(marker);
-                }
-            });
-            
-            // Apply visibility rules
-            updateLayerVisibility();
-        }
-        
-        // Update embedded capacity marker sizes based on zoom
-        function updateEmbeddedCapacitySizes() {
-            const zoom = map.getZoom();
-            const baseSize = getMarkerRadius(zoom) * 1.5;
-            const borderWidth = getMarkerBorderWidth(zoom);
-            Object.values(embeddedCapacityLayerGroups).forEach(layerGroup => {
-                layerGroup.eachLayer(marker => {
-                    if (marker.setIcon) {
-                        const status = marker._embeddedStatus || 'Connected';
-                        const capacity = marker._embeddedCapacity || 1;
-                        const sizeMultiplier = getCapacitySizeMultiplier(capacity);
-                        marker.setIcon(createEmbeddedCapacityIcon(baseSize, status, borderWidth, sizeMultiplier));
-                    }
-                });
-            });
-        }
+        // (Embedded capacity and infrastructure projects not yet available for NPG)
         
         // Update pole/tower marker sizes based on zoom
         function updatePoleTowerSizes() {
             const zoom = map.getZoom();
-            // Scale size: 6px at zoom 6, 8px at zoom 12, 12px at zoom 16+
-            const baseSize = Math.min(12, Math.max(6, 6 + (zoom - 6) * 0.5));
-            const borderWidth = zoom >= 14 ? 2 : (zoom >= 10 ? 1.5 : 1);
+            // Scale radius: 2px at zoom 6, 4px at zoom 12, 6px at zoom 16+
+            const radius = Math.min(6, Math.max(2, 2 + (zoom - 6) * 0.4));
+            const weight = zoom >= 14 ? 2 : (zoom >= 10 ? 1.5 : 1);
             
             POLE_TOWER_LAYERS.forEach(layerConfig => {
                 const layerGroup = poleTowerLayerGroups[layerConfig.voltage];
                 if (!layerGroup) return;
                 
                 layerGroup.eachLayer(marker => {
-                    if (marker.setIcon) {
-                        marker.setIcon(L.divIcon({
-                            className: '',
-                            html: `<div style="
-                                width: ${baseSize}px;
-                                height: ${baseSize}px;
-                                background: transparent;
-                                border: ${borderWidth}px solid ${layerConfig.color};
-                                opacity: 0.8;
-                            "></div>`,
-                            iconSize: [baseSize, baseSize],
-                            iconAnchor: [baseSize/2, baseSize/2]
-                        }));
+                    if (marker.setRadius) {
+                        marker.setRadius(radius);
+                        marker.setStyle({ weight: weight });
                     }
                 });
             });
         }
         
-        // Create popup content for infrastructure projects
-        function createInfrastructureProjectPopupContent(properties) {
-            const name = properties.ltds_name || properties.substation_or_circuit_ple_name || 'Unknown';
-            const assetType = properties.asset_type_or_quantity || 'Unknown';
-            const justification = properties.justification_for_the_need || 'Unknown';
-            const voltage = properties.connectivity_voltage || 'Unknown';
-            const startYear = properties.expected_start_year || 'Unknown';
-            const completionYear = properties.expected_completion_year || 'Unknown';
-            const gsp = properties.associated_gsp || 'Unknown';
-            const localAuthority = properties.local_authority || 'Unknown';
-            const dno = properties.dno || 'Unknown';
-            
-            return `
-                <div class="popup-content">
-                    <div class="voltage-badge" style="background: #f59e0b;">Infrastructure Project</div>
-                    <strong style="font-size: 14px; display: block; margin-bottom: 8px;">${name}</strong>
-                    <div style="font-size: 12px; line-height: 1.6;">
-                        <div><strong>Asset/Work:</strong> ${assetType}</div>
-                        <div><strong>Justification:</strong> ${justification}</div>
-                        <div><strong>Voltage:</strong> ${voltage}</div>
-                        <div><strong>Timeline:</strong> ${startYear} - ${completionYear}</div>
-                        <div><strong>Grid Supply Point:</strong> ${gsp}</div>
-                        <div><strong>Local Authority:</strong> ${localAuthority}</div>
-                        <div><strong>DNO:</strong> ${dno}</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Create infrastructure project marker icon
-        function createInfrastructureProjectIcon(baseSize, borderWidth) {
-            borderWidth = borderWidth || 1.5;
-            const size = baseSize * 1.2;
-            return L.divIcon({
-                className: '',
-                html: `<div class="infrastructure-project-marker" style="width:${size}px;height:${size}px;border-width:${borderWidth}px;"></div>`,
-                iconSize: [size, size],
-                iconAnchor: [size/2, size/2]
-            });
-        }
-        
-        // Parse voltage string to numeric value (for filtering)
-        function parseVoltageFromString(voltageStr) {
-            if (!voltageStr) return 11;  // Default
-            voltageStr = voltageStr.toLowerCase();
-            
-            if (voltageStr.includes('132')) return 132;
-            if (voltageStr.includes('66')) return 66;
-            if (voltageStr.includes('33')) return 33;
-            if (voltageStr.includes('20')) return 20;
-            if (voltageStr.includes('11')) return 11;
-            if (voltageStr.includes('6.6')) return 11;  // Map 6.6kV to 11kV bucket
-            
-            return 11;  // Default to 11kV
-        }
-        
-        // Load infrastructure projects layer
-        async function loadInfrastructureProjectsLayer() {
+        // (Infrastructure projects functions removed - not yet available for NPG)
+
+        // Load a GeoJSON data source and distribute features to voltage-based layers
+        async function loadDataSource(sourceConfig) {
             try {
-                const response = await fetch(INFRASTRUCTURE_PROJECTS_LAYER.file);
+                const response = await fetch(sourceConfig.file);
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
                 const data = await response.json();
                 
-                // Store raw GeoJSON for POC mode calculations
-                rawGeoJSONData[INFRASTRUCTURE_PROJECTS_LAYER.name] = data;
-                
-                infrastructureProjectsFeatures = [];
-                
+                // Distribute features by voltage into per-voltage GeoJSON collections
                 data.features.forEach(feature => {
-                    if (!feature.geometry || feature.geometry.type !== 'Point') return;
+                    if (!feature.geometry) return;
                     
-                    const props = feature.properties;
-                    const coords = feature.geometry.coordinates;
+                    // Get voltage in volts from the source-specific field
+                    const volts = feature.properties[sourceConfig.voltageField];
+                    if (!volts) return;
                     
-                    // Parse voltage
-                    const voltage = parseVoltageFromString(props.connectivity_voltage);
+                    // Find matching voltage layer
+                    const voltageLayer = getVoltageLayerByVolts(volts);
+                    if (!voltageLayer) return;  // Skip unmapped voltages (e.g., 275kV)
                     
-                    // Parse completion year to timestamp (for date filtering)
-                    const completionYear = parseInt(props.expected_completion_year) || 2026;
-                    const completionDate = new Date(completionYear, 11, 31);  // End of year
-                    const completionTs = completionDate.getTime();
-                    
-                    // Store processed feature data
-                    infrastructureProjectsFeatures.push({
-                        coords: coords,
-                        voltage: voltage,
-                        completionYear: completionYear,
-                        completionTs: completionTs,
-                        properties: props
-                    });
+                    // Initialize raw GeoJSON data for this voltage if needed
+                    if (!rawGeoJSONData[voltageLayer.name]) {
+                        rawGeoJSONData[voltageLayer.name] = {
+                            type: 'FeatureCollection',
+                            features: []
+                        };
+                    }
+                    rawGeoJSONData[voltageLayer.name].features.push(feature);
                 });
-                
-                // Create layer groups for each voltage level
-                const voltages = [11, 33, 66, 132];
-                voltages.forEach(v => {
-                    infrastructureProjectsLayerGroups[v] = L.layerGroup();
-                    // Don't add to map yet - default is OFF
-                });
-                
-                // Build initial markers
-                rebuildInfrastructureProjectMarkers();
                 
                 loadedCount++;
                 updateProgress();
-                
                 return true;
             } catch (error) {
-                console.error(`Failed to load ${INFRASTRUCTURE_PROJECTS_LAYER.name}:`, error);
+                console.error(`Failed to load ${sourceConfig.file}:`, error);
                 loadedCount++;
                 updateProgress();
                 return false;
             }
         }
         
-        // Rebuild infrastructure project markers based on current filters
-        function rebuildInfrastructureProjectMarkers() {
-            // Clear existing markers
-            Object.values(infrastructureProjectsLayerGroups).forEach(layerGroup => {
-                layerGroup.clearLayers();
-            });
-            
-            const zoom = map.getZoom();
-            const baseSize = getMarkerRadius(zoom) * 1.5;
-            const borderWidth = getMarkerBorderWidth(zoom);
-            
-            infrastructureProjectsFeatures.forEach(feature => {
-                // Filter by date - show projects completing by the selected date
-                if (feature.completionTs && feature.completionTs > embeddedDateFilter) {
-                    return;  // Skip projects completing after the filtered date
-                }
+        // Build Leaflet layers from the collected rawGeoJSONData per voltage
+        function buildVoltageLayers() {
+            LAYERS.forEach(layerConfig => {
+                const geoJSON = rawGeoJSONData[layerConfig.name];
+                if (!geoJSON || !geoJSON.features || geoJSON.features.length === 0) return;
                 
-                const marker = L.marker([feature.coords[1], feature.coords[0]], {
-                    icon: createInfrastructureProjectIcon(baseSize, borderWidth)
-                });
-                
-                // Store data on marker for later use
-                marker._infraVoltage = feature.voltage;
-                marker._infraCompletionYear = feature.completionYear;
-                
-                marker.bindPopup(createInfrastructureProjectPopupContent(feature.properties));
-                
-                // Add to appropriate voltage layer group
-                const voltage = feature.voltage;
-                if (infrastructureProjectsLayerGroups[voltage]) {
-                    infrastructureProjectsLayerGroups[voltage].addLayer(marker);
-                } else {
-                    infrastructureProjectsLayerGroups[11].addLayer(marker);
-                }
-            });
-            
-            // Apply visibility rules
-            updateLayerVisibility();
-        }
-        
-        // Update infrastructure project marker sizes based on zoom
-        function updateInfrastructureProjectSizes() {
-            const zoom = map.getZoom();
-            const baseSize = getMarkerRadius(zoom) * 1.5;
-            const borderWidth = getMarkerBorderWidth(zoom);
-            Object.values(infrastructureProjectsLayerGroups).forEach(layerGroup => {
-                layerGroup.eachLayer(marker => {
-                    if (marker.setIcon) {
-                        marker.setIcon(createInfrastructureProjectIcon(baseSize, borderWidth));
-                    }
-                });
-            });
-        }
-
-        // Load a GeoJSON layer
-        async function loadLayer(layerConfig) {
-            try {
-                const response = await fetch(layerConfig.file);
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}`);
-                }
-                const data = await response.json();
-                
-                // Store raw GeoJSON for POC mode calculations
-                rawGeoJSONData[layerConfig.name] = data;
-                
-                const layer = L.geoJSON(data, {
+                const layer = L.geoJSON(geoJSON, {
                     style: {
                         color: layerConfig.color,
                         weight: layerConfig.weight,
                         opacity: 0.8
+                    },
+                    filter: (feature) => {
+                        // Skip features with null geometry
+                        return feature.geometry !== null;
                     },
                     onEachFeature: (feature, layer) => {
                         layer.bindPopup(createPopupContent(feature.properties, layerConfig));
@@ -2812,23 +2456,13 @@
                         allBounds.extend(layerBounds);
                     }
                 }
-                
-                loadedCount++;
-                updateProgress();
-                
-                return true;
-            } catch (error) {
-                console.error(`Failed to load ${layerConfig.name}:`, error);
-                loadedCount++;
-                updateProgress();
-                return false;
-            }
+            });
         }
         
         // Update loading progress
         function updateProgress() {
             const progressEl = document.getElementById('loading-progress');
-            progressEl.textContent = `${loadedCount} / ${TOTAL_LAYERS} layers loaded`;
+            progressEl.textContent = `${loadedCount} / ${TOTAL_LAYERS} data sources loaded`;
             
             if (loadedCount === TOTAL_LAYERS) {
                 finishLoading();
@@ -2872,7 +2506,8 @@
         // Update layer visibility based on current MVA filter
         function updateLayerVisibility() {
             // Voltage indicator visibility tracking
-            const voltageVisible = { '33kV': false, '66kV': false, '132kV': false };
+            const voltageVisible = {};
+            LAYERS.forEach(l => { voltageVisible[l.name] = false; });
             
             // Update cable layers
             LAYERS.forEach(layerConfig => {
@@ -2885,10 +2520,7 @@
                     if (!map.hasLayer(layer)) {
                         map.addLayer(layer);
                     }
-                    // Track which voltage levels are visible
-                    if (layerConfig.name.includes('33kV')) voltageVisible['33kV'] = true;
-                    if (layerConfig.name.includes('66kV')) voltageVisible['66kV'] = true;
-                    if (layerConfig.name.includes('132kV')) voltageVisible['132kV'] = true;
+                    voltageVisible[layerConfig.name] = true;
                 } else {
                     if (map.hasLayer(layer)) {
                         map.removeLayer(layer);
@@ -2898,7 +2530,7 @@
             
             // Update voltage indicators in UI
             Object.entries(voltageVisible).forEach(([voltage, visible]) => {
-                const indicator = document.getElementById(`indicator-${voltage.replace(/[^a-zA-Z0-9]/g, '')}`);
+                const indicator = document.getElementById(`indicator-${voltage.replace(/\./g, 'p').replace(/[^a-zA-Z0-9p]/g, '')}`);
                 if (indicator) {
                     if (visible) {
                         indicator.classList.remove('hidden');
@@ -2936,93 +2568,6 @@
                     polesTowersToggle.classList.add('hidden');
                 }
             }
-            
-            // Update embedded capacity layers by voltage and status
-            let anyConnectedVisible = false;
-            let anyAcceptedVisible = false;
-            
-            Object.entries(embeddedCapacityLayerGroups).forEach(([voltage, layerGroup]) => {
-                const voltageNum = parseInt(voltage, 10);
-                const mvaRange = EMBEDDED_CAPACITY_MVA_RANGES[voltageNum];
-                if (!mvaRange) return;
-                
-                const voltageInRange = rangesOverlap(filterMin, filterMax, mvaRange.mvaMin, mvaRange.mvaMax);
-                
-                // Always keep layer group on map, but control individual marker visibility
-                if (!map.hasLayer(layerGroup)) {
-                    map.addLayer(layerGroup);
-                }
-                
-                // Update each marker's visibility based on status toggles
-                layerGroup.eachLayer(marker => {
-                    const status = marker._embeddedStatus || 'Connected';
-                    const isConnected = status === 'Connected';
-                    const statusVisible = isConnected ? embeddedConnectedVisible : embeddedAcceptedVisible;
-                    const shouldShow = voltageInRange && statusVisible;
-                    
-                    // Use opacity to show/hide markers
-                    if (shouldShow) {
-                        marker.setOpacity(1);
-                        if (isConnected) anyConnectedVisible = true;
-                        else anyAcceptedVisible = true;
-                    } else {
-                        marker.setOpacity(0);
-                    }
-                });
-            });
-            
-            // Update embedded capacity indicators
-            const connectedIndicator = document.getElementById('toggle-embedded-connected');
-            const acceptedIndicator = document.getElementById('toggle-embedded-accepted');
-            
-            if (connectedIndicator) {
-                if (!embeddedConnectedVisible) {
-                    connectedIndicator.classList.add('hidden');
-                } else {
-                    connectedIndicator.classList.remove('hidden');
-                }
-            }
-            if (acceptedIndicator) {
-                if (!embeddedAcceptedVisible) {
-                    acceptedIndicator.classList.add('hidden');
-                } else {
-                    acceptedIndicator.classList.remove('hidden');
-                }
-            }
-            
-            // Update infrastructure projects layers by voltage
-            Object.entries(infrastructureProjectsLayerGroups).forEach(([voltage, layerGroup]) => {
-                const voltageNum = parseInt(voltage, 10);
-                const mvaRange = EMBEDDED_CAPACITY_MVA_RANGES[voltageNum];  // Reuse same MVA ranges
-                if (!mvaRange) return;
-                
-                const voltageInRange = rangesOverlap(filterMin, filterMax, mvaRange.mvaMin, mvaRange.mvaMax);
-                const shouldShow = infrastructureProjectsVisible && voltageInRange;
-                
-                if (shouldShow) {
-                    if (!map.hasLayer(layerGroup)) {
-                        map.addLayer(layerGroup);
-                    }
-                    // Update each marker's visibility
-                    layerGroup.eachLayer(marker => {
-                        marker.setOpacity(1);
-                    });
-                } else {
-                    if (map.hasLayer(layerGroup)) {
-                        map.removeLayer(layerGroup);
-                    }
-                }
-            });
-            
-            // Update infrastructure projects indicator
-            const infraIndicator = document.getElementById('toggle-infrastructure-projects');
-            if (infraIndicator) {
-                if (!infrastructureProjectsVisible) {
-                    infraIndicator.classList.add('hidden');
-                } else {
-                    infraIndicator.classList.remove('hidden');
-                }
-            }
         }
         
         // Update the MVA display values
@@ -3053,23 +2598,19 @@
             };
         }
         
-        // Get visible layer names (filtered by MVA) - includes cables and embedded capacity
+        // Get visible layer names (filtered by MVA) - cables only
         function getVisibleLayerNames() {
-            const cableNames = LAYERS
+            return LAYERS
                 .filter(l => rangesOverlap(filterMin, filterMax, l.mvaMin, l.mvaMax))
                 .map(l => l.name);
-            // Include embedded capacity if either connected or accepted is visible
-            const embeddedNames = (embeddedConnectedVisible || embeddedAcceptedVisible) ? [EMBEDDED_CAPACITY_LAYER.name] : [];
-            return [...cableNames, ...embeddedNames];
         }
         
-        // Get layer config by name (from cables or embedded capacity)
+        // Get layer config by name
         function getLayerConfig(name) {
-            if (name === EMBEDDED_CAPACITY_LAYER.name) return EMBEDDED_CAPACITY_LAYER;
             return LAYERS.find(l => l.name === name);
         }
         
-        // Find nearest point on all visible cables within 30km
+        // Find nearest point on all visible cables within max distance
         function findNearestConnection(cursorLat, cursorLng) {
             const cursorPoint = turf.point([cursorLng, cursorLat]);
             const visibleLayerNames = getVisibleLayerNames();
@@ -3078,7 +2619,7 @@
             let nearestDistance = Infinity;
             let nearestLayerConfig = null;
             
-            // Create a bounding box for 30km search radius
+            // Create a bounding box for search radius
             const searchBuffer = turf.buffer(cursorPoint, POC_MAX_DISTANCE_KM, { units: 'kilometers' });
             const searchBbox = turf.bbox(searchBuffer);
             
@@ -3526,17 +3067,15 @@
             }
             
             // Convert map to results array, sorted by distance
-            // Then pick the 2 nearest with DIFFERENT voltages
+            // Return all results with different voltages that are within range
             const allResults = Object.values(nearestMap).sort((a, b) => a.distance - b.distance);
             
-            // Pick up to 2 results with different voltages
+            // Pick all results with different voltages (one per voltage)
             const selectedResults = [];
             for (const result of allResults) {
-                // Check if we already have this voltage
                 const alreadyHasVoltage = selectedResults.some(r => r.voltage === result.voltage);
                 if (!alreadyHasVoltage) {
                     selectedResults.push(result);
-                    if (selectedResults.length >= 2) break;
                 }
             }
             
@@ -3622,9 +3161,9 @@
             // Check if any shuffling has occurred
             const hasShuffled = Object.keys(singlePocSkipped).length > 0;
             
-            // Build results HTML (horizontal layout, max 2 results)
+            // Build results HTML (horizontal layout, all matching voltages)
             if (results.length === 0) {
-                resultsEl.innerHTML = '<div class="poc-float-empty">No connections found within 30km</div>';
+                resultsEl.innerHTML = `<div class="poc-float-empty">No connections found within ${Math.round(POC_MAX_DISTANCE_KM)}km</div>`;
             } else {
                 resultsEl.innerHTML = results.map(r => {
                     const color = VOLTAGE_POWER_RANGES[r.voltage]?.color || '#6b7280';
@@ -3787,6 +3326,38 @@
         
         // Tolerance in meters for near-miss detection
         const OBSTACLE_TOLERANCE_METERS = 3;
+        
+        // Helper: Get the bearing (direction in degrees) of a line at the point nearest to a given location.
+        // Used to determine if two lines are running parallel vs crossing each other.
+        function getLineBearingAtPoint(line, point) {
+            const nearest = turf.nearestPointOnLine(line, point, { units: 'meters' });
+            const segIdx = nearest.properties.index;
+            const coords = line.geometry.coordinates;
+            
+            if (segIdx !== undefined && segIdx < coords.length - 1) {
+                return turf.bearing(turf.point(coords[segIdx]), turf.point(coords[segIdx + 1]));
+            } else if (coords.length >= 2) {
+                return turf.bearing(
+                    turf.point(coords[coords.length - 2]),
+                    turf.point(coords[coords.length - 1])
+                );
+            }
+            return null;
+        }
+        
+        // Helper: Check if two bearings are nearly parallel (within threshold degrees).
+        // Since roads are bidirectional, 0° and 180° are considered parallel.
+        function areBearingsParallel(bearing1, bearing2, thresholdDeg) {
+            if (bearing1 === null || bearing2 === null) return false;
+            thresholdDeg = thresholdDeg || 25;
+            
+            let diff = Math.abs(bearing1 - bearing2) % 360;
+            if (diff > 180) diff = 360 - diff;
+            // Treat opposite directions as parallel (e.g. 10° vs 190°)
+            if (diff > 90) diff = 180 - diff;
+            
+            return diff <= thresholdDeg;
+        }
         
         // Helper: Check if two lines intersect or come within tolerance distance
         function linesIntersectOrNear(line1, line2, toleranceMeters) {
@@ -4087,11 +3658,26 @@
                                 const result = linesIntersectOrNear(connectionLine, featureLine, OBSTACLE_TOLERANCE_METERS);
                                 
                                 if (result.intersects) {
-                                    detectedObstacles.add(obstacleKey);
+                                    // Filter crossing points: for roads, skip points where the
+                                    // connection line runs parallel to the road (i.e. the route
+                                    // follows this road rather than crossing it).
+                                    const validCrossings = [];
                                     
                                     result.points.forEach(intersection => {
                                         const pt = intersection.geometry.coordinates;
-                                        crossings.push({
+                                        
+                                        if (obstacleType === 'road') {
+                                            const iPt = turf.point(pt);
+                                            const connBearing = getLineBearingAtPoint(connectionLine, iPt);
+                                            const roadBearing = getLineBearingAtPoint(featureLine, iPt);
+                                            
+                                            if (areBearingsParallel(connBearing, roadBearing)) {
+                                                // Route runs along this road — not a true crossing
+                                                return;
+                                            }
+                                        }
+                                        
+                                        validCrossings.push({
                                             lat: pt[1],
                                             lng: pt[0],
                                             obstacleName: obstacleName,
@@ -4100,6 +3686,11 @@
                                             nearMiss: result.nearMiss || false
                                         });
                                     });
+                                    
+                                    if (validCrossings.length > 0) {
+                                        detectedObstacles.add(obstacleKey);
+                                        crossings.push(...validCrossings);
+                                    }
                                 }
                             } catch (e) {
                                 // Invalid line geometry - log and skip
@@ -4280,8 +3871,10 @@
             return turf.distance(from, to, { units: 'meters' });
         }
         
-        // Calculate route along public roads using OSRM
-        // The route is converted to waypoints for the regular POC line system
+        // Calculate route along public roads using OSRM with foot profile
+        // Uses walking navigation to avoid one-way street issues (no U-turns),
+        // producing routes that follow the most direct path along public roads -
+        // ideal for cable routing where traffic direction doesn't matter
         async function calculateRoadRoute(pocId) {
             const site = sites.find(s => s.id === currentSiteId);
             if (!site) return;
@@ -4297,9 +3890,11 @@
                 // Build waypoints string: start to end
                 const waypointsStr = `${site.lng},${site.lat};${poc.lng},${poc.lat}`;
                 
-                // Use OSRM public demo server for routing
+                // Use OSRM public server with foot profile
+                // Foot profile ignores one-way restrictions and produces more direct routes
+                // along roads, which better represents how cables would actually be laid
                 const response = await fetch(
-                    `https://router.project-osrm.org/route/v1/driving/${waypointsStr}?overview=full&geometries=geojson`,
+                    `https://router.project-osrm.org/route/v1/foot/${waypointsStr}?overview=full&geometries=geojson`,
                     { headers: { 'User-Agent': 'POC-Finder-App' } }
                 );
                 
@@ -4314,13 +3909,150 @@
                 }
                 
                 const route = data.routes[0];
-                const routeCoords = route.geometry.coordinates.map(coord => [coord[1], coord[0]]); // [lat, lng]
+                let routeCoords = route.geometry.coordinates.map(coord => [coord[1], coord[0]]); // [lat, lng]
                 let roadDistance = route.distance; // in meters
                 
                 // Get the snapped waypoints from OSRM (where the route actually starts/ends on the road)
                 const waypoints = data.waypoints || [];
                 const routeStart = waypoints[0]?.location; // [lng, lat]
-                const routeEnd = waypoints[waypoints.length - 1]?.location; // [lng, lat]
+                let routeEnd = waypoints[waypoints.length - 1]?.location; // [lng, lat]
+                
+                // --- Optimize POC: find nearer cable of same voltage along the route ---
+                // The initial POC was found by straight-line distance, but the road route
+                // may pass closer to a different segment of cable at the same voltage.
+                // Scan along the route and find the point where the road is nearest to any
+                // cable of the same voltage, then re-target the POC there if it shortens
+                // the total path (road distance + off-road extension to cable).
+                {
+                    const routeLine = turf.lineString(route.geometry.coordinates); // GeoJSON [lng, lat]
+                    const routeLengthM = turf.length(routeLine, { units: 'meters' });
+                    const pocVoltage = poc.voltage;
+                    
+                    // Collect cable line features of the same voltage, pre-filtered by route bbox
+                    const routeBbox = turf.bbox(routeLine);
+                    const searchPadding = 0.009; // ~1km in degrees
+                    const expandedBbox = [
+                        routeBbox[0] - searchPadding,
+                        routeBbox[1] - searchPadding,
+                        routeBbox[2] + searchPadding,
+                        routeBbox[3] + searchPadding
+                    ];
+                    
+                    const candidateLines = []; // Turf lineString features near the route
+                    
+                    Object.keys(rawGeoJSONData).forEach(layerName => {
+                        if (extractVoltage(layerName) !== pocVoltage) return;
+                        const geoJSON = rawGeoJSONData[layerName];
+                        if (!geoJSON || !geoJSON.features) return;
+                        
+                        geoJSON.features.forEach(feature => {
+                            if (!feature.geometry) return;
+                            
+                            // Bbox pre-filter: skip features far from the route
+                            try {
+                                const fBbox = turf.bbox(feature);
+                                if (fBbox[0] > expandedBbox[2] || fBbox[2] < expandedBbox[0] ||
+                                    fBbox[1] > expandedBbox[3] || fBbox[3] < expandedBbox[1]) {
+                                    return;
+                                }
+                            } catch (e) { return; }
+                            
+                            try {
+                                if (feature.geometry.type === 'LineString') {
+                                    candidateLines.push(feature);
+                                } else if (feature.geometry.type === 'MultiLineString') {
+                                    feature.geometry.coordinates.forEach(coords => {
+                                        try { candidateLines.push(turf.lineString(coords)); } catch (e) {}
+                                    });
+                                }
+                            } catch (e) {}
+                        });
+                    });
+                    
+                    if (candidateLines.length > 0 && routeLengthM > 0) {
+                        // Sample along the route at ~50m intervals to find optimal cable connection
+                        const numSamples = Math.min(500, Math.max(20, Math.ceil(routeLengthM / 50)));
+                        const sampleInterval = routeLengthM / numSamples;
+                        
+                        let bestTotalDist = Infinity;
+                        let bestCablePoint = null;
+                        let bestDistAlongRoute = null;
+                        
+                        for (let d = 0; d <= routeLengthM; d += sampleInterval) {
+                            const routePoint = turf.along(routeLine, d, { units: 'meters' });
+                            
+                            let nearestCableDist = Infinity;
+                            let nearestCablePt = null;
+                            
+                            candidateLines.forEach(line => {
+                                try {
+                                    const nearest = turf.nearestPointOnLine(line, routePoint, { units: 'meters' });
+                                    if (nearest.properties.dist < nearestCableDist) {
+                                        nearestCableDist = nearest.properties.dist;
+                                        nearestCablePt = {
+                                            lat: nearest.geometry.coordinates[1],
+                                            lng: nearest.geometry.coordinates[0]
+                                        };
+                                    }
+                                } catch (e) {}
+                            });
+                            
+                            if (nearestCablePt && nearestCableDist <= 1000) { // Max 1km off-road to cable
+                                const totalDist = d + nearestCableDist;
+                                if (totalDist < bestTotalDist) {
+                                    bestTotalDist = totalDist;
+                                    bestCablePoint = nearestCablePt;
+                                    bestDistAlongRoute = d;
+                                }
+                            }
+                        }
+                        
+                        // Calculate original total distance for comparison
+                        const origOffRoadDist = routeEnd ?
+                            calculateStraightLineDistance(routeEnd[1], routeEnd[0], poc.lat, poc.lng) : 0;
+                        const originalTotalDist = roadDistance + origOffRoadDist;
+                        
+                        // Use optimized POC if it provides a meaningfully shorter total path (>50m saving)
+                        if (bestCablePoint && bestDistAlongRoute !== null && bestTotalDist < originalTotalDist - 50) {
+                            console.log(`Route optimizer: Found nearer ${pocVoltage} POC at ${bestDistAlongRoute.toFixed(0)}m along route ` +
+                                `(total: ${bestTotalDist.toFixed(0)}m vs original: ${originalTotalDist.toFixed(0)}m, ` +
+                                `saving ${(originalTotalDist - bestTotalDist).toFixed(0)}m)`);
+                            
+                            // Update POC endpoint to the nearer cable point
+                            poc.lat = bestCablePoint.lat;
+                            poc.lng = bestCablePoint.lng;
+                            
+                            // Truncate the route at the optimal exit point on the road
+                            if (bestDistAlongRoute < routeLengthM - 10) {
+                                const truncPoint = turf.along(routeLine, bestDistAlongRoute, { units: 'meters' });
+                                const truncated = turf.lineSlice(
+                                    turf.point(route.geometry.coordinates[0]),
+                                    truncPoint,
+                                    routeLine
+                                );
+                                
+                                routeCoords = truncated.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+                                roadDistance = bestDistAlongRoute;
+                                
+                                // Update routeEnd so the off-road extension below uses the new route endpoint
+                                const lastCoord = truncated.geometry.coordinates[truncated.geometry.coordinates.length - 1];
+                                routeEnd = lastCoord; // [lng, lat]
+                            }
+                            
+                            // Try to snap optimized POC to a nearby pole/tower if poles layer is visible
+                            if (polesTowersVisible) {
+                                const nearestPole = findNearestPoleTower(poc.lat, poc.lng, pocVoltage, 200);
+                                if (nearestPole) {
+                                    poc.lat = nearestPole.lat;
+                                    poc.lng = nearestPole.lng;
+                                    poc.type = 'Pole/Tower';
+                                    poc.poleInfo = nearestPole.properties;
+                                    console.log('Route optimizer: Snapped optimized POC to nearby pole/tower');
+                                }
+                            }
+                        }
+                    }
+                }
                 
                 // Build complete path with off-road extensions if needed
                 let fullCoordinates = [];
@@ -4436,6 +4168,11 @@
                 
                 // Rebuild the regular POC line with the new waypoints
                 rebuildPOCLine(site, poc);
+                
+                // Move the POC endpoint marker to match the (possibly optimized) POC location
+                if (pocMarkers[pocId]) {
+                    pocMarkers[pocId].setLatLng([poc.lat, poc.lng]);
+                }
                 
                 // Recalculate obstacles for the new path
                 recalculatePOCObstacles(site, poc);
@@ -4977,7 +4714,7 @@
                     </div>
                 ` : ''}
                 
-                ${site.pocs.length > 0 ? pocCardsHTML : '<div class="poc-empty">No connections found within 30km.</div>'}
+                ${site.pocs.length > 0 ? pocCardsHTML : `<div class="poc-empty">No connections found within ${Math.round(POC_MAX_DISTANCE_KM)}km.</div>`}
             `;
         }
         
@@ -5355,15 +5092,15 @@
         
         // Extract voltage from layer name
         function extractVoltage(layerName) {
-            if (layerName.includes('11kV')) return '11kV';
-            if (layerName.includes('66kV')) return '66kV';  // Check 66kV before 33kV to avoid false match
-            if (layerName.includes('33kV')) return '33kV';
             if (layerName.includes('132kV')) return '132kV';
+            if (layerName.includes('66kV')) return '66kV';
+            if (layerName.includes('33kV')) return '33kV';
+            if (layerName.includes('HV Network')) return 'HV Network';
             return null;
         }
         
         // Find nearest connection for each voltage level
-        function findNearestPerVoltage(siteLat, siteLng, maxDistanceKm = 30) {
+        function findNearestPerVoltage(siteLat, siteLng, maxDistanceKm = POC_MAX_DISTANCE_KM) {
             const sitePoint = turf.point([siteLng, siteLat]);
             // Only search layers that match current MVA filter
             const visibleLayerNames = getVisibleLayerNames();
@@ -5489,8 +5226,8 @@
                 const { nearestPerVoltage } = findNearestPerVoltage(site.lat, site.lng);
                 const discoveredPOCs = [];
                 
-                // Add all voltages (33kV, 66kV, 132kV)
-                const voltages = ['33kV', '66kV', '132kV'];
+                // Add all voltages
+                const voltages = LAYERS.map(l => l.name);
                 
                 voltages.forEach(voltage => {
                     const nearest = nearestPerVoltage[voltage];
@@ -5643,18 +5380,13 @@
                 const div = L.DomUtil.create('div', 'filter-panel');
                 
                 // Build cable layer indicators HTML by voltage level
-                const voltageGroups = {
-                    '33kV': { color: '#4ade80', mvaMin: 3, mvaMax: 30 },
-                    '66kV': { color: '#16a34a', mvaMin: 20, mvaMax: 60 },
-                    '132kV': { color: '#f97316', mvaMin: 20, mvaMax: 100 }
-                };
-                let cableIndicatorsHTML = Object.entries(voltageGroups).map(([voltage, config]) => {
-                    const id = voltage.replace(/[^a-zA-Z0-9]/g, '');
+                let cableIndicatorsHTML = LAYERS.map(layerConfig => {
+                    const id = layerConfig.name.replace(/\./g, 'p').replace(/[^a-zA-Z0-9p]/g, '');
                     return `
                         <div class="layer-indicator" id="indicator-${id}">
-                            <span class="layer-dot" style="background: ${config.color}"></span>
-                            <span>${voltage}</span>
-                            <span class="layer-mva">${config.mvaMin}-${config.mvaMax}</span>
+                            <span class="layer-dot" style="background: ${layerConfig.color}"></span>
+                            <span>${layerConfig.name}</span>
+                            <span class="layer-mva">${layerConfig.mvaMin}-${layerConfig.mvaMax}</span>
                         </div>
                     `;
                 }).join('');
@@ -5678,23 +5410,41 @@
                         <div class="location-search-results" id="location-search-results"></div>
                     </div>
                     
-                    <h4>Project Size</h4>
-                    <p class="subtitle">Filter networks by connection capacity (MVA)</p>
-                    
-                    <div class="mva-display">
-                        <div class="mva-value">
-                            <div class="label">Min</div>
-                            <div class="number" id="mva-min">${formatMVA(filterMin)}</div>
+                    <div class="filter-section">
+                        <h4>Project Size</h4>
+                        <p class="subtitle">Filter networks by connection capacity (MVA)</p>
+                        
+                        <div class="mva-display">
+                            <div class="mva-value">
+                                <div class="label">Min</div>
+                                <div class="number" id="mva-min">${formatMVA(filterMin)}</div>
+                            </div>
+                            <div class="mva-separator">to</div>
+                            <div class="mva-value">
+                                <div class="label">Max</div>
+                                <div class="number" id="mva-max">${formatMVA(filterMax)}</div>
+                            </div>
                         </div>
-                        <div class="mva-separator">to</div>
-                        <div class="mva-value">
-                            <div class="label">Max</div>
-                            <div class="number" id="mva-max">${formatMVA(filterMax)}</div>
+                        
+                        <div class="slider-container">
+                            <div id="mva-slider"></div>
                         </div>
                     </div>
                     
-                    <div class="slider-container">
-                        <div id="mva-slider"></div>
+                    <div class="filter-section">
+                        <h4>Max POC Distance</h4>
+                        <p class="subtitle">Maximum search radius for finding connections</p>
+                        
+                        <div class="mva-display">
+                            <div class="mva-value">
+                                <div class="label">Radius</div>
+                                <div class="number" id="poc-distance-display">${POC_MAX_DISTANCE_KM} km</div>
+                            </div>
+                        </div>
+                        
+                        <div class="slider-container">
+                            <div id="poc-distance-slider"></div>
+                        </div>
                     </div>
                     
                     <div class="map-layers">
@@ -5719,85 +5469,13 @@
                     </div>
                     
                     <div class="active-layers" style="margin-top: 8px;">
-                        <div class="active-layers-title">Embedded Capacity</div>
-                        <div class="layer-indicator layer-toggle hidden" id="toggle-embedded-connected" style="cursor: pointer;">
-                            <span class="layer-dot" style="background: #8b5cf6; transform: rotate(45deg);"></span>
-                            <span>Connected</span>
-                            <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
-                        </div>
-                        <div class="layer-indicator layer-toggle hidden" id="toggle-embedded-accepted" style="cursor: pointer;">
-                            <span class="layer-dot" style="background: #c4b5fd; transform: rotate(45deg);"></span>
-                            <span>Accepted</span>
-                            <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
-                        </div>
-                    </div>
-                    
-                    <div class="active-layers" style="margin-top: 8px;">
-                        <div class="active-layers-title">Infrastructure Projects</div>
-                        <div class="layer-indicator layer-toggle hidden" id="toggle-infrastructure-projects" style="cursor: pointer;">
-                            <span class="layer-dot" style="background: #f59e0b; clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);"></span>
-                            <span>Planned Upgrades</span>
-                            <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
-                        </div>
-                        
-                        <!-- Date filter slider -->
-                        <div class="embedded-filter-section">
-                            <div class="embedded-filter-title">Project Date Filter</div>
-                            <div class="date-display">
-                                <span class="current-date" id="embedded-date-display">Loading...</span>
-                                <span class="date-range" id="embedded-date-range"></span>
-                            </div>
-                            <div class="date-slider-container">
-                                <div id="embedded-date-slider"></div>
-                            </div>
-                        </div>
-                        
-                        <!-- Resource type filter -->
-                        <div class="embedded-filter-section">
-                            <div class="embedded-filter-title">Project Type</div>
-                            <div class="resource-type-filters" id="resource-type-filters">
-                                <div class="resource-type-toggle" data-type="Solar PV">
-                                    <span class="resource-icon">☀️</span>
-                                    <span class="resource-name">Solar</span>
-                                    <span class="resource-check">✓</span>
-                                </div>
-                                <div class="resource-type-toggle" data-type="Storage">
-                                    <span class="resource-icon">🔋</span>
-                                    <span class="resource-name">Storage</span>
-                                    <span class="resource-check">✓</span>
-                                </div>
-                                <div class="resource-type-toggle" data-type="Wind">
-                                    <span class="resource-icon">💨</span>
-                                    <span class="resource-name">Wind</span>
-                                    <span class="resource-check">✓</span>
-                                </div>
-                                <div class="resource-type-toggle" data-type="Fossil fuel">
-                                    <span class="resource-icon">🏭</span>
-                                    <span class="resource-name">Fossil</span>
-                                    <span class="resource-check">✓</span>
-                                </div>
-                                <div class="resource-type-toggle" data-type="Biogas">
-                                    <span class="resource-icon">🌿</span>
-                                    <span class="resource-name">Biogas</span>
-                                    <span class="resource-check">✓</span>
-                                </div>
-                                <div class="resource-type-toggle" data-type="Unknown">
-                                    <span class="resource-icon">❓</span>
-                                    <span class="resource-name">Other</span>
-                                    <span class="resource-check">✓</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="active-layers" style="margin-top: 8px;">
-                        <div class="active-layers-title">Connection Points</div>
+                        <div class="active-layers-title">EHV Supports</div>
                         <div class="layer-indicator layer-toggle hidden" id="toggle-poles-towers" style="cursor: pointer;">
                             <span class="layer-dot" style="background: transparent; border: 2px solid #f97316; width: 8px; height: 8px;"></span>
-                            <span>132kV Poles/Towers</span>
+                            <span>33/66/132kV Supports</span>
                             <span class="layer-toggle-check" style="margin-left: auto; opacity: 0.3;">✓</span>
                         </div>
-                        <div style="font-size: 10px; color: #9ca3af; padding: 4px 0 0 14px;">POC finder snaps to poles when enabled</div>
+                        <div style="font-size: 10px; color: #9ca3af; padding: 4px 0 0 14px;">POC finder snaps to supports when enabled</div>
                     </div>
                 `;
                 
@@ -5844,94 +5522,24 @@
                     });
                 });
                 
-                // Add click handler for embedded capacity Connected toggle
-                const connectedToggle = document.getElementById('toggle-embedded-connected');
-                if (connectedToggle) {
-                    connectedToggle.addEventListener('click', function() {
-                        embeddedConnectedVisible = !embeddedConnectedVisible;
-                        const checkmark = this.querySelector('.layer-toggle-check');
-                        checkmark.style.opacity = embeddedConnectedVisible ? '1' : '0.3';
-                        updateLayerVisibility();
-                    });
-                }
-                
-                // Add click handler for embedded capacity Accepted toggle
-                const acceptedToggle = document.getElementById('toggle-embedded-accepted');
-                if (acceptedToggle) {
-                    acceptedToggle.addEventListener('click', function() {
-                        embeddedAcceptedVisible = !embeddedAcceptedVisible;
-                        const checkmark = this.querySelector('.layer-toggle-check');
-                        checkmark.style.opacity = embeddedAcceptedVisible ? '1' : '0.3';
-                        updateLayerVisibility();
-                    });
-                }
-                
-                // Add click handler for infrastructure projects toggle
-                const infraToggle = document.getElementById('toggle-infrastructure-projects');
-                if (infraToggle) {
-                    infraToggle.addEventListener('click', function() {
-                        infrastructureProjectsVisible = !infrastructureProjectsVisible;
-                        const checkmark = this.querySelector('.layer-toggle-check');
-                        checkmark.style.opacity = infrastructureProjectsVisible ? '1' : '0.3';
-                        updateLayerVisibility();
-                    });
-                }
-                
-                // Add click handler for poles/towers toggle
+                // Add click handler for EHV supports toggle (lazy-loads data on first enable)
                 const polesTowersToggle = document.getElementById('toggle-poles-towers');
                 if (polesTowersToggle) {
-                    polesTowersToggle.addEventListener('click', function() {
+                    polesTowersToggle.addEventListener('click', async function() {
                         polesTowersVisible = !polesTowersVisible;
                         const checkmark = this.querySelector('.layer-toggle-check');
                         checkmark.style.opacity = polesTowersVisible ? '1' : '0.3';
+                        
+                        // Lazy-load supports data on first enable
+                        if (polesTowersVisible && !supportsLoaded) {
+                            this.querySelector('span:nth-child(2)').textContent = 'Loading supports...';
+                            await loadSupportsData();
+                            this.querySelector('span:nth-child(2)').textContent = '33/66/132kV Supports';
+                        }
+                        
                         updateLayerVisibility();
                     });
                 }
-                
-                // Initialize embedded capacity date slider
-                const embeddedDateSliderEl = document.getElementById('embedded-date-slider');
-                if (embeddedDateSliderEl && typeof noUiSlider !== 'undefined') {
-                    // Initialize with placeholder values (will be updated after data loads)
-                    noUiSlider.create(embeddedDateSliderEl, {
-                        start: [Date.now()],
-                        connect: [true, false],
-                        range: {
-                            'min': Date.now() - (365 * 24 * 60 * 60 * 1000 * 30), // 30 years ago
-                            'max': Date.now() + (365 * 24 * 60 * 60 * 1000 * 15)  // 15 years in future
-                        },
-                        step: 24 * 60 * 60 * 1000 * 30  // ~1 month steps
-                    });
-                    
-                    embeddedDateSliderEl.noUiSlider.on('update', function(values) {
-                        const timestamp = parseInt(values[0]);
-                        const displayEl = document.getElementById('embedded-date-display');
-                        if (displayEl) {
-                            displayEl.textContent = formatDateDisplay(timestamp);
-                        }
-                    });
-                    
-                    embeddedDateSliderEl.noUiSlider.on('change', function(values) {
-                        embeddedDateFilter = parseInt(values[0]);
-                        rebuildEmbeddedCapacityMarkers();
-                        rebuildInfrastructureProjectMarkers();  // Also rebuild infrastructure projects
-                    });
-                }
-                
-                // Add click handlers for resource type toggles
-                const resourceTypeToggles = document.querySelectorAll('.resource-type-toggle');
-                resourceTypeToggles.forEach(toggle => {
-                    toggle.addEventListener('click', function() {
-                        const resourceType = this.dataset.type;
-                        if (visibleResourceTypes.has(resourceType)) {
-                            visibleResourceTypes.delete(resourceType);
-                            this.classList.add('hidden');
-                        } else {
-                            visibleResourceTypes.add(resourceType);
-                            this.classList.remove('hidden');
-                        }
-                        rebuildEmbeddedCapacityMarkers();
-                    });
-                });
                 
                 // Location search functionality
                 const locationSearchInput = document.getElementById('location-search-input');
@@ -6124,17 +5732,17 @@
                     start: [filterMin, filterMax],
                     connect: true,
                     range: {
-                        'min': [0.5],
-                        '20%': [2],
-                        '40%': [10],
-                        '60%': [30],
-                        '80%': [60],
+                        'min': [0.1],
+                        '15%': [1],
+                        '30%': [5],
+                        '50%': [20],
+                        '70%': [50],
                         'max': [100]
                     },
                     tooltips: false,
                     pips: {
                         mode: 'values',
-                        values: [0.5, 5, 20, 50, 100],
+                        values: [0.1, 1, 5, 20, 50, 100],
                         density: 10,
                         format: {
                             to: (v) => v >= 1 ? v.toFixed(0) : v.toFixed(1)
@@ -6165,6 +5773,51 @@
                 
                 // Apply initial filter
                 updateLayerVisibility();
+                
+                // Initialize max POC distance slider
+                const distSlider = document.getElementById('poc-distance-slider');
+                
+                noUiSlider.create(distSlider, {
+                    start: [POC_MAX_DISTANCE_KM],
+                    connect: [true, false],
+                    range: {
+                        'min': [1],
+                        '25%': [5],
+                        '50%': [15],
+                        '75%': [30],
+                        'max': [100]
+                    },
+                    tooltips: false,
+                    pips: {
+                        mode: 'values',
+                        values: [1, 5, 15, 30, 50, 100],
+                        density: 10,
+                        format: {
+                            to: (v) => v >= 10 ? v.toFixed(0) : v.toFixed(0)
+                        }
+                    }
+                });
+                
+                // Style the handle to match the MVA slider
+                const distHandles = distSlider.querySelectorAll('.noUi-handle');
+                distHandles.forEach(handle => {
+                    handle.style.width = '8px';
+                    handle.style.height = '8px';
+                    handle.style.borderRadius = '2px';
+                    handle.style.border = 'none';
+                    handle.style.boxShadow = 'none';
+                    handle.style.top = '0px';
+                    handle.style.right = '-4px';
+                    handle.style.boxSizing = 'border-box';
+                });
+                
+                distSlider.noUiSlider.on('update', function(values) {
+                    POC_MAX_DISTANCE_KM = parseFloat(values[0]);
+                    const displayEl = document.getElementById('poc-distance-display');
+                    if (displayEl) {
+                        displayEl.textContent = `${Math.round(POC_MAX_DISTANCE_KM)} km`;
+                    }
+                });
             }, 100);
             
             // Load saved sites from localStorage and show markers
@@ -6185,112 +5838,91 @@
             // Default one-off POC on map click (lightweight alternative to POC mode)
             map.on('click', handleSinglePOCClick);
             
-            // Add zoom handler to update embedded capacity, infrastructure, and pole/tower marker sizes
+            // Add zoom handler to update pole/tower marker sizes
             map.on('zoomend', () => {
-                updateEmbeddedCapacitySizes();
-                updateInfrastructureProjectSizes();
                 updatePoleTowerSizes();
             });
             
             // Initial size update
-            updateEmbeddedCapacitySizes();
-            updateInfrastructureProjectSizes();
             updatePoleTowerSizes();
-            
-            // Update embedded date slider with actual data range
-            updateEmbeddedDateSlider();
             
             // Hide loading overlay
             document.getElementById('loading').classList.add('hidden');
         }
-        
-        // Update the embedded date slider with actual data range
-        function updateEmbeddedDateSlider() {
-            const sliderEl = document.getElementById('embedded-date-slider');
-            const rangeEl = document.getElementById('embedded-date-range');
-            
-            if (sliderEl && sliderEl.noUiSlider && embeddedDateMin && embeddedDateMax) {
-                // Update slider range
-                sliderEl.noUiSlider.updateOptions({
-                    range: {
-                        'min': embeddedDateMin,
-                        'max': embeddedDateMax
-                    },
-                    start: [embeddedDateFilter || embeddedDateMax]
-                });
-                
-                // Update range display
-                if (rangeEl) {
-                    rangeEl.textContent = `${formatDateDisplay(embeddedDateMin)} - ${formatDateDisplay(embeddedDateMax)}`;
-                }
-            }
-        }
 
-        // Load pole/tower layer
-        async function loadPoleTowerLayer(layerConfig) {
+        // Load supports data lazily (only when user toggles on the supports layer)
+        async function loadSupportsData() {
+            if (supportsLoaded) return;
+            supportsLoaded = true;
+            
             try {
-                const response = await fetch(layerConfig.file);
+                console.log('Loading supports data (this may take a moment due to file size)...');
+                const response = await fetch(SUPPORTS_FILE);
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}`);
                 }
                 const data = await response.json();
                 
-                // Store data for POC snapping
-                poleTowerData[layerConfig.voltage] = data.features || [];
+                // Initialize layer groups for each EHV voltage
+                POLE_TOWER_LAYERS.forEach(layerConfig => {
+                    const layerGroup = L.layerGroup();
+                    poleTowerLayerGroups[layerConfig.voltage] = layerGroup;
+                    poleTowerData[layerConfig.voltage] = [];
+                });
                 
-                // Create layer group for this voltage
-                const layerGroup = L.layerGroup();
-                poleTowerLayerGroups[layerConfig.voltage] = layerGroup;
-                
-                // Create markers for each pole/tower
+                // Distribute features by voltage
+                // Uses canvas-rendered circleMarkers instead of DOM-based divIcons
+                // for dramatically better performance with 70K+ features
                 data.features.forEach(feature => {
                     if (!feature.geometry || feature.geometry.type !== 'Point') return;
+                    
+                    const volts = feature.properties.voltage;
+                    if (!volts) return;
+                    
+                    // Find matching pole/tower layer
+                    const layerConfig = POLE_TOWER_LAYERS.find(l => l.voltageVolts === volts);
+                    if (!layerConfig) return;  // Skip HV voltages for supports display
+                    
+                    // Store for POC snapping
+                    poleTowerData[layerConfig.voltage].push(feature);
                     
                     const coords = feature.geometry.coordinates;
                     const props = feature.properties || {};
                     
-                    // Create small transparent box marker with voltage-colored outline
-                    const marker = L.marker([coords[1], coords[0]], {
-                        icon: L.divIcon({
-                            className: '',
-                            html: `<div style="
-                                width: 8px;
-                                height: 8px;
-                                background: transparent;
-                                border: 2px solid ${layerConfig.color};
-                                opacity: 0.8;
-                            "></div>`,
-                            iconSize: [8, 8],
-                            iconAnchor: [4, 4]
-                        })
+                    // Create canvas-rendered circle marker (much faster than DOM divIcon)
+                    const marker = L.circleMarker([coords[1], coords[0]], {
+                        radius: 4,
+                        color: layerConfig.color,
+                        weight: 1.5,
+                        opacity: 0.8,
+                        fillColor: 'transparent',
+                        fillOpacity: 0
                     });
                     
-                    // Add popup with pole info
-                    const poleType = props.ob_class || 'Pole/Tower';
-                    const routeName = props.route_name || 'Unknown';
-                    const poleNum = props.pole_num || 'N/A';
+                    // Add popup with support info
+                    const supportType = props.support_type || 'Support';
+                    const supportHeight = props.support_height || 'Unknown';
+                    const dnoArea = props.dno_area || 'Unknown';
                     marker.bindPopup(`
                         <div class="popup-content">
                             <span class="voltage-badge" style="background-color: ${layerConfig.color}">${layerConfig.voltage}</span>
-                            <div><strong>Type:</strong> ${poleType}</div>
-                            <div><strong>Route:</strong> ${routeName}</div>
-                            <div><strong>Pole #:</strong> ${poleNum}</div>
+                            <div><strong>Type:</strong> ${supportType}</div>
+                            <div><strong>Height:</strong> ${supportHeight}</div>
+                            <div><strong>Area:</strong> ${dnoArea}</div>
                         </div>
                     `);
                     
-                    layerGroup.addLayer(marker);
+                    poleTowerLayerGroups[layerConfig.voltage].addLayer(marker);
                 });
                 
-                // Don't add to map initially - layer starts hidden (polesTowersVisible = false)
-                // Layer will be added when user enables it via the toggle
+                console.log('Supports data loaded successfully');
+                // Apply visibility after loading
+                updateLayerVisibility();
                 
-                loadedCount++;
-                updateProgress();
                 return true;
             } catch (error) {
-                console.error(`Failed to load ${layerConfig.name}:`, error);
-                loadedCount++;
-                updateProgress();
+                console.error('Failed to load supports data:', error);
+                supportsLoaded = false;
                 return false;
             }
         }
@@ -6326,13 +5958,11 @@
 
         // Load all layers
         async function init() {
-            // Load cable layers, embedded capacity, infrastructure projects, and pole/tower layers in parallel
-            await Promise.all([
-                ...LAYERS.map(loadLayer),
-                loadEmbeddedCapacityLayer(),
-                loadInfrastructureProjectsLayer(),
-                ...POLE_TOWER_LAYERS.map(loadPoleTowerLayer)
-            ]);
+            // Load all data sources in parallel
+            await Promise.all(DATA_SOURCES.map(loadDataSource));
+            
+            // Build Leaflet layers from collected data
+            buildVoltageLayers();
         }
 
         // Start loading
